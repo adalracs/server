@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adsum | Gestión Inteligente de Activos</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto+Mono:wght@400;500&display=swap">
+    <style>
+        :root {
+            --primary: #2A5CAA;
+            --secondary: #333333;
+            --accent: #4CAF50;
+            --light: #f5f7fa;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--secondary);
+            line-height: 1.6;
+        }
+        
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .nav-links a {
+            margin-left: 2rem;
+            text-decoration: none;
+            color: var(--secondary);
+            font-weight: 500;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+            padding: 8rem 5% 4rem;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .cta-button {
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+        }
+        
+        /* Modules Grid */
+        .section-title {
+            text-align: center;
+            margin: 4rem 0 2rem;
+            color: var(--primary);
+        }
+        
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            padding: 0 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .module-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+        
+        .module-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        /* Workflow */
+        .workflow {
+            background: var(--light);
+            padding: 4rem 5%;
+            margin-top: 3rem;
+        }
+        
+        .workflow-steps {
+            display: flex;
+            justify-content: space-between;
+            max-width: 900px;
+            margin: 2rem auto;
+            position: relative;
+        }
+        
+        .step {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            width: 30%;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: -35%;
+            width: 30%;
+            height: 2px;
+            background: var(--primary);
+            z-index: 1;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .workflow-steps {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .step {
+                width: 80%;
+                margin-bottom: 2rem;
+            }
+            
+            .step:not(:last-child)::after {
+                top: auto;
+                bottom: -20%;
+                right: 50%;
+                width: 2px;
+                height: 20%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">ADSUM</div>
+            <div class="nav-links">
+                <a href="#modulos">Módulos</a>
+                <a href="#flujo">Flujo de Trabajo</a>
+                <a href="#integraciones">Integraciones</a>
+                <a href="#contacto">Contacto</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Gestión Inteligente de Activos con Adsum</h1>
+        <p>Optimiza el mantenimiento, reduce costos y aumenta la confiabilidad de tus equipos con nuestro sistema integrado.</p>
+        <a href="#contacto" class="cta-button">Solicitar Demo</a>
+    </section>
+
+    <section id="modulos">
+        <h2 class="section-title">Módulos del Sistema</h2>
+        <div class="modules-grid">
+            <div class="module-card">
+                <div class="module-icon">📊</div>
+                <h3>Taxonomía de Equipos</h3>
+                <p>Clasificación técnica de activos para gestión estandarizada.</p>
+            </div>
+            <div class="module-card">
+                <div class="module-icon">🔄</div>
+                <h3>Gestión del Trabajo</h3>
+                <p>Desde SS hasta OT y reportes finales.</p>
+            </div>
+            <div class="module-card">
+                <div class="module-icon">📦</div>
+                <h3>Inventario</h3>
+                <p>Control de repuestos y materiales.</p>
+            </div>
+            <div class="module-card">
+                <div class="module-icon">⚙️</div>
+                <h3>Interfaces SCADA/PLC</h3>
+                <p>Monitoreo en tiempo real de equipos.</p>
+            </div>
+            <div class="module-card">
+                <div class="module-icon">💰</div>
+                <h3>Costos ABC</h3>
+                <p>Análisis de costos por actividad.</p>
+            </div>
+            <div class="module-card">
+                <div class="module-icon">📈</div>
+                <h3>RCM</h3>
+                <p>Mantenimiento Centrado en Confiabilidad.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="flujo" class="workflow">
+        <h2 class="section-title">Flujo de Trabajo Integrado</h2>
+        <div class="workflow-steps">
+            <div class="step">
+                <h3>1. Solicitud de Servicio (SS)</h3>
+                <p>Generada automáticamente por SCADA o manualmente.</p>
+            </div>
+            <div class="step">
+                <h3>2. Orden de Trabajo (OT)</h3>
+                <p>Asignada a técnicos vía App Adsum.</p>
+            </div>
+            <div class="step">
+                <h3>3. Reporte y Cierre</h3>
+                <p>Con calificación de servicio e indicadores.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Integraciones -->
+    <section id="integraciones">
+        <h2 class="section-title">Integraciones Técnicas</h2>
+        <div style="text-align: center; padding: 0 5% 4rem;">
+            <p style="max-width: 800px; margin: 0 auto;">Adsum se conecta con tus sistemas existentes para un flujo de datos unificado:</p>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin-top: 2rem;">
+                <div style="background: white; padding: 1rem; border-radius: 8px; min-width: 120px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                    <p style="font-weight: 600; margin: 0;">SCADA</p>
+                </div>
+                <div style="background: white; padding: 1rem; border-radius: 8px; min-width: 120px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                    <p style="font-weight: 600; margin: 0;">PLC</p>
+                </div>
+                <div style="background: white; padding: 1rem; border-radius: 8px; min-width: 120px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                    <p style="font-weight: 600; margin: 0;">AVL</p>
+                </div>
+                <div style="background: white; padding: 1rem; border-radius: 8px; min-width: 120px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                    <p style="font-weight: 600; margin: 0;">SRH</p>
+                </div>
+                <div style="background: white; padding: 1rem; border-radius: 8px; min-width: 120px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                    <p style="font-weight: 600; margin: 0;">SRF</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto -->
+    <section id="contacto" style="background: var(--primary); padding: 4rem 5%; text-align: center; color: white;">
+        <h2 style="margin-top: 0;">¿Listo para optimizar tu gestión de activos?</h2>
+        <p style="max-width: 600px; margin: 1rem auto 2rem;">Contáctanos para una demostración personalizada del sistema Adsum.</p>
+        <form style="max-width: 500px; margin: 0 auto;">
+            <input type="text" placeholder="Nombre" style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; border: none; border-radius: 4px;">
+            <input type="email" placeholder="Correo electrónico" style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; border: none; border-radius: 4px;">
+            <textarea placeholder="Mensaje" style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; border: none; border-radius: 4px; height: 120px;"></textarea>
+            <button type="submit" style="background: white; color: var(--primary); padding: 0.8rem 1.5rem; border: none; border-radius: 4px; font-weight: 600; cursor: pointer;">Enviar Solicitud</button>
+        </form>
+    </section>
+
+    <footer style="background: var(--secondary); color: white; text-align: center; padding: 2rem 5%;">
+        <p>© 2024 Adsum. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
