@@ -1,1 +1,1 @@
-/etc/nginx/sites-enabled/adsuminternational.com
+/etc/nginx/sites-available/adsuminternational.com

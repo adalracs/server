@@ -1,1 +1,1 @@
-/etc/nginx/sites-enabled/keytutty.com
+/etc/nginx/sites-available/keytutty.com

@@ -1,1 +1,1 @@
-/etc/nginx/sites-enabled/lainiver.com
+/etc/nginx/sites-available/lainiver.com
