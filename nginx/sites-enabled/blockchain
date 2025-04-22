@@ -1,0 +1,14 @@
+server {
+    listen 80;
+    server_name blockchain.adsuminternational.net; # Reemplaza con el dominio o la IP de tu servidor
+
+    location / {
+        include uwsgi_params;
+        uwsgi_pass unix:/home/arias/Adsum-Blockchain/socket/uwsgi.sock; # La ruta al socket de uWSGI
+    }
+
+    # Para servir archivos estáticos (opcional)
+    location /static {
+        alias /home/arias/Adsum-Blockchain/static; # Reemplaza con la ruta a tus archivos estáticos
+    }
+}

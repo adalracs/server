@@ -5,7 +5,7 @@ server {
     root /var/www/html/lainiver.com;
     index index.html index.htm;
 
-    server_name lainiver.com;  # Cambia esto por tu dominio real o usa una subdirectorio
+    server_name lainiver.com www.aliniver.com;
 
     location / {
         try_files $uri $uri/ =404;
