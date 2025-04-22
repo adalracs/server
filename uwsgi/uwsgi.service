@@ -1,0 +1,17 @@
+#Configuracion Debian 12
+[Unit]
+Description=uWSGI HTTP and application server
+After=network.target
+
+[Service]
+User=www-data
+WorkingDirectory=/home/arias/Adsum-Blockchain
+ExecStart=/usr/bin/uwsgi --ini /home/arias/Adsum-Blockchain/uwsgi.ini
+Restart=on-failure
+KillSignal=SIGQUIT
+Type=notify
+StandardError=syslog
+NotifyAccess=all
+
+[Install]
+WantedBy=multi-user.target
