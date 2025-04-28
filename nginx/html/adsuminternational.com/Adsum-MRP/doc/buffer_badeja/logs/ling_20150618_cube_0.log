@@ -1,0 +1,4 @@
+2015-06-18 00:00:05 - jair.paya => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.96.169
+2015-06-18 00:00:05 - jair.paya => [Rango de Generacion 2015-06-18 - 2015-06-25 :: RNG_DATE_PER ] -> IP: 192.168.96.169
+2015-06-18 00:00:05 - jair.paya => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.96.169
+2015-06-18 00:00:05 - jair.paya => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 192.168.96.169

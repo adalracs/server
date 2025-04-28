@@ -1,0 +1,70 @@
+{
+  "header": {
+    "title": "Adsum-Blockchain",
+    "subtitle": "La piattaforma blockchain aperta."
+  },
+  "nav": {
+    "about": "Chi siamo",
+    "capabilities": "Capacità",
+    "accomplishments": "Risultati",
+    "dive": "Esplora Blockchain"
+  },
+  "sections": {
+    "about": {
+      "title": "L'azienda blockchain",
+      "content": "La nostra blockchain è progettata per soddisfare le esigenze di sviluppatori, startup tecnologiche, aziende, organizzazioni non governative, istituzioni accademiche e governi, tutti alla ricerca di trasparenza, sovranità dei dati e sicurezza. Adsum-Blockchain offre una piattaforma accessibile e flessibile che, oltre ad essere a basso costo, fornisce strumenti per creare applicazioni decentralizzate (DApps). La nostra soluzione permette lo sviluppo di progetti innovativi che coinvolgono identità decentralizzata, trasparenza e autenticità.",
+      "mission": "La nostra missione è democratizzare l'accesso alla tecnologia blockchain fornendo una piattaforma accessibile ed efficiente per la creazione di applicazioni decentralizzate (DApps). Permettiamo a qualsiasi appassionato di tecnologia di concretizzare le proprie idee e progetti, promuovendo la sovranità dei dati e la trasparenza a tutti i livelli. Ci impegniamo a garantire che gli utenti finali abbiano il pieno controllo dei propri dati e transazioni, favorendo un ambiente di fiducia e sicurezza."
+    },
+    "capabilities": {
+      "title": "Le nostre capacità",
+      "items": [
+        "Algoritmo di consenso PoA: Alta efficienza e velocità.",
+        "Sicurezza migliorata: Solo i nodi autorizzati possono validare le transazioni.",
+        "Piattaforma scalabile: Alta capacità di elaborazione e transazioni veloci.",
+        "Microservizi e API gratuiti per gli sviluppatori."
+      ],
+      "content": "Offriamo un'infrastruttura blockchain accessibile, permettendo a sviluppatori e appassionati di tecnologia di tutti i livelli di partecipare e creare soluzioni che promuovono la sovranità dei dati, garantendo che gli utenti finali abbiano il pieno controllo dei propri dati e transazioni. Favoriamo un ambiente collaborativo in cui sviluppatori, aziende, istituzioni accademiche e organizzazioni possono lavorare insieme, condividere conoscenze e far progredire collettivamente la tecnologia blockchain."
+    },
+    "accomplishments": {
+      "title": "Alcuni risultati",
+      "items": [
+        "Fiducia: Gli utenti devono sentire di potersi fidare pienamente delle applicazioni che utilizzano la nostra piattaforma.",
+        "Innovazione: Vogliamo ispirare un senso di innovazione, creatività e trasparenza con meccanismi robusti che garantiscano integrità e privacy.",
+        "Comunità: Costruire una comunità attiva e solidale dove conoscenze ed esperienze possono essere condivise, lavorando insieme verso obiettivi comuni."
+      ],
+      "achieved": "Questo si realizza attraverso:",
+      "achievements": [
+        "Implementazione di successo di nodi da parte di molteplici organizzazioni.",
+        "Sviluppo di applicazioni decentralizzate in vari settori.",
+        "Crescita di una comunità attiva di sviluppatori."
+      ]
+    },
+    "dive": {
+      "title": "Esplora Blockchain",
+      "content": "Benvenuto nell'emozionante mondo della tecnologia Blockchain! In Adsum-Blockchain, crediamo nel potere trasformativo delle blockchain e vogliamo che tu faccia parte di questa rivoluzione. Perché unirsi all'avventura Blockchain?",
+      "reasons": [
+        {
+          "title": "Innovazione a portata di mano:",
+          "content": "Accedi alle più recenti tecnologie e metodi nello sviluppo Blockchain, ottimizzando i tuoi processi e migliorando il tuo progetto."
+        },
+        {
+          "title": "Comunità e collaborazione:",
+          "content": "Unisciti a una vivace comunità di sviluppatori ed entusiasti che condividono i tuoi interessi e sono pronti a collaborare con te."
+        },
+        {
+          "title": "Guide e supporto:",
+          "content": "Goditi tutorial dettagliati, documentazione estesa e supporto tecnico per assisterti in ogni passo del percorso."
+        },
+        {
+          "title": "Sicurezza e trasparenza:",
+          "content": "Sfrutta le caratteristiche intrinseche della Blockchain per garantire che le tue transazioni siano sicure, trasparenti e affidabili."
+        }
+      ],
+      "cta": "Inizia oggi e scopri come la Blockchain può trasformare il tuo business, i tuoi progetti e il tuo futuro. Non aspettare oltre, fai il salto e crea la tua catena con noi!",
+      "button": "Inizia ora"
+    }
+  },
+  "footer": {
+    "copyright": "Adsum-Blockchain"
+  }
+}

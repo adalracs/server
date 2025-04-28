@@ -1,0 +1,64 @@
+<?php 
+/*
+Propiedad intelectual de Adsum (c).
+Funcion         : fncgeninimen
+Decripcion      : La funcion declara las variables javascript necesarias para generar el menu.
+Parametros      : Descripicion
+Retorno         : Descripicion
+Autor           : ariascos
+Fecha           : 26-sep-2001  
+*/
+
+function  fncgeninimen()
+{
+define ("n",0);
+define ("n1",1);
+echo   "<html>"."\n";
+echo   "<head>"."\n";
+echo   "<meta http-equiv=".'"'."Content-Type".'"'." content=".'"'."text/html; charset=iso-8859-1".'"'.">"."\n";
+echo   "<title>sin titulo</title>"."\n";
+echo   "<script type=".'"'."text/javascript".'"'." src=".'"'."mtmcode.js".'"'.">"."\n";
+echo   "</script>"."\n";
+echo   "<script type=".'"'."text/javascript".'"'.">"."\n";
+echo   "var MTMTableWidth = ".' "'."100%".'"'.";"."\n";
+echo   "var MTMenuFrame = ".' "'."menu".'"'.";"."\n";
+echo   "var MTMSubsGetPlus = ".' "'."Always".'"'.";"."\n";
+echo   "var MTMEmulateWE = "." false".";"."\n";
+echo   "var MTMenuImageDirectory = ".' "'."../img/".'"'.";"."\n";
+echo   "var MTMBGColor = ".' "'."#000033".'"'.";"."\n";
+echo   "var MTMBackground = ".' "'."#5961a0".'"'.";"."\n";
+echo   "var MTMTextColor = ".' "'."green".'"'.";"."\n";
+echo   "var MTMLinkColor = ".' "'."white".'"'.";"."\n";
+echo   "var MTMAhoverColor = ".' "'."Black".'"'.";"."\n";
+echo   "var MTMTrackColor = ".' "'."yellow".'"'.";"."\n";
+echo   "var MTMSubExpandColor = ".' "'."yellow".'"'.";"."\n";
+echo   "var MTMSubClosedColor = ".' "'."white".'"'.";"."\n";
+echo   "var MTMRootIcon = ".' "'."menu_new_root".'.'."gif".'"'.";"."\n";
+echo   "var MTMenuText = ".' "'."Sus opciones son:".'"'.";"."\n";
+echo   "var MTMRootColor = ".' "'."#000033".'"'.";"."\n";
+echo   "var MTMRootFont = ".' "'."Tahoma".'"'.";"."\n";
+echo   "var MTMRootCSSize = ".' "'."84%".'"'.";"."\n";
+echo   "var MTMRootFontSize = ".' "'."-1".'"'.";"."\n";
+echo   "var MTMenuFont = ".' "'."Tahoma".'"'.";"."\n";
+echo   "var MTMenuCSSize = ".' "'."84%".'"'.";"."\n";
+echo   "var MTMenuFontSize = ".' "'."-1".'"'.";"."\n";
+echo   "var MTMLinkedSS = "." false".";"."\n";
+echo   "var MTMSSHREF = ".' "'."style/menu".'.'."css".'"'.";"."\n";
+echo   "var MTMExtraCSS = ".' "'.'"'.";"."\n";
+echo   "var MTMHeader = ".' "'.'"'.";"."\n";
+echo   "var MTMFooter = ".' "'.'"'.";"."\n";
+echo   "var MTMSubsAutoClose = "." false".";"."\n";
+echo   "var MTMTimeOut = "."1".";"."\n";
+echo   "var MTMUseCookies = "." false".";"."\n";
+echo   "var MTMCookieName = ".' "'."MTMCookie".'"'.";"."\n";
+echo   "var MTMCookieDays = "." 3".";"."\n";
+echo   "var MTMUseToolTips = "." true".";"."\n";
+echo   "var MTMIconList = "." null".";"."\n";
+echo   "MTMIconList = "." new IconList()".";"."\n";
+echo   "MTMIconList".'.'."addIcon(new MTMIcon(".'"'."menu_link_external".'.'."gif".'"'.", ".'"'."http://".'"'.", ".'"'."pre".'"'."))".";"."\n";
+echo   "MTMIconList".'.'."addIcon(new MTMIcon(".'"'."menu_link_pdf".'.'."gif".'"'.", ".'"'.'.'."pdf".'"'.", ".'"'."post".'"'."))".";"."\n";
+echo   "var  menu = "." null".";"."\n";
+echo   "menu = "." new MTMenu()".";"."\n";
+}
+fncgeninimen();
+?>

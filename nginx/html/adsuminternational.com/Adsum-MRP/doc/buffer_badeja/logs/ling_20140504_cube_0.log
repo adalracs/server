@@ -1,0 +1,4 @@
+2014-05-04 00:00:08 - oscar.cardenas => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 190.242.58.154
+2014-05-04 00:00:08 - oscar.cardenas => [Rango de Generacion 2014-05-04 - 2014-05-11 :: RNG_DATE_PER ] -> IP: 190.242.58.154
+2014-05-04 00:00:08 - oscar.cardenas => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 190.242.58.154
+2014-05-04 00:00:08 - oscar.cardenas => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 190.242.58.154

@@ -1,0 +1,64 @@
+<?php
+/*
+Propiedad intelectual de Adsum (c).
+Funcion         : fncvallogin
+Decripcion      : Valida si existe un usuario y su clave es correcta. 
+Parametros      : Descripicion
+   $isbusuanomb   Id del usuario.
+   $isbpass        Cadena Password.
+Retorno         : Descripicion
+ $onuReturn = 3   el usuario existe (inactivo).
+ $onuReturn = 2   el usuario existe pero clave incorrecta.
+ $onuReturn = 1  el usuario existe  clave correcta.
+ $onuReturn = -3  no existe.
+ $onuReturn = -2   Error de base de datos.
+ $onuReturn =  -1  Error de coneci¢n.
+Autor           : agomez-freina
+Fecha           : 03-sep-2001  
+*/
+include( '../src/FunPerPriNiv/pktblusuario.php');
+function  fncvallogin($isbusuanomb,$isbpass)
+{
+	define ("n",0);
+	define ("n1",1);
+	define ("n2",2);
+	define ("n3",3);
+	define ("e_connection",-1);
+	define ("e_db",-2);
+	define ("e_empty",-3);
+	$nuResult = call_user_func ('fullscanusuario');
+	if($nuResult && $nuResult != e_empty && $nuResult != e_db
+	&& $nuResult != e_connection)
+	{
+		$nucantrow = fncnumreg($nuResult);
+		for($i = n ;$i < $nucantrow ; $i++)
+		{
+			$recResult = fncfetch($nuResult,$i);
+			if($recResult[n1] == $isbusuanomb)
+			{
+				if($recResult[n3] == n1)
+				{
+					if($recResult[n2] == $isbpass)
+					{
+						// echo n1."\n";
+						return n1;
+					}
+					else
+					{
+						// echo n2."\n";
+						return n2;
+					}
+				}
+				else
+				{
+					// echo n3."\n";
+					 return n3;
+				}
+			}
+		}
+		// echo e_empty."\n";
+		return e_empty;
+	}
+}
+	   // fncvallogin($argv[1],$argv[2]);
+?>

@@ -1,0 +1,5 @@
+2015-07-25 00:00:17 - andres.jimenez => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.65.101
+2015-07-25 00:00:17 - andres.jimenez => [Rango de Generacion 2015-07-25 - 2015-08-01 :: RNG_DATE_PER ] -> IP: 192.168.65.101
+2015-07-25 00:00:17 - andres.jimenez => [PROGRAMACION 283 - No GENERA ORDEN / FECHA GENERACION [2015-08-23] MAYOR A FECHA LIMITE [2015-08-01] :: RNG_NOGEN_OT ] -> IP: 192.168.65.101
+2015-07-25 00:00:17 - andres.jimenez => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.65.101
+2015-07-25 00:00:17 - andres.jimenez => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 192.168.65.101

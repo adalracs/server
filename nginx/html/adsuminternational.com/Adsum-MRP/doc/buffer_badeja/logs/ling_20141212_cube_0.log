@@ -1,0 +1,4 @@
+2014-12-12 00:00:04 - harold.saa => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.67.44
+2014-12-12 00:00:04 - harold.saa => [Rango de Generacion 2014-12-12 - 2014-12-19 :: RNG_DATE_PER ] -> IP: 192.168.67.44
+2014-12-12 00:00:04 - harold.saa => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.67.44
+2014-12-12 00:00:04 - harold.saa => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 192.168.67.44

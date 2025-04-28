@@ -1,0 +1,4 @@
+2014-04-23 00:00:25 - melquin.cuaran => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 190.242.58.154
+2014-04-23 00:00:25 - melquin.cuaran => [Rango de Generacion 2014-04-23 - 2014-04-30 :: RNG_DATE_PER ] -> IP: 190.242.58.154
+2014-04-23 00:00:25 - melquin.cuaran => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 190.242.58.154
+2014-04-23 00:00:25 - melquin.cuaran => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 190.242.58.154

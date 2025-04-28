@@ -1,0 +1,116 @@
+<?php 
+/*
+Propiedad intelectual de adsum (c).
+Clase       	: procesos_admin
+Decripcion      : definimos tantos m�todos como funciones queremos que nuestro servidor "sirva"
+Parametros      : null
+Retorno         : null
+Autor           : ariascos - lfolaya - mstroh
+Fecha           : 04-ene-2006
+*/
+/*
+incluimos rsServer.php que contiene la class rs_server que ser� la que "extenderemos"
+*/
+include ( '../src/FunPerSecNiv/fncconn.php');
+include ( '../src/FunPerSecNiv/fncclose.php');
+include ( '../src/FunPerSecNiv/fncnumreg.php');
+include ( '../src/FunPerSecNiv/fncfetch.php');
+include ( '../src/FunPerPriNiv/pktblotestado.php');
+include ( '../src/FunPerPriNiv/pktblhistoriaot.php');
+include ( '../src/FunGen/rsServer.php');
+include ('consultaconfotestado.php');
+
+class procesos_admin extends rs_server
+{
+
+	/*
+	Propiedad intelectual de adsum (c).
+	Funcion         : mostrarOtestado
+	Decripcion      : realiza la consulta a la base de datos
+	Parametros      : $paramaters		el valor del atributo del formulario
+	Retorno         : $str
+	Autor           : mstroh
+	Fecha           : 04-ene-2006
+	*/
+	function mostrarEstados($paramaters)
+	{
+		$idcon = fncconn();
+		$sbreg['ordtracodigo'] = $paramaters[0];
+
+		$idres = dinamicscanhistoriaot($sbreg, $idcon);
+		$num = fncnumreg($idres);
+		//-----------------------------------------
+		// Trae el registro con la mayor secuencia
+		//-----------------------------------------
+		for($n=0; $n<$num; $n++)
+		{
+			$sbreg = fncfetch($idres, $i);
+
+			if($n == 0)
+			{
+				$maxsecuen = $sbreg['histotsecuen'];
+				$maxseccod = $sbreg['otestacodigo'];
+			}
+			else
+			{
+				if($sbreg['histotsecuen'] > $maxsecuen)
+				{
+					$maxsecuen = $sbreg['histotsecuen'];
+					$maxseccod = $sbreg['otestacodigo'];
+				}
+			}
+		}
+		//------------------------------------
+		// Lee el archivo ot.conf
+		//------------------------------------
+		$fa = file('../etc/ot.conf');
+		$flnum = count($fa);
+
+		for($n=0; $n<$flnum; $n++)
+		{
+			if(rtrim($fa[$n]) == '[Orden logico]')
+			{
+				while (rtrim($fa[$n+1]) != '[/Orden logico]')
+				{
+					$n++;
+					$arrvalores = rtrim($fa[$n]);
+					$valposic = explode('-', $arrvalores);
+
+					if($maxseccod == $valposic[0])
+					{
+						$sbregotestado = loadrecordotestado($valposic[1], $idcon);
+						$string = $string.$sbregotestado['otestacodigo'].",".$sbregotestado['otestanombre'].",";
+
+						switch ($sbregotestado['otestatipo']) 
+						{
+							case 3:
+								$type = "rport";
+								break;
+							
+							case 4:
+								$type = "cclosed";
+						}
+					}
+
+				}
+			}
+		}
+		//------------------------------------
+		if(isset($string))
+		{
+			$len = strlen($string);
+			$string = substr($string, 0, $len-1);
+
+			return $string.",".$type.", type";
+		}
+		else
+		{
+			fncclose($idcon);
+			return "";
+		}
+	}
+}
+$oRS = new procesos_admin(array('mostrarEstados'));
+// el metodo action es el que recoge los datos (POST) y actua en consideraci�n ;-)
+$oRS->action();
+?>

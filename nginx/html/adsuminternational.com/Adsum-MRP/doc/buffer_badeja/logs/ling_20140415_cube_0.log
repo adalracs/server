@@ -1,0 +1,4 @@
+2014-04-15 00:00:12 - jhon.banguero => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 190.242.58.154
+2014-04-15 00:00:12 - jhon.banguero => [Rango de Generacion 2014-04-15 - 2014-04-22 :: RNG_DATE_PER ] -> IP: 190.242.58.154
+2014-04-15 00:00:12 - jhon.banguero => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 190.242.58.154
+2014-04-15 00:00:12 - jhon.banguero => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 190.242.58.154

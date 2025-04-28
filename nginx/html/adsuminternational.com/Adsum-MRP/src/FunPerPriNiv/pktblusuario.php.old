@@ -1,0 +1,731 @@
+<?php 
+function nulousuario ($arg) 
+{ 
+	return (($arg == "0"))?"0":(!($arg))?"NULL":"'".$arg."'"; 
+} 
+/* 
+    Propiedad intelectual de Adsum (c). 
+    Funcion        :        Loadusuario 
+    Descripcion    :	    Accesa el Registro indicado de la tabla 
+    Parametros	   :        Descripcion 
+     $iintusuacodi	 Campo parte de la llave primaria 
+    Retorno	   : 
+	TRUE	Registro solicitado 
+        FALSE	Error de base de datos o de conecci¢n 
+    Autor          :        PTSC 
+    Fecha          :        14-April-2002 
+    Historia de Modificaciones 
+    Fecha	Autor	  Modificacion 
+*/ 
+function loadrecordusuario( 
+       	$iintusuacodi,$nuConn 
+   		       ) 
+{ 
+  	define("e_connection",-1); 
+	define("e_db",-2); 
+	define("e_empty",-3); 
+	define("cero",0); 
+	 
+	if ($nuConn) 
+	{ 
+	   $sbSql = "SELECT * FROM usuario 
+	 	    WHERE 
+	 	    usuacodi =  "."'".$iintusuacodi."'"; 
+  
+	   @ $nuResult = pg_exec($nuConn,$sbSql); 
+  
+		unset($sbSql); 
+		if ($nuResult) 
+		{ 
+			$nuCantRow = pg_numrows($nuResult); 
+  
+			if ($nuCantRow > cero) 
+			{ 
+  
+				$nuCantFields = pg_numfields($nuResult); 
+				$sbRow = pg_fetch_row ($nuResult,cero); 
+			    $sbLista = array(  
+             		     "usuacodi"=>$sbRow[0], 
+             		     "usuanomb"=>$sbRow[1], 
+             		     "usuapass"=>$sbRow[2], 
+             		     "usuaacti"=>$sbRow[3] 
+                                    ); 
+				return $sbLista; 
+			} 
+			else 
+			{ 
+  
+				return  e_empty; 
+  
+			} 
+		} 
+		else 
+		{ 
+			 echo"Ha ocurrido un error \n"; 
+			 echo $php_errormsg; 
+			return  e_db; 
+		} 
+	} 
+	else 
+	{ 
+		// echo"Fallo Intento de Conexion \n"; 
+		return  e_connection; 
+	} 
+} 
+/* 
+    Propiedad intelectual de Adsum (c). 
+    Funcion        :        fullscanusuario 
+    Descripcion    :	    Accesa todos los Registros  de la tabla 
+    Parametros	   :        Descripcion 
+    Retorno	   : 
+  
+        TRUE	Id de transaccion 
+        FALSE	Error de base de datos o de conecci¢n 
+  
+    Autor          :        PTSC 
+    Fecha          :        14-April-2002 
+  
+    Historia de Modificaciones 
+    Fecha	Autor	  Modificacion 
+  
+*/ 
+function fullscanusuario($nuConn) 
+{ 
+  
+	define("e_connection",-1); 
+	define("e_db",-2); 
+	define("e_empty",-3); 
+        define("cero",0);
+	 
+	if ($nuConn) 
+	{ 
+		$sbSql = "SELECT * FROM usuario"; 
+ 
+		@ $nuResult = pg_exec($nuConn,$sbSql); 
+  
+		if ($nuResult) 
+		{ 
+			$nuCantRow = pg_numrows($nuResult); 
+  
+		unset($sbSql); 
+			if ($nuCantRow > cero) 
+			{ 
+  
+				return $nuResult; 
+			} 
+			else 
+			{ 
+  
+				return  e_empty; 
+  
+			} 
+		} 
+		else 
+		{ 
+			// echo"Ha ocurrido un error \n"; 
+			// echo $php_errormsg; 
+			return  e_db; 
+		} 
+	} 
+	else 
+	{ 
+		// echo"Fallo Intento de Conexion \n"; 
+		return  e_connection; 
+	} 
+} 
+/* 
+    Propiedad intelectual de Adsum (c). 
+  
+    Funcion        :        Sintaxisusuario 
+    Descripcion    :	    Verifica sintaxis de la consulta en dinamicScan 
+    Parametros	   :        Descripcion 
+  
+   $arg         Valor del campo 
+   $campo         Nombre del campo 
+   $flagusuario         Bandera que define si se utiliza AND 
+  
+    Retorno	   : 
+          TRUE	 
+          FALSE	 
+    Autor          :        agomez-freina 
+    Fecha          :        14-April-2002 
+  
+    Historia de Modificaciones 
+    Fecha	Autor	  Modificacion 
+  
+*/ 
+function sintaxisusuario ($arg, $campo, &$flagusuario) 
+{ 
+	if ($flagusuario) 
+	{ 
+		$aux = "AND"; 
+	} 
+	if ($arg=="") 
+	{ 
+		return ""; 
+	} 
+	else 
+	{ 
+		$flagusuario = 1; 
+		return $aux." ".$campo." like '%".$arg."%'"; 
+	} 
+} 
+/* 
+    Propiedad intelectual de Adsum (c). 
+  
+    Funcion        :        DinamicScanusuario 
+    Descripcion    :	    Accesa el registro que hace match con la entrada 
+    Parametros	   :        Descripcion 
+  
+   $iintusuacodi	 Campo parte de la llave primaria 
+  
+    Retorno	   : 
+          TRUE	Id. de transaccion. 
+          FALSE	Error de base de datos o de conecci¢n 
+    Autor          :        lbustamante 
+    Fecha          :        14-April-2002 
+  
+    Historia de Modificaciones 
+    Fecha	Autor	  Modificacion 
+  
+*/ 
+function dinamicscanusuario 
+    ( 
+		$ircRecord,$nuConn 
+    ) 
+{ 
+	define("e_connection",-1); 
+	define("e_db",-2); 
+	define("e_empty",-3); 
+	define("cero",0); 
+	$flagusuario = cero; 
+  
+	if ($nuConn) 
+	{ 
+     
+		$sbSql = "SELECT * FROM usuario WHERE". 
+		sintaxisusuario($ircRecord[usuacodi],"usuacodi",$flagusuario). 
+		sintaxisusuario($ircRecord[usuanomb],"usuanomb",$flagusuario). 
+		sintaxisusuario($ircRecord[usuapass],"usuapass",$flagusuario). 
+		sintaxisusuario($ircRecord[usuaacti],"usuaacti",$flagusuario); 
+  
+		@ $nuResult = pg_exec($nuConn,$sbSql); 
+  
+		unset($sbSql); 
+  
+		if ($nuResult) 
+		{ 
+			$nuCantRow = pg_numrows($nuResult); 
+  
+			if ($nuCantRow > cero) 
+			{ 
+  
+				return $nuResult; 
+			} 
+			else 
+			{ 
+  
+				return  e_empty; 
+  
+			} 
+		} 
+		else 
+		{ 
+			// echo"Ha ocurrido un error \n"; 
+			// echo $php_errormsg; 
+			return  e_db; 
+		} 
+	} 
+	else 
+	{ 
+		// echo"Fallo Intento de Conexion \n"; 
+		return  e_connection; 
+	} 
+} 
+/* 
+    Propiedad intelectual de FullEngine (c). 
+  
+    Funcion        :        Sintaxisopusuario 
+    Descripcion    :	    Verifica sintaxis de la consulta en dinamicScan 
+  
+    Parametros	   :        Descripcion 
+  
+   $iintusuacodi	 Campo parte de la llave primaria 
+  
+    Retorno	   : 
+  
+        TRUE	 
+        FALSE	 
+  
+    Autor          :        agomez-freina 
+    Fecha          :        14-April-2002 
+  
+    Historia de Modificaciones 
+    Fecha	Autor	  Modificacion 
+  
+*/ 
+function sintaxisopusuario ($arg,$campo,&$flagusuario,$oper) 
+{ 
+	if ($flagusuario) 
+	{ 
+		$aux = "AND"; 
+	} 
+	if ($arg=="") 
+	{ 
+		return ""; 
+	} 
+	else 
+	{ 
+		$flagusuario = 1; 
+		switch ($oper): 
+		case "like": 
+		return $aux." ".$campo." like '%".$arg."%'"; 
+		break; 
+		case "=": 
+		return $aux." ".$campo." = '".$arg."'"; 
+		break; 
+		case "<": 
+		return $aux." ".$campo." < ".$arg; 
+		break; 
+		case "<=": 
+		return $aux." ".$campo." <= ".$arg; 
+		break; 
+		case ">": 
+		return $aux." ".$campo." > ".$arg; 
+		break; 
+		case ">=": 
+		return $aux." ".$campo." >= ".$arg; 
+		break; 
+		case "<>": 
+		return $aux." ".$campo." <> ".$arg; 
+		break; 
+		case "like%_": 
+		return $aux." ".$campo." like '%".$arg."'"; 
+		break; 
+		case "like_%": 
+		return $aux." ".$campo." like '".$arg."%'"; 
+		break; 
+		endswitch; 
+	} 
+} 
+/* 
+    Propiedad intelectual de FullEngine (c). 
+  
+    Funcion        :        DinamicScanopusuario 
+    Descripcion    :	    Accesa el registro que hace match con la entrada 
+  
+    Parametros	   :        Descripcion 
+  
+   $iintusuacodi	 Campo parte de la llave primaria 
+  
+    Retorno	   : 
+  
+        TRUE	Id. de transaccion. 
+        FALSE	Error de base de datos o de conecci¢n 
+  
+    Autor          :        lbustamante 
+    Fecha          :        14-April-2002 
+  
+    Historia de Modificaciones 
+    Fecha	Autor	  Modificacion 
+  
+*/ 
+function dinamicscanopusuario($ircrecord,$ircrecordop,$nuconn) 
+{ 
+  
+	define("e_connection",-1); 
+	define("e_db",-2); 
+	define("e_empty",-3); 
+	define("cero",0); 
+	$flagusuario = cero; 
+  
+	if ($nuconn) 
+	{ 
+     
+		$sbSql = "SELECT * FROM usuario WHERE". 
+		sintaxisopusuario($ircrecord[usuacodi],"usuacodi",$flagusuario, 
+		$ircrecordop[usuacodi]). 
+		sintaxisopusuario($ircrecord[usuanomb],"usuanomb",$flagusuario, 
+		$ircrecordop[usuanomb]). 
+		sintaxisopusuario($ircrecord[usuapass],"usuapass",$flagusuario, 
+		$ircrecordop[usuapass]). 
+		sintaxisopusuario($ircrecord[usuaacti],"usuaacti",$flagusuario, 
+		$ircrecordop[usuaacti]); 
+  
+  
+		@ $nuResult = pg_exec($nuconn,$sbSql); 
+  
+		unset($sbSql); 
+  
+		if ($nuResult) 
+		{ 
+			$nuCantRow = pg_numrows($nuResult); 
+  
+			if ($nuCantRow > cero) 
+			{ 
+  
+				return $nuResult; 
+			} 
+			else 
+			{ 
+  
+				return  e_empty; 
+  
+			} 
+		} 
+		else 
+		{ 
+			// echo"Ha ocurrido un error \n"; 
+			// echo $php_errormsg; 
+			return  e_db; 
+		} 
+	} 
+	else 
+	{ 
+		// echo"Fallo Intento de Conexion \n"; 
+		return  e_connection; 
+	} 
+} 
+/* 
+    Propiedad intelectual de FullEngine (c). 
+  
+    Funcion        :        DinamicLimitScanusuario 
+    Descripcion    :	    Accesa el registro que hace match con la entrada 
+  
+    Parametros	   :        Descripcion 
+  
+   $iintusuacodi	 Campo parte de la llave primaria 
+  
+    Retorno	   : 
+  
+        TRUE	Id. de transaccion. 
+        FALSE	Error de base de datos o de conecci¢n 
+  
+    Autor          :        lbustamante 
+    Fecha          :        14-April-2002 
+  
+    Historia de Modificaciones 
+    Fecha	Autor	  Modificacion 
+  
+*/ 
+function dinamiclimitscanusuario 
+    ( 
+		$ircRecord,$inucant,$inupos,$nuConn 
+    ) 
+{ 
+	define("e_connection",-1); 
+	define("e_db",-2); 
+	define("e_empty",-3); 
+   define("cero",0); 
+	$flagusuario = cero; 
+  
+	if ($nuConn) 
+	{ 
+     
+		$sbSql = "SELECT * FROM usuario WHERE". 
+		sintaxisusuario($ircRecord[usuacodi],"usuacodi",$flagusuario). 
+		sintaxisusuario($ircRecord[usuanomb],"usuanomb",$flagusuario). 
+		sintaxisusuario($ircRecord[usuapass],"usuapass",$flagusuario). 
+		sintaxisusuario($ircRecord[usuaacti],"usuaacti",$flagusuario). 
+		" LIMIT ".$inucant.",".$inupos; 
+  
+  
+		@ $nuResult = pg_exec($nuConn,$sbSql); 
+  
+		unset($sbSql); 
+  
+		if ($nuResult) 
+		{ 
+			$nuCantRow = pg_numrows($nuResult); 
+  
+			if ($nuCantRow > cero) 
+			{ 
+  
+				return $nuResult; 
+			} 
+			else 
+			{ 
+  
+				return  e_empty; 
+  
+			} 
+		} 
+		else 
+		{ 
+			// echo"Ha ocurrido un error \n"; 
+			// echo $php_errormsg; 
+			return  e_db; 
+		} 
+	} 
+	else 
+	{ 
+		// echo"Fallo Intento de Conexion \n"; 
+		return  e_connection; 
+	} 
+} 
+/* 
+    Propiedad intelectual de FullEngine (c). 
+  
+    Funcion        :        DinamicLimitScanopusuario 
+    Descripcion    :	    Accesa el registro que hace match con la entrada 
+  
+    Parametros	   :        Descripcion 
+  
+   $iintusuacodi	 Campo parte de la llave primaria 
+  
+    Retorno	   : 
+  
+        TRUE	Id. de transaccion. 
+        FALSE	Error de base de datos o de conecci¢n 
+  
+    Autor          :        lbustamante 
+    Fecha          :        14-April-2002 
+  
+    Historia de Modificaciones 
+    Fecha	Autor	  Modificacion 
+  
+*/ 
+function 
+dinamiclimitscanopusuario($ircrecord,$ircrecordop,$inucant,$inupos,$nuconn) 
+{ 
+  
+	define("e_connection",-1); 
+	define("e_db",-2); 
+	define("e_empty",-3); 
+	define("cero",0); 
+	$flagusuario = cero; 
+  
+	if ($nuconn) 
+	{ 
+     
+		$sbSql = "SELECT * FROM usuario WHERE". 
+		sintaxisopusuario($ircrecord[usuacodi],"usuacodi",$flagusuario, 
+		$ircrecordop[usuacodi]). 
+		sintaxisopusuario($ircrecord[usuanomb],"usuanomb",$flagusuario, 
+		$ircrecordop[usuanomb]). 
+		sintaxisopusuario($ircrecord[usuapass],"usuapass",$flagusuario, 
+		$ircrecordop[usuapass]). 
+		sintaxisopusuario($ircrecord[usuaacti],"usuaacti",$flagusuario, 
+		$ircrecordop[usuaacti])." LIMIT ".$inucant.",".$inupos; 
+  
+  
+		@ $nuResult = pg_exec($nuconn,$sbSql); 
+  
+		unset($sbSql); 
+  
+		if ($nuResult) 
+		{ 
+			$nuCantRow = pg_numrows($nuResult); 
+  
+			if ($nuCantRow > cero) 
+			{ 
+  
+				return $nuResult; 
+			} 
+			else 
+			{ 
+  
+				return  e_empty; 
+  
+			} 
+		} 
+		else 
+		{ 
+			// echo"Ha ocurrido un error \n"; 
+			// echo $php_errormsg; 
+			return  e_db; 
+		} 
+	} 
+	else 
+	{ 
+		// echo"Fallo Intento de Conexion \n"; 
+		return  e_connection; 
+	} 
+} 
+/* 
+    Propiedad intelectual de FullEngine (c). 
+  
+    Funcion        :        UpRecordusuario 
+    Descripcion    :	    Actualiza un registro en la tabla partir de un 
+
+	record 
+  
+    Parametros	   :        Descripcion 
+  
+   $ircRecord         Registro a  modificar en la tabla 
+  
+    Retorno	   : 
+  
+        TRUE	True 
+        FALSE	Error de base de datos o de conecci¢n 
+  
+    Autor          :        PTSC 
+    Fecha          :        14-April-2002 
+  
+    Historia de Modificaciones 
+    Fecha	Autor	  Modificacion 
+  
+*/ 
+function uprecordusuario( 
+                    $ircRecord,$nuConn 
+   		       ) 
+{ 
+  
+	define("e_connection",-1); 
+	define("e_db",-2); 
+	define("e_empty",-3); 
+    define("cero",0); 
+    define("n1",1); 
+	 
+	 
+	if ($nuConn) 
+	{ 
+		$sbSql = "UPDATE usuario SET 
+       	             usuacodi =  ".nulousuario($ircRecord[usuacodi]).", 
+       	             usuanomb =  ".nulousuario($ircRecord[usuanomb]).", 
+       	             usuapass =  ".nulousuario($ircRecord[usuapass]).", 
+                     usuaacti =  ".nulousuario($ircRecord[usuaacti])." 
+	             WHERE 
+	 	    usuacodi =  "."'".$ircRecord[usuacodi]."'"; 
+  
+		@ $nuResult = pg_exec($nuConn,$sbSql); 
+  
+		unset($sbSql); 
+		if (!$nuResult) 
+		{ 
+			// echo "Ha ocurrido un error \n"; 
+			// echo $php_errormsg; 
+			return e_db; 
+		} 
+	} 
+	else 
+	{ 
+		// echo "Fallo Intento de Conexion \n"; 
+		return e_connection; 
+	} 
+	return n1; 
+} 
+/* 
+    Propiedad intelectual de FullEngine (c). 
+  
+    Funcion        :        InsRecordusuario 
+    Descripcion    :	    Adiciona registro a la Tabla 
+  
+    Parametros	   :        Descripcion 
+  
+   $ircRecord         Registro a insertar en la tabla 
+  
+    Retorno	   : 
+  
+        TRUE	True 
+        FALSE	Error de base de datos o de conecci¢n 
+  
+    Autor          :        agomez - freina 
+    Fecha          :        14-April-2002 
+  
+    Historia de Modificaciones 
+    Fecha	Autor	  Modificacion 
+  
+*/ 
+function insrecordusuario 
+    ( 
+		$ircRecord,$nuConn 
+    ) 
+  
+{ 
+	define("e_connection",-1); 
+	define("e_db",-2); 
+	define("e_empty",-3); 
+    define("cero",0); 
+    define("n1",1); 
+	 
+	 
+	if ($nuConn) 
+	{ 
+     
+		$sbSql = "INSERT INTO usuario ( 
+		usuacodi,  
+		usuanomb,  
+		usuapass,  
+		usuaacti )  
+		VALUES (". 
+           nulousuario($ircRecord[usuacodi]).",". 
+           nulousuario($ircRecord[usuanomb]).",". 
+           nulousuario($ircRecord[usuapass]).",". 
+           nulousuario($ircRecord[usuaacti]).")"; 
+  
+  
+		@ $nuResult = pg_exec($nuConn,$sbSql); 
+  
+		unset($sbSql); 
+		if (!$nuResult) 
+		{ 
+			// echo "Ha ocurrido un error \n"; 
+			// echo $php_errormsg; 
+			return e_db; 
+		} 
+	} 
+	else 
+	{ 
+		// echo "Fallo Intento de Conexion \n"; 
+		return e_connection; 
+	} 
+	return n1; 
+} 
+/* 
+    Propiedad intelectual de FullEngine (c). 
+  
+    Funcion        :        DelRecordusuario 
+    Descripcion    :	    Borra el registro indicado de la Tabla 
+  
+    Parametros	   :        Descripcion 
+  
+   $iintusuacodi	 Campo parte de la llave primaria 
+  
+    Retorno	   : 
+  
+        TRUE	True 
+        FALSE	Error de base de datos o de conecci¢n 
+  
+    Autor          :        agomez - freina 
+    Fecha          :        14-April-2002 
+  
+    Historia de Modificaciones 
+    Fecha	Autor	  Modificacion 
+  
+*/ 
+function delrecordusuario( 
+       	$iintusuacodi,$nuConn 
+   		       ) 
+{ 
+  
+	define("e_connection",-1); 
+	define("e_db",-2); 
+	define("e_empty",-3); 
+	define("cero",0); 
+   define("n1",1); 
+	 
+	if ($nuConn) 
+	{ 
+		$sbSql = "DELETE FROM usuario 
+	 	    WHERE 
+	 	    usuacodi =  "."'".$iintusuacodi."'"; 
+  
+		@ $nuResult = pg_exec($nuConn,$sbSql); 
+  
+		unset($sbSql); 
+		if (!$nuResult) 
+		{ 
+			// echo"Ha ocurrido un error \n"; 
+			// echo $php_errormsg; 
+			return  e_db; 
+		} 
+	} 
+	else 
+	{ 
+		// echo"Fallo Intento de Conexion \n"; 
+		return  e_connection; 
+	} 
+	return n1; 
+}
+?>

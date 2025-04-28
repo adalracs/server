@@ -1,0 +1,4 @@
+2014-07-06 00:00:33 - nelson.astudillo => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 200.93.164.51
+2014-07-06 00:00:33 - nelson.astudillo => [Rango de Generacion 2014-07-06 - 2014-07-13 :: RNG_DATE_PER ] -> IP: 200.93.164.51
+2014-07-06 00:00:33 - nelson.astudillo => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 200.93.164.51
+2014-07-06 00:00:33 - nelson.astudillo => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 200.93.164.51

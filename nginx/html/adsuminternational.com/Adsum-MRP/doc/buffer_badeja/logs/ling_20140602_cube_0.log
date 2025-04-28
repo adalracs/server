@@ -1,0 +1,4 @@
+2014-06-02 00:00:42 - katherine.baracaldo => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 200.93.164.51
+2014-06-02 00:00:42 - katherine.baracaldo => [Rango de Generacion 2014-06-02 - 2014-06-09 :: RNG_DATE_PER ] -> IP: 200.93.164.51
+2014-06-02 00:00:42 - katherine.baracaldo => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 200.93.164.51
+2014-06-02 00:00:42 - katherine.baracaldo => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 200.93.164.51

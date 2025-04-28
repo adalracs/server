@@ -1,0 +1,69 @@
+<?php
+/*
+Propiedad intelectual de Adsum (c).
+Funcion         : fncgenmen
+Decripcion      : recopila las opciones de menu a las cuales tiene dereho un usuario.
+Parametros      : Descripicion
+   $iintusuacodi     Id del usuario.
+Retorno         : Descripicion
+  true $oreccadena     Registro con los datos para armar el menu.
+  false = 0            el usuario no tiene acceso a menu.
+Autor           : ariascos
+Fecha           : 17-sep-2001  
+*/
+
+function  fncgenmennew($iintusuacodi,$inuconn)
+{
+	define ("n",0);
+	define ("n1",1);
+	define ("e_conn",-1);
+	define ("e_db",-2);
+	define ("e_empty",-3);
+	$sbflag  = n;
+
+	$recresult1 = call_user_func ('fncusugrunew',$iintusuacodi,$inuconn);
+	if($recresult1 != n)
+	{
+		sort ($recresult1);
+	 	$cant = count ($recresult1);
+		for ($i = n; $i < $cant; $i++ )
+		{
+			$recresult2 = call_user_func('fnccomgrunew',$recresult1[$i],$inuconn);
+			if($recresult2 !=n)
+			{
+				sort ($recresult2);
+				if ($flag ==n)
+				{
+					$recvector = $recresult2;
+					$flag =n1;
+				}
+				else
+				{
+					$cant2 = count($recresult2);
+					for($j = n; $j < $cant2; $j++)
+					{
+						$flag1 = n;
+						$cant1 = count($recvector);
+						for($g = n ; $g < $cant1 ;$g++)
+						{
+							if($recresult2[$j] == $recvector[$g])
+							{
+								$flag1 = n1;
+							}
+						}
+						if ($flag1 != n1)
+						{
+							$recvector[$cant1] = $recresult2[$j];
+					 	}
+					}
+				}
+			}
+		}
+		return $recvector;
+	}
+	else 
+	{
+		return n;
+	}
+}
+?>

@@ -1,0 +1,4 @@
+2014-04-25 00:00:16 - sandro.vega => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 200.93.164.51
+2014-04-25 00:00:16 - sandro.vega => [Rango de Generacion 2014-04-25 - 2014-05-02 :: RNG_DATE_PER ] -> IP: 200.93.164.51
+2014-04-25 00:00:18 - sandro.vega => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 200.93.164.51
+2014-04-25 00:00:18 - sandro.vega => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 200.93.164.51

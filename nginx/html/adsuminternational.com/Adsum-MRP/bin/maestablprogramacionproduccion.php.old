@@ -1,0 +1,789 @@
+<?php 
+ob_start();
+	include ( '../src/FunGen/sesion/fncvalses.php');
+	include ( '../src/FunGen/fncnumprox.php');
+	include ( '../src/FunGen/cargainput.php');
+	include ( '../src/FunGen/fncnumact.php');
+	include ( '../src/FunGen/floadtimehours.php');
+	include ( '../src/FunGen/floadtimeminut.php');
+	include ( '../src/FunPerSecNiv/fncsqlrun.php');
+	include ( '../src/FunPerPriNiv/pktblop.php');
+	include ( '../src/FunPerPriNiv/pktblopp.php');
+	include ( '../src/FunPerPriNiv/pktblplanta.php');
+	include ( '../src/FunPerPriNiv/pktblequipo.php');
+	include ( '../src/FunPerPriNiv/pktblusuario.php');
+	include ( '../src/FunPerPriNiv/pktblopflexo.php');
+	include ( '../src/FunPerPriNiv/pktblopcorte.php');
+	include ( '../src/FunPerPriNiv/pktblitemdesa.php');
+	include ( '../src/FunPerPriNiv/pktblproducto.php');
+	include ( '../src/FunPerPriNiv/pktblpadreitem.php');
+	include ( '../src/FunPerPriNiv/pktbloplaminado.php');	
+	include ( '../src/FunPerPriNiv/pktblformulacion.php');
+	include ( '../src/FunPerPriNiv/pktblopextrusion.php');
+	include ( '../src/FunPerPriNiv/pktblprocedimiento.php');
+	include ( '../src/FunPerPriNiv/pktblprogramaflexo.php');
+	include ( '../src/FunPerPriNiv/pktblprogramacorte.php');
+	include ( '../src/FunPerPriNiv/pktblprogramalaminado.php');
+	include ( '../src/FunPerPriNiv/pktblprogramaextrusion.php');	
+	
+	$idcon = fncconn();
+ob_end_flush();
+?>
+<html>
+	<head>
+		<title>Programacion de produccion</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<meta http-equiv="expires" content="0">
+		<?php include('../def/jquery.library_maestro.php');?>
+		<script type="text/javascript" src="../src/FunjQuery/jquery.jsscripts/jquery.function_comun.js"></script>
+		<script type="text/javascript" src="../src/FunjQuery/jquery.jsscripts/jquery.ui.ajax_accionextras.js"></script>
+		<script type="text/javascript">
+			$(function(){
+				//tab's para la bandeja general de corte
+				$("#programacionproduccion").tabs({
+					ajaxOptions: {
+						error: function(xhr, status, index, anchor) {
+							$(anchor.hash).html("No se puede cargar esta pesta&ntilde;a. Vamos a tratar de solucionar este problema lo m&aacute;s pronto posible.");
+						}
+					}
+				});
+			});
+		</script>
+	</head>
+	<?php if(!$codigo){echo "<!--";} ?>
+	<body bgcolor="FFFFFF" text="#000000">
+		<form name="form1" method="post"  enctype="multipart/form-data">
+<!-- 	CONTENIDO GENERAL -->
+		<div style="padding: 6px;">
+			<br>
+			<div class="contenido-general-inf">
+			
+			
+			<!-- 	TITULO -->
+				<br>
+	 			<div class="ui-widget-content">
+	          		<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+						<tr class="ui-widget-header">
+	          				<td>&nbsp;<b>PROGRAMACION DE PRODUCCION</b></td>
+	          				<td>&nbsp;<b>OPP : ORDEN DE PRODUCCION PROGRAMADA </b></td>
+	          				<td>&nbsp;<b>OP : ORDEN DE PRODUCCION </b></td>
+	         			</tr>
+	         			<tr>
+	         				<td align="right" colspan="3" class="borde-cell"><p><img src="../img/adsumcuasipequeno.jpg"><br><b><small>NIT 890307885-1</small></b></p></td>
+	         			</tr>
+	         		</table>
+	         	</div>
+	         <!-- 	FIN TITULO -->
+	         
+<?php $EXTRUSION = 1;if($EXTRUSION > 0){?>	         
+<!-- EXTRUSION -->        
+	         <!-- 	SUBTITULO INFORMATIVO -->
+				<br>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+					<tr>
+						<td width="40%">
+							<div class="ui-widget-content">
+								<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+									<tr>
+										<td class="ui-widget-header" width="30%">&nbsp;<b>SISTEMA:</b></td>
+										<td class="ui-state-default" width="70%">&nbsp;EXTRUSION</td>
+									</tr>
+									<tr class="ui-widget-header">
+										<td class="ui-widget-header" width="30%">&nbsp;<b>FECHA:</b></td>
+										<td class="ui-state-default" width="70%">&nbsp;<?php echo date('Y/m/d') ?></td>
+									</tr>
+								</table>
+							</div>
+						</td>
+						<td align="right" width="60%" class="borde-cell">&nbsp;</td>
+					</tr>
+				</table>
+			</div>
+			<br>
+			<!-- 	FIN SUBTITULO INFORMATIVO -->
+			
+			<!-- 	CONTENIDO -->
+			<div class="ui-widget-content contenido-general-inf">
+	          	<?php 
+	          		$rsExtrusionEqu = fullscanprogramaextrusionequipos($idcon,1);
+	          		$nrExtrusionEqu = fncnumreg($rsExtrusionEqu);
+	          		//VARIBLES PARA LOS ORDENES DE PRODUCCION PROGRAMADAS {OPP}
+	          		$UNDEXTRUSION = 0;
+					$KGSEXTRUSION = 0;
+					$MTSEXTRUSION = 0;
+					$OPPEXTRUSION = 0;
+					//se emite mensaje sin ordenes en programa
+					if(!$nrExtrusionEqu)
+					{
+				?>
+				<div class="ui-widget">
+	 				<div style="margin-top: 1px; padding: 0 .7em;" class="ui-state-highlight ui-corner-all"> 
+  						<p><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-info"></span>
+  						<b>No se encontraron OPP.</b></p>
+ 					</div>
+				</div>
+				<?php 
+					}
+	          		for($a = 0; $a < $nrExtrusionEqu; $a++)
+	          		{
+	          			$rwExtrusionEqu = fncfetch($rsExtrusionEqu,$a);
+	          	?>
+	          	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" class="ui-widget-content">
+					<tr class="ui-widget-header">
+						<td colspan="8">&nbsp;<b><?php echo cargaequiponombre($rwExtrusionEqu['equipocodigo'],$idcon) ?></b></td>
+					</tr>
+	          	<?php 
+	          			$rsExtrusion = dinamicscanprogramaextrusion(array('equipocodigo' => $rwExtrusionEqu['equipocodigo']),$idcon);
+	          			$nrExtrusion = fncnumreg($rsExtrusion);
+	          			for($b = 0; $b < $nrExtrusion; $b++)
+	           			{
+	          				$rwExtrusion = fncfetch($rsExtrusion, $b);
+	          				//VARIBLES PARA LOS ORDENES DE PRODUCCION PROGRAMADAS {OPP}
+	          				$UNDEXTRUSION++;
+							$KGSEXTRUSION = $KGSEXTRUSION + $rwExtrusion['ordoppcantid'];
+							$MTSEXTRUSION = $MTSEXTRUSION + $rwExtrusion['ordoppmetros'];
+							$OPPEXTRUSION = $rwExtrusion['ordoppcodigo'];	          		
+	          	?>
+					<tr>
+	          			<td class="NoiseFooterTD cont-field-b" width="5%">&nbsp;OE&nbsp;</td>
+	          			<td class="NoiseFooterTD cont-field-b" width="5%">&nbsp;<b># OPP</b>&nbsp;</td>
+	          			<td class="NoiseFooterTD cont-field-b" width="10%">&nbsp;ANCHO&nbsp;<b>(mm)</b>&nbsp;</td>
+	          			<td class="NoiseFooterTD cont-field-b" width="10%">&nbsp;KILOS&nbsp;<b>(kg)</b>&nbsp;</td>
+	          			<td class="NoiseFooterTD cont-field-b" width="10%">&nbsp;METROS&nbsp;<b>(mts)</b>&nbsp;</td>
+	          			<td class="NoiseFooterTD cont-field-b" width="60%">&nbsp;PLANTA&nbsp;</td>	          			
+	         		</tr>
+					<tr>
+	          			<td class="NoiseDataTD cont-field-b" width="5%">&nbsp;<font color="#FF0000"><b><?php echo str_pad( ($b + 1) , 3, "0", STR_PAD_LEFT) ?></b></font></td>
+	          			<td class="NoiseDataTD cont-field-b" width="5%">&nbsp;<font color="#000080"><b><?php echo ($rwExtrusion['ordoppcodigo'])? str_pad($rwExtrusion['ordoppcodigo'], 5, "0", STR_PAD_LEFT) : '---' ;?></b></font></td>
+	          			<td class="NoiseDataTD cont-field-b" width="10%">&nbsp;<font color="#000080"><b><?php echo ($rwExtrusion['ordoppanchoe'])? str_pad($rwExtrusion['ordoppanchoe'], 4, "0", STR_PAD_LEFT) : '---' ;?></b></font></td>
+	          			<td class="NoiseDataTD cont-field-b" width="10%">&nbsp;<font color="#000080"><b><?php echo ($rwExtrusion['ordoppcantid'])? number_format($rwExtrusion['ordoppcantid'], 2, ',', '.') : '---' ;?></b></font></td>
+	          			<td class="NoiseDataTD cont-field-b" width="10%">&nbsp;<font color="#000080"><b><?php echo ($rwExtrusion['ordoppmetros'])? number_format($rwExtrusion['ordoppmetros'], 2, ',', '.') : '---' ;?></b></font></td>
+	          			<td class="NoiseDataTD cont-field-b" width="60%">&nbsp;<font color="#000080"><b><?php echo ($rwExtrusion['plantacodigo'])? cargaplantanombre($rwExtrusion['plantacodigo'],$idcon) : '---' ;?></b></font></td>	          			
+	         		</tr>
+	         		<?php 
+	         				if($OPPEXTRUSION > 0)
+	         				{
+	         					$rsOpextrusion = dinamicscanopextrusion(array('ordoppcodigo' =>$OPPEXTRUSION),$idcon);
+								$nrOpextrusion = fncnumreg($rsOpextrusion);
+								//VARIBLES PARA LOS ORDENES DE PRODUCCION {OP}
+								$CORTEEXTRUSION = '';
+								$PISTASEXTRUSION = '';
+								for($c = 0; $c < $nrOpextrusion; $c++)
+								{
+									$rwOpextrusion = fncfetch($rsOpextrusion, $c);
+									//VARIBLES PARA LOS ORDENES DE PRODUCCION {OP}
+									$CORTEEXTRUSION = ($rwOpextrusion['ordproanchop'] && $rwOpextrusion['ordpropistae'])? ($rwOpextrusion['ordpropistae'] * $rwOpextrusion['ordproanchop']) : '---' ;
+									$PISTASEXTRUSION = ($rwOpextrusion['ordproanchop'] && $rwOpextrusion['ordpropistae'])? $rwOpextrusion['ordpropistae'].' * '.$rwOpextrusion['ordproanchop'] : '---' ;
+	         		?>
+	         		<tr>
+	         			<td class="NoiseDataTD cont-field-b" colspan="1">&nbsp;</td>
+	         			<td class="NoiseDataTD cont-field-b" colspan="5">
+	         				<div class="ui-widget-content">
+	         					<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+									<tr>
+	          							<td class="NoiseFooterTD cont-field-b" width="5%">&nbsp;<b># OP</b>&nbsp;</td>
+	          							<td class="NoiseFooterTD cont-field-b" width="5%">&nbsp;FORMULA&nbsp;</td>
+	          							<td class="NoiseFooterTD cont-field-b" width="10%">&nbsp;CALIBRE&nbsp;<b>(&micro;m)</b></td>
+	          							<td class="NoiseFooterTD cont-field-b" width="10%">&nbsp;A. CORTE&nbsp;<b>(mm)</b></td>
+	          							<td class="NoiseFooterTD cont-field-b" width="10%">&nbsp;PISTAS&nbsp;</td>
+	          							<td class="NoiseFooterTD cont-field-b" width="40%">&nbsp;ITEM PRODUCCION&nbsp;</td>
+	          							<td class="NoiseFooterTD cont-field-b" width="20%">&nbsp;DESTINO&nbsp;</td>
+	         						</tr>
+	         						<tr>
+	         							<td class="NoiseDataTD cont-field-b" width="5%">&nbsp;<?php echo ($rwOpextrusion['ordprocodigo'])? str_pad($rwOpextrusion['ordprocodigo'] , 4, "0", STR_PAD_LEFT) : '---' ;?></td>
+	         							<td class="NoiseDataTD cont-field-b" width="5%">&nbsp;<font color="#FF0000"><b><?php echo ($rwOpextrusion['formulcodigo'])? cargaformulacionnombre($rwOpextrusion['formulcodigo'],$idcon).'' : '---' ;?></b></font></td>
+	         							<td class="NoiseDataTD cont-field-b" width="10%">&nbsp;<?php echo ($rwOpextrusion['ordprocalib'])? $rwOpextrusion['ordprocalib'] : '---' ;?></td>
+	         							<td class="NoiseDataTD cont-field-b" width="10%">&nbsp;<?php echo $CORTEEXTRUSION; ?></td>
+	         							<td class="NoiseDataTD cont-field-b" width="10%">&nbsp;<?php echo $PISTASEXTRUSION; ?></td>
+	         							<td class="NoiseDataTD cont-field-b" width="40%">&nbsp;<font color="#FF0000"><b><?php echo ($rwOpextrusion['itedescodigo'])? carganombitemdesa1($rwOpextrusion['itedescodigo'],$idcon) : '---' ;?></b></font></td>
+	         							<td class="NoiseDataTD cont-field-b" width="20%">&nbsp;<?php echo ($rwOpextrusion['proceddestin'])? cargaprocedimientonombre($rwOpextrusion['proceddestin'],$idcon) : '---' ;?></td>
+	         						</tr>
+	         						<tr>
+	         							<td class="NoiseDataTD cont-field-b" colspan="1">&nbsp;</td>
+	         							<td class="NoiseDataTD cont-field-b" colspan="2">&nbsp;<b>PV :</b>&nbsp;<?php echo ($rwOpextrusion['pedvennumero'])? $rwOpextrusion['pedvennumero'] : '---' ;?></td>
+	         							<td class="NoiseDataTD cont-field-b" colspan="2">&nbsp;<b>ITEM :</b>&nbsp;<?php echo ($rwOpextrusion['produccoduno'])? $rwOpextrusion['produccoduno'] : '---' ;?></td>
+	         							<td class="NoiseDataTD cont-field-b" colspan="2">&nbsp;<b>REFERENCIA :</b>&nbsp;<?php echo ($rwOpextrusion['produccodigo'])? carganombproducto($rwOpextrusion['produccodigo'],$idcon) : '---' ;?></td>
+	         						</tr>
+	         					</table>
+	         				</div>
+	         			</td>
+	         		</tr>
+	         		<?php 
+								}
+					?>
+					<tr>
+	         			<td class="NoiseDataTD cont-field-b" colspan="6">&nbsp;</td>
+	         		</tr>
+					<?php 
+							}
+						}
+	         		?>
+	         		<tr>
+	         			<td class="NoiseDataTD cont-field-b" colspan="6">&nbsp;</td>
+	         		</tr>
+	         	</table>
+	         	<?php
+					} 
+	         	?>
+	 		</div>
+	 		<!-- 	FIN CONTENIDO -->
+	 		
+	 		
+	 		<!--  CONSOLIDADO DE CONTENIDO -->
+	 		<br>
+	 		<div class="ui-widget-content">
+	          	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+					<tr class="ui-widget-header">
+	          			<td class="ui-widget-header" width="15%">&nbsp;Total Ordenes :&nbsp;</td>
+	          			<td class="ui-state-default" width="15%">&nbsp;<?php echo str_pad($UNDEXTRUSION, 3, "0", STR_PAD_LEFT) ?>&nbsp;<b>(und)</b></td>
+	          			<td class="ui-widget-header" width="15%">&nbsp;Total Kilos :&nbsp;</td>
+	          			<td class="ui-state-default" width="15%">&nbsp;<?php echo number_format($KGSEXTRUSION, 2, ',', '.') ?>&nbsp;<b>(kgs)</b></td>
+	          			<td class="ui-widget-header" width="15%">&nbsp;Total Metros :&nbsp;</td>
+	          			<td class="ui-state-default"width="25%">&nbsp;<?php echo number_format($MTSEXTRUSION, 2, ',', '.') ?>&nbsp;<b>(mts)</b></td>
+	         		</tr>
+	         	</table>
+	         </div>
+	         <!--  FIN CONSOLIDADO DE CONTENIDO -->
+	         <br><br><br>
+<!-- FIN EXTRUSION -->
+<?php }?>
+
+
+
+<?php $FLEXOGRAFIA = 1;if($FLEXOGRAFIA > 0){?>	    
+<!-- FLEXOGRAFIA -->
+	         
+	         <!-- 	SUBTITULO INFORMATIVO -->
+				<br>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+					<tr>
+						<td width="40%">
+							<div class="ui-widget-content">
+								<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+									<tr>
+										<td class="ui-widget-header" width="30%">&nbsp;<b>SISTEMA:</b></td>
+										<td class="ui-state-default" width="70%">&nbsp;FLEXOGRAFIA</td>
+									</tr>
+									<tr>
+										<td class="ui-widget-header"width="30%">&nbsp;<b>FECHA:</b></td>
+										<td class="ui-state-default" width="70%">&nbsp;<?php echo date('Y/m/d') ?></td>
+									</tr>
+								</table>
+							</div>
+						</td>
+						<td align="right" width="60%" class="borde-cell">&nbsp;</td>
+					</tr>
+				</table>
+			<br>
+			<!-- 	FIN SUBTITULO INFORMATIVO -->
+			
+			
+			<!-- 	CONTENIDO -->
+			<div class="ui-widget-content contenido-general-inf">
+				<?php 
+	          		$rsFlexografiaEqu = fullscanprogramaflexoequipos($idcon,1);
+	          		$nrFlexografiaEqu = fncnumreg($rsFlexografiaEqu);
+	          		//VARIBLES PARA LOS ORDENES DE PRODUCCION PROGRAMADAS {OPP}
+	          		$UNDFLEXOGRAFIA = 0;
+					$KGSFLEXOGRAFIA = 0;
+					$MTSFLEXOGRAFIA = 0;
+					$OPPFLEXOGRAFIA = 0 ;
+					if(!$nrFlexografiaEqu)
+					{
+				?>
+				<div class="ui-widget">
+	 				<div style="margin-top: 1px; padding: 0 .7em;" class="ui-state-highlight ui-corner-all"> 
+  						<p><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-info"></span>
+  						<b>No se encontraron OPP.</b></p>
+ 					</div>
+				</div>
+				<?php 
+					}
+	          		for($a = 0; $a < $nrFlexografiaEqu; $a++)
+	          		{
+	          			$rwFlexografiaEqu = fncfetch($rsFlexografiaEqu,$a);
+	          	?>
+	          	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" class="ui-widget-content">
+					<tr class="ui-widget-header">
+						<td colspan="8">&nbsp;<b><?php echo cargaequiponombre($rwFlexografiaEqu['equipocodigo'],$idcon) ?></b></td>
+					</tr>
+	          	<?php 
+	          			$rsFlexografia = dinamicscanprogramaflexo(array('equipocodigo' => $rwFlexografiaEqu['equipocodigo']),$idcon);
+	          			$nrFlexografia = fncnumreg($rsFlexografia);
+	          			for($b = 0; $b < $nrFlexografia; $b++)
+	           			{
+	          				$rwFlexografia = fncfetch($rsFlexografia, $b);
+	          				//VARIBLES PARA LOS ORDENES DE PRODUCCION PROGRAMADAS {OPP}
+	          				$UNDFLEXOGRAFIA++;
+							$KGSFLEXOGRAFIA = $KGSFLEXOGRAFIA + $rwFlexografia['ordoppcantid'];
+							$MTSFLEXOGRAFIA = $MTSFLEXOGRAFIA + $rwFlexografia['ordoppmetros'];
+							$OPPFLEXOGRAFIA = $rwFlexografia['ordoppcodigo'];	          		
+	          	?>
+					<tr>
+	          			<td class="NoiseFooterTD cont-field-b" width="5%">&nbsp;OE&nbsp;</td>
+	          			<td class="NoiseFooterTD cont-field-b" width="5%">&nbsp;<b># OPP</b>&nbsp;</td>
+	          			<td class="NoiseFooterTD cont-field-b" width="10%">&nbsp;ANCHO&nbsp;<b>(mm)</b>&nbsp;</td>
+	          			<td class="NoiseFooterTD cont-field-b" width="10%">&nbsp;KILOS&nbsp;<b>(kg)</b>&nbsp;</td>
+	          			<td class="NoiseFooterTD cont-field-b" width="10%">&nbsp;METROS&nbsp;<b>(mts)</b>&nbsp;</td>
+	          			<td class="NoiseFooterTD cont-field-b" width="60%">&nbsp;PLANTA&nbsp;</td>	          			
+	         		</tr>
+					<tr>
+	          			<td class="NoiseDataTD cont-field-b" width="5%">&nbsp;<font color="#FF0000"><b><?php echo str_pad( ($b + 1) , 3, "0", STR_PAD_LEFT) ?></b></font></td>
+	          			<td class="NoiseDataTD cont-field-b" width="5%">&nbsp;<font color="#000080"><b><?php echo ($rwFlexografia['ordoppcodigo'])? str_pad($rwFlexografia['ordoppcodigo'], 5, "0", STR_PAD_LEFT) : '---' ;?></b></font></td>
+	          			<td class="NoiseDataTD cont-field-b" width="10%">&nbsp;<font color="#000080"><b><?php echo ($rwFlexografia['ordoppanchoe'])? str_pad($rwFlexografia['ordoppanchoe'], 4, "0", STR_PAD_LEFT) : '---' ;?></b></font></td>
+	          			<td class="NoiseDataTD cont-field-b" width="10%">&nbsp;<font color="#000080"><b><?php echo ($rwFlexografia['ordoppcantid'])? number_format($rwFlexografia['ordoppcantid'], 2, ',', '.') : '---' ;?></b></font></td>
+	          			<td class="NoiseDataTD cont-field-b" width="10%">&nbsp;<font color="#000080"><b><?php echo ($rwFlexografia['ordoppmetros'])? number_format($rwFlexografia['ordoppmetros'], 2, ',', '.') : '---' ;?></b></font></td>
+	          			<td class="NoiseDataTD cont-field-b" width="60%">&nbsp;<font color="#000080"><b><?php echo ($rwFlexografia['plantacodigo'])? cargaplantanombre($rwFlexografia['plantacodigo'],$idcon) : '---' ;?></b></font></td>
+	         		</tr>
+	         		<?php 
+	         				if($OPPFLEXOGRAFIA > 0)
+	         				{
+			         			$rsOpflexografia = dinamicscanopflexo(array('ordoppcodigo' =>$OPPFLEXOGRAFIA),$idcon);
+								$nrOpflexografia = fncnumreg($rsOpflexografia);
+								for($c = 0; $c < $nrOpflexografia; $c++)
+								{
+									$rwOpflexografia = fncfetch($rsOpflexografia, $c);
+	         		?>
+	         		<tr>
+	         			<td class="NoiseDataTD cont-field-b" colspan="1">&nbsp;</td>
+	         			<td class="NoiseDataTD cont-field-b" colspan="5">
+	         				<div class="ui-widget-content">
+	         					<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+									<tr>
+	          							<td class="NoiseFooterTD cont-field-b" width="5%">&nbsp;<b># OP</b>&nbsp;</td>
+	          							<td class="NoiseFooterTD cont-field-b" width="30%">&nbsp;MATERIAL  A IMPRIMIR&nbsp;</td>
+	          							<td class="NoiseFooterTD cont-field-b" width="10%">&nbsp;CALIBRE&nbsp;</td>
+	          							<td class="NoiseFooterTD cont-field-b" width="10%">&nbsp;IMPRESION&nbsp;</td>
+	          							<td class="NoiseFooterTD cont-field-b" width="10%">&nbsp;RODILLO&nbsp;</td>
+	          							<td class="NoiseFooterTD cont-field-b" width="10%">&nbsp;ESTRUCTURA&nbsp;</td>
+	          							<td class="NoiseFooterTD cont-field-b" width="25%">&nbsp;FECHA DE ENTREGA&nbsp;</td>
+	         						</tr>
+	         						<tr>
+	         							<td class="NoiseDataTD cont-field-b" width="5%">&nbsp;<?php echo ($rwOpflexografia['ordprocodigo'])? str_pad($rwOpflexografia['ordprocodigo'] , 4, "0", STR_PAD_LEFT) : '---' ;?></td>
+	         							<td class="NoiseDataTD cont-field-b" width="30%">&nbsp;<font color="#FF0000"><b><?php echo ($rwOpflexografia['paditecodigo'])? cargapadreitemnombre($rwOpflexografia['paditecodigo'],$idcon) : '---' ;?></b></font></td>
+	         							<td class="NoiseDataTD cont-field-b" width="10%">&nbsp;<?php echo ($rwOpflexografia['ordprocalib'])? $rwOpflexografia['ordprocalib'] : '---' ;?></td>
+	         							<td class="NoiseDataTD cont-field-b" width="10%">&nbsp;<font color="#FF0000"><b><?php echo ($rwOpflexografia['ordprotipimp'])? strtoupper($rwOpflexografia['ordprotipimp']) : '---' ;?></b></font></td>
+	         							<td class="NoiseDataTD cont-field-b" width="10%">&nbsp;<font color="#FF0000"><b><?php echo ($rwOpflexografia['ordprorodillo'])? strtoupper($rwOpflexografia['ordprorodillo']) : '---' ;?></b></font></td>
+	         							<td class="NoiseDataTD cont-field-b" width="10%">&nbsp;<?php echo ($rwOpflexografia['ordproestruc'])? strtoupper($rwOpflexografia['ordproestruc']) : '---' ;?></td>
+	         							<td class="NoiseDataTD cont-field-b" width="25%">&nbsp;<font color="#FF0000"><b><?php echo ($rwOpflexografia['pedvenfecent'])? $rwOpflexografia['pedvenfecent'] : '---' ;?></b></font></td>
+	         						</tr>
+	         						<tr>
+	         							<td class="NoiseDataTD cont-field-b" colspan="1">&nbsp;</td>
+	         							<td class="NoiseDataTD cont-field-b" colspan="1">&nbsp;<b>PV :</b>&nbsp;<?php echo ($rwOpflexografia['pedvennumero'])? $rwOpflexografia['pedvennumero'] : '---' ;?></td>
+	         							<td class="NoiseDataTD cont-field-b" colspan="1">&nbsp;<b>ITEM :</b>&nbsp;<?php echo ($rwOpflexografia['produccoduno'])? $rwOpflexografia['produccoduno'] : '---' ;?></td>
+	         							<td class="NoiseDataTD cont-field-b" colspan="4">&nbsp;<b>REFERENCIA :</b>&nbsp;<?php echo ($rwOpflexografia['produccodigo'])? carganombproducto($rwOpflexografia['produccodigo'],$idcon) : '---' ;?></td>
+	         						</tr>
+	         					</table>
+	         				</div>
+	         			</td>
+	         		</tr>
+	         		<?php 
+								}
+					?>
+					<tr>
+	         			<td class="NoiseDataTD cont-field-b" colspan="6">&nbsp;</td>
+	         		</tr>
+					<?php
+							}
+						}
+	         		?>
+	         		<tr>
+	         			<td class="NoiseDataTD cont-field-b" colspan="6">&nbsp;</td>
+	         		</tr>
+	          	</table>
+	         	<?php
+					} 
+	         	?>
+	 		</div>
+	 		<!-- 	FIN CONTENIDO -->
+	 		
+	 		
+	 		<!--  CONSOLIDADO DE CONTENIDO -->
+	 		<br>
+	 		<div class="ui-widget-content">
+	          	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+					<tr>
+	          			<td class="ui-widget-header" width="15%">&nbsp;Total Ordenes :&nbsp;</td>
+	          			<td class="ui-state-default" width="15%">&nbsp;<?php echo str_pad($UNDFLEXOGRAFIA, 3, "0", STR_PAD_LEFT) ?>&nbsp;<b>(und)</b></td>
+	          			<td class="ui-widget-header" width="15%">&nbsp;Total Kilos :&nbsp;</td>
+	          			<td class="ui-state-default" width="15%">&nbsp;<?php echo number_format($KGSFLEXOGRAFIA, 2, ',', '.') ?>&nbsp;<b>(kgs)</b></td>
+	          			<td class="ui-widget-header" class="ui-widget-header" width="15%">&nbsp;Total Metros :&nbsp;</td>
+	          			<td class="ui-state-default"width="25%">&nbsp;<?php echo number_format($MTSFLEXOGRAFIA, 2, ',', '.') ?>&nbsp;<b>(mts)</b></td>
+	         		</tr>
+	         	</table>
+	         </div>
+	         <!--  FIN CONSOLIDADO DE CONTENIDO -->
+			<br><br><br>
+			
+<!-- FIN FLEXOGRAFIA -->
+<?php }?>
+
+
+
+
+<?php $LAMINADO = 1;if($LAMINADO > 0){?>	   
+<!-- LAMINADO -->
+	         
+	         <!-- 	SUBTITULO INFORMATIVO -->
+				<br>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+					<tr>
+						<td width="40%">
+							<div class="ui-widget-content">
+								<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+									<tr>
+										<td class="ui-widget-header" width="30%">&nbsp;<b>SISTEMA:</b></td>
+										<td class="ui-state-default" width="70%">&nbsp;LAMINADO</td>
+									</tr>
+									<tr>
+										<td class="ui-widget-header" width="30%">&nbsp;<b>FECHA:</b></td>
+										<td class="ui-state-default" width="70%">&nbsp;<?php echo date('Y/m/d') ?></td>
+									</tr>
+								</table>
+							</div>
+						</td>
+						<td align="right" width="60%" class="borde-cell">&nbsp;</td>
+					</tr>
+				</table>
+				<br>
+			<!-- 	FIN SUBTITULO INFORMATIVO -->
+			
+			
+			<!-- 	CONTENIDO -->
+			<div class="ui-widget-content contenido-general-inf">
+	          	<?php 
+	          		$rsLaminadoEqu = fullscanprogramalaminadoequipos($idcon,1);
+	          		$nrLaminadoEqu = fncnumreg($rsLaminadoEqu);
+	          		//VARIBLES PARA LOS ORDENES DE PRODUCCION PROGRAMADAS {OPP}
+	          		$UNDLAMINADO = 0;
+					$KGSLAMINADO = 0;
+					$MTSLAMINADO = 0;
+					$OPPLAMINADO = 0 ;
+					if(!$nrLaminadoEqu)
+					{
+				?>
+				<div class="ui-widget">
+	 				<div style="margin-top: 1px; padding: 0 .7em;" class="ui-state-highlight ui-corner-all"> 
+  						<p><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-info"></span>
+  						<b>No se encontraron OPP.</b></p>
+ 					</div>
+				</div>
+				<?php 
+						
+					}
+	          		for($a = 0; $a < $nrLaminadoEqu; $a++)
+	          		{
+	          			$rwLaminadoEqu = fncfetch($rsLaminadoEqu,$a);
+	          	?>
+	          	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" class="ui-widget-content">
+					<tr class="ui-widget-header">
+						<td colspan="8">&nbsp;<b><?php echo cargaequiponombre($rwLaminadoEqu['equipocodigo'],$idcon) ?></b></td>
+					</tr>
+	          	<?php 
+	          			$rsLaminado = dinamicscanprogramalaminado(array('equipocodigo' => $rwLaminadoEqu['equipocodigo']),$idcon);
+	          			$nrLaminado = fncnumreg($rsLaminado);
+	          			for($b = 0; $b < $nrLaminado; $b++)
+	           			{
+	          				$rwLaminado = fncfetch($rsLaminado, $b);
+	          				//VARIBLES PARA LOS ORDENES DE PRODUCCION PROGRAMADAS {OPP}
+	          				$UNDLAMINADO++;
+							$KGSLAMINADO = $KGSLAMINADO + $rwLaminado['ordoppcantid'];
+							$MTSLAMINADO = $MTSLAMINADO + $rwLaminado['ordoppmetros'];
+							$OPPLAMINADO = $rwLaminado['ordoppcodigo'];	          		
+	          	?>
+					<tr>
+	          			<td class="NoiseFooterTD cont-field-b" width="5%">&nbsp;OE&nbsp;</td>
+	          			<td class="NoiseFooterTD cont-field-b" width="5%">&nbsp;<b># OPP</b>&nbsp;</td>
+	          			<td class="NoiseFooterTD cont-field-b" width="10%">&nbsp;ANCHO&nbsp;<b>(mm)</b>&nbsp;</td>
+	          			<td class="NoiseFooterTD cont-field-b" width="10%">&nbsp;KILOS&nbsp;<b>(kg)</b>&nbsp;</td>
+	          			<td class="NoiseFooterTD cont-field-b" width="10%">&nbsp;METROS&nbsp;<b>(mts)</b>&nbsp;</td>
+	          			<td class="NoiseFooterTD cont-field-b" width="60%">&nbsp;PLANTA&nbsp;</td>	          			
+	         		</tr>
+					<tr>
+	          			<td class="NoiseDataTD cont-field-b" width="5%">&nbsp;<?php echo str_pad( ($b + 1) , 3, "0", STR_PAD_LEFT) ?></td>
+	          			<td class="NoiseDataTD cont-field-b" width="5%">&nbsp;<font color="#FF0000"><b><?php echo ($rwLaminado['ordoppcodigo'])? str_pad($rwLaminado['ordoppcodigo'], 5, "0", STR_PAD_LEFT) : '---' ;?></b></font></td>
+	          			<td class="NoiseDataTD cont-field-b" width="10%">&nbsp;<font color="#000080"><b><?php echo ($rwLaminado['ordoppanchoe'])? str_pad($rwLaminado['ordoppanchoe'], 4, "0", STR_PAD_LEFT) : '---' ;?></b></font></td>
+	          			<td class="NoiseDataTD cont-field-b" width="10%">&nbsp;<font color="#000080"><b><?php echo ($rwLaminado['ordoppcantid'])? number_format($rwLaminado['ordoppcantid'], 2, ',', '.') : '---' ;?></b></font></td>
+	          			<td class="NoiseDataTD cont-field-b" width="10%">&nbsp;<font color="#000080"><b><?php echo ($rwLaminado['ordoppmetros'])? number_format($rwLaminado['ordoppmetros'], 2, ',', '.') : '---' ;?></b></font></td>
+	          			<td class="NoiseDataTD cont-field-b" width="60%">&nbsp;<font color="#000080"><b><?php echo ($rwLaminado['plantacodigo'])? cargaplantanombre($rwLaminado['plantacodigo'],$idcon) : '---' ;?></b></font></td>	          			
+	         		</tr>
+	         		<?php 
+	         					if($OPPLAMINADO > 0)
+	         					{
+	         						$rsOplaminado = dinamicscanoplaminado(array('ordoppcodigo' =>$OPPLAMINADO),$idcon);
+									$nrOplaminado = fncnumreg($rsOplaminado);
+									for($b = 0; $b < $nrOplaminado; $b++)
+									{
+										$rwOplaminado = fncfetch($rsOplaminado, $b);
+	         		?>
+	         		<tr>
+	         			<td class="NoiseDataTD cont-field-b" colspan="1">&nbsp;</td>
+	         			<td class="NoiseDataTD cont-field-b" colspan="5">
+	         				<div class="ui-widget-content">
+	         					<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+									<tr>
+	          							<td class="NoiseFooterTD cont-field-b" width="5%">&nbsp;<b># OP</b>&nbsp;</td>
+	          							<td class="NoiseFooterTD cont-field-b" width="15%">&nbsp;ADHESIVO&nbsp;</td>
+	          							<td class="NoiseFooterTD cont-field-b" width="10%">&nbsp;DESEMPE&Ntilde;O&nbsp;</td>
+	          							<td class="NoiseFooterTD cont-field-b" width="15%">&nbsp;LAMINADO&nbsp;</td>
+	          							<td class="NoiseFooterTD cont-field-b" width="20%">&nbsp;ESTADO&nbsp;</td>
+	          							<td class="NoiseFooterTD cont-field-b" width="35%">&nbsp;FECHA DE ENTREGA&nbsp;</td>
+	         						</tr>
+	         						<tr>
+	         							<td class="NoiseDataTD cont-field-b" width="5%">&nbsp;<?php echo ($rwOplaminado['ordprocodigo'])? str_pad($rwOplaminado['ordprocodigo'] , 4, "0", STR_PAD_LEFT) : '---' ;?></td>
+	         							<td class="NoiseDataTD cont-field-b" width="15%">&nbsp;<font color="#FF0000"><b><?php echo ($rwOplaminado['ordprotipo'])? strtoupper($rwOplaminado['ordprotipo']) : '---' ;?></b></font></td>
+	         							<td class="NoiseDataTD cont-field-b" width="10%">&nbsp;<font color="#FF0000"><b><?php echo ($rwOplaminado['ordprodesem'])? strtoupper($rwOplaminado['ordprodesem']) : '---' ;?></b></font></td>
+	         							<td class="NoiseDataTD cont-field-b" width="15%">&nbsp;<font color="#FF0000"><b><?php echo ($rwOplaminado['ordprolamina'])? strtoupper($rwOplaminado['ordprolamina']) : '---' ;?></b></font></td>
+	         							<td class="NoiseDataTD cont-field-b" width="20%">&nbsp;---</td>
+	         							<td class="NoiseDataTD cont-field-b" width="35%">&nbsp;<font color="#FF0000"><b><?php echo ($rwOplaminado['pedvenfecent'])? strtoupper($rwOplaminado['pedvenfecent']) : '---' ;?></b></font></td>
+	         						</tr>
+	         						<tr>
+	         							<td class="NoiseDataTD cont-field-b" colspan="1">&nbsp;</td>
+	         							<td class="NoiseDataTD cont-field-b" colspan="1">&nbsp;<b>PV :</b>&nbsp;<?php echo ($rwOplaminado['pedvennumero'])? $rwOplaminado['pedvennumero'] : '---' ;?></td>
+	         							<td class="NoiseDataTD cont-field-b" colspan="1">&nbsp;<b>ITEM :</b>&nbsp;<?php echo ($rwOplaminado['produccoduno'])? $rwOplaminado['produccoduno'] : '---' ;?></td>
+	         							<td class="NoiseDataTD cont-field-b" colspan="3">&nbsp;<b>REFERENCIA :</b>&nbsp;<?php echo ($rwOplaminado['produccodigo'])? carganombproducto($rwOplaminado['produccodigo'],$idcon) : '---' ;?></td>
+	         						</tr>
+	         					</table>
+	         				</div>
+	         			</td>
+	         		</tr>
+	         		<?php 
+								}
+					?>
+					<tr>
+	         			<td class="NoiseDataTD cont-field-b" colspan="6">&nbsp;</td>
+	         		</tr>
+					<?php 
+	         				}
+						}
+	         		?>
+	         		<tr>
+	         			<td class="NoiseDataTD cont-field-b" colspan="6">&nbsp;</td>
+	         		</tr>
+	          	</table>
+	          	<?php
+					} 
+	         	?>
+	 		</div>
+	 		<!-- 	FIN CONTENIDO -->
+	 		
+	 		
+	 		<!--  CONSOLIDADO DE CONTENIDO -->
+	 		<br>
+	 		<div class="ui-widget-content">
+	          	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+					<tr>
+	          			<td class="ui-widget-header" width="15%">&nbsp;Total Ordenes :&nbsp;</td>
+	          			<td class="ui-state-default" width="15%">&nbsp;<?php echo str_pad($UNDLAMINADO, 3, "0", STR_PAD_LEFT) ?>&nbsp;<b>(und)</b></td>
+	          			<td class="ui-widget-header" width="15%">&nbsp;Total Kilos :&nbsp;</td>
+	          			<td class="ui-state-default" width="15%">&nbsp;<?php echo number_format($KGSLAMINADO, 2, ',', '.') ?>&nbsp;<b>(kgs)</b></td>
+	          			<td class="ui-widget-header" width="15%">&nbsp;Total Metros :&nbsp;</td>
+	          			<td class="ui-state-default" width="25%">&nbsp;<?php echo number_format($MTSLAMINADO, 2, ',', '.') ?>&nbsp;<b>(mts)</b></td>
+	         		</tr>
+	         	</table>
+	         </div>
+	         <!--  FIN CONSOLIDADO DE CONTENIDO -->
+			<br><br><br>
+			
+<!-- FIN LAMINADO -->
+<?php }?>
+
+
+
+
+
+
+<?php $CORTE = 1;if($CORTE > 0){?>	   
+<!-- CORTE -->
+	         
+	         <!-- 	SUBTITULO INFORMATIVO -->
+				<br>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+					<tr>
+						<td width="40%">
+							<div class="ui-widget-content">
+								<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+									<tr>
+										<td class="ui-widget-header" width="30%">&nbsp;<b>SISTEMA:</b></td>
+										<td class="ui-state-default" width="70%">&nbsp;CORTE</td>
+									</tr>
+									<tr>
+										<td class="ui-widget-header" width="30%">&nbsp;<b>FECHA:</b></td>
+										<td class="ui-state-default" width="70%">&nbsp;<?php echo date('Y/m/d') ?></td>
+									</tr>
+								</table>
+							</div>
+						</td>
+						<td align="right" width="60%" class="borde-cell">&nbsp;</td>
+					</tr>
+				</table>
+			<br>
+			<!-- 	FIN SUBTITULO INFORMATIVO -->
+			
+			
+			<!-- 	CONTENIDO -->
+			<div class="ui-widget-content contenido-general-inf">
+				<?php 
+	          		$rsCorteEqu = fullscanprogramacorteequipos($idcon,1);
+	          		$nrCorteEqu = fncnumreg($rsCorteEqu);
+	          		//VARIBLES PARA LOS ORDENES DE PRODUCCION PROGRAMADAS {OPP}
+	          		$UNDCORTE = 0;
+					$KGSCORTE = 0;
+					$MTSCORTE = 0;
+					$OPPCORTE = 0;
+					if(!$nrCorteEqu)
+					{
+				?>
+				<div class="ui-widget">
+	 				<div style="margin-top: 1px; padding: 0 .7em;" class="ui-state-highlight ui-corner-all"> 
+  						<p><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-info"></span>
+  						<b>No se encontraron OPP.</b></p>
+ 					</div>
+				</div>
+				<?php 
+					}
+	          		for($a = 0; $a < $nrCorteEqu; $a++)
+	          		{
+	          			$rwCorteEqu = fncfetch($rsCorteEqu,$a);
+	          	?>
+	          	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" class="ui-widget-content">
+					<tr class="ui-widget-header">
+						<td colspan="8">&nbsp;<b><?php echo cargaequiponombre($rwCorteEqu['equipocodigo'],$idcon) ?></b></td>
+					</tr>
+	          	<?php 
+	          			$rsCorte = dinamicscanprogramacorte(array('equipocodigo' => $rwCorteEqu['equipocodigo']),$idcon);
+	          			$nrCorte = fncnumreg($rsCorte);
+	          			for($b = 0; $b < $nrCorte; $b++)
+	           			{
+	          				$rwCorte = fncfetch($rsCorte, $b);
+	          				//VARIBLES PARA LOS ORDENES DE PRODUCCION PROGRAMADAS {OPP}
+	          				$UNDCORTE++;
+							$KGSCORTE = $KGSCORTE + $rwCorte['ordoppcantid'];
+							$MTSCORTE = $MTSCORTE + $rwCorte['ordoppmetros'];
+							$OPPCORTE = $rwCorte['ordoppcodigo'];        		
+	          	?>
+					<tr>
+	          			<td class="NoiseFooterTD cont-field-b" width="5%">&nbsp;OE&nbsp;</td>
+	          			<td class="NoiseFooterTD cont-field-b" width="5%">&nbsp;<b># OPP</b>&nbsp;</td>
+	          			<td class="NoiseFooterTD cont-field-b" width="10%">&nbsp;ANCHO&nbsp;<b>(mm)</b>&nbsp;</td>
+	          			<td class="NoiseFooterTD cont-field-b" width="10%">&nbsp;KILOS&nbsp;<b>(kg)</b>&nbsp;</td>
+	          			<td class="NoiseFooterTD cont-field-b" width="10%">&nbsp;METROS&nbsp;<b>(mts)</b>&nbsp;</td>
+	          			<td class="NoiseFooterTD cont-field-b" width="60%">&nbsp;PLANTA&nbsp;</td>	          			
+	         		</tr>
+					<tr>
+	          			<td class="NoiseDataTD cont-field-b" width="5%">&nbsp;<?php echo str_pad( ($b + 1) , 3, "0", STR_PAD_LEFT) ?></td>
+	          			<td class="NoiseDataTD cont-field-b" width="5%">&nbsp;<font color="#FF0000"><b><?php echo ($rwCorte['ordoppcodigo'])? str_pad($rwCorte['ordoppcodigo'], 5, "0", STR_PAD_LEFT) : '---' ;?></b></font></td>
+	          			<td class="NoiseDataTD cont-field-b" width="10%">&nbsp;<font color="#000080"><b><?php echo ($rwCorte['ordoppanchoe'])? str_pad($rwCorte['ordoppanchoe'], 4, "0", STR_PAD_LEFT) : '---' ;?></b></font></td>
+	          			<td class="NoiseDataTD cont-field-b" width="10%">&nbsp;<font color="#000080"><b><?php echo ($rwCorte['ordoppcantid'])? number_format($rwCorte['ordoppcantid'], 2, ',', '.') : '---' ;?></b></font></td>
+	          			<td class="NoiseDataTD cont-field-b" width="10%">&nbsp;<font color="#000080"><b><?php echo ($rwCorte['ordoppmetros'])? number_format($rwCorte['ordoppmetros'], 2, ',', '.') : '---' ;?></b></font></td>
+	          			<td class="NoiseDataTD cont-field-b" width="60%">&nbsp;<font color="#000080"><b><?php echo ($rwCorte['plantacodigo'])? cargaplantanombre($rwCorte['plantacodigo'],$idcon) : '---' ;?></b></font></td>	          			
+	         		</tr>
+	         		<?php 
+	         				if($OPPCORTE > 0)
+	         				{
+		         				$rsOpcorte = dinamicscanopcorte(array('ordoppcodigo' =>$OPPCORTE),$idcon);
+								$nrOpcorte = fncnumreg($rsOpcorte);
+								$PISTASCORTE = '';
+								for($b = 0; $b < $nrOpcorte; $b++)
+								{
+									$rwOpcorte = fncfetch($rsOpcorte, $b);
+									$PISTASCORTE = ($rwOpcorte['ordproanchom'] && $rwOpcorte['ordpropista'])? $rwOpcorte['ordpropista'].' * '.$rwOpcorte['ordproanchom'] : '---' ;
+	         		?>
+	         		<tr>
+	         			<td class="NoiseDataTD cont-field-b" colspan="1">&nbsp;</td>
+	         			<td class="NoiseDataTD cont-field-b" colspan="5">
+	         				<div class="ui-widget-content">
+	         					<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+									<tr>
+	          							<td class="NoiseFooterTD cont-field-b" width="5%">&nbsp;<b># OP</b>&nbsp;</td>
+	          							<td class="NoiseFooterTD cont-field-b" width="20%">&nbsp;T. CORE&nbsp;</td>
+	          							<td class="NoiseFooterTD cont-field-b" width="10%">&nbsp;A.CORTE&nbsp;</td>
+	          							<td class="NoiseFooterTD cont-field-b" width="10%">&nbsp;PISTAS&nbsp;</td>
+	          							<td class="NoiseFooterTD cont-field-b" width="20%">&nbsp;ESTADO&nbsp;</td>
+	          							<td class="NoiseFooterTD cont-field-b" width="35%">&nbsp;FECHA DE ENTREGA&nbsp;</td>
+	         						</tr>
+	         						<tr>
+	         							<td class="NoiseDataTD cont-field-b" width="5%">&nbsp;<?php echo ($rwOpcorte['ordprocodigo'])? str_pad($rwOpcorte['ordprocodigo'] , 4, "0", STR_PAD_LEFT) : '---' ;?></td>
+	         							<td class="NoiseDataTD cont-field-b" width="20%">&nbsp;<font color="#FF0000"><b><?php echo ($rwOpcorte['ordprotacore'])? strtoupper($rwOpcorte['ordprotacore']) : '---' ;?></b></font></td>
+	         							<td class="NoiseDataTD cont-field-b" width="10%">&nbsp;<font color="#FF0000"><b><?php echo ($rwOpcorte['ordproanchom'])? strtoupper($rwOpcorte['ordproanchom']) : '---' ;?></b></font></td>
+	         							<td class="NoiseDataTD cont-field-b" width="10%">&nbsp;<font color="#FF0000"><b><?php echo $PISTASCORTE;?></b></font></td>
+	         							<td class="NoiseDataTD cont-field-b" width="20%">&nbsp;---</td>
+	         							<td class="NoiseDataTD cont-field-b" width="35%">&nbsp;<font color="#FF0000"><b><?php echo ($rwOpcorte['pedvenfecent'])? strtoupper($rwOpcorte['pedvenfecent']) : '---' ;?></b></font></td>
+	         						</tr>
+	         						<tr>
+	         							<td class="NoiseDataTD cont-field-b" colspan="1">&nbsp;</td>
+	         							<td class="NoiseDataTD cont-field-b" colspan="1">&nbsp;<b>PV :</b>&nbsp;<?php echo ($rwOpcorte['pedvennumero'])? $rwOpcorte['pedvennumero'] : '---' ;?></td>
+	         							<td class="NoiseDataTD cont-field-b" colspan="1">&nbsp;<b>ITEM :</b>&nbsp;<?php echo ($rwOpcorte['produccoduno'])? $rwOpcorte['produccoduno'] : '---' ;?></td>
+	         							<td class="NoiseDataTD cont-field-b" colspan="3">&nbsp;<b>REFERENCIA :</b>&nbsp;<?php echo ($rwOpcorte['produccodigo'])? carganombproducto($rwOpcorte['produccodigo'],$idcon) : '---' ;?></td>
+	         						</tr>
+	         					</table>
+	         				</div>
+	         			</td>
+	         		</tr>
+	         		<?php 
+								}
+					?>
+					<tr>
+	         			<td class="NoiseDataTD cont-field-b" colspan="6">&nbsp;</td>
+	         		</tr>
+					<?php 
+							}
+	           			}
+	         		?>
+	         		<tr>
+	         			<td class="NoiseDataTD cont-field-b" colspan="6">&nbsp;</td>
+	         		</tr>
+	          	</table>
+	          	<?php
+					} 
+	         	?>
+	 		</div>
+	 		<!-- 	FIN CONTENIDO -->
+	 		
+	 		
+	 		<!--  CONSOLIDADO DE CONTENIDO -->
+	 		<br>
+	 		<div class="ui-widget-content">
+	          	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+					<tr>
+	          			<td class="ui-widget-header" width="15%">&nbsp;Total Ordenes :&nbsp;</td>
+	          			<td class="ui-state-default" width="15%">&nbsp;<?php echo str_pad($UNDCORTE, 3, "0", STR_PAD_LEFT) ?>&nbsp;<b>(und)</b></td>
+	          			<td class="ui-widget-header" width="15%">&nbsp;Total Kilos :&nbsp;</td>
+	          			<td class="ui-state-default" width="15%">&nbsp;<?php echo number_format($KGSCORTE, 2, ',', '.') ?>&nbsp;<b>(kgs)</b></td>
+	          			<td class="ui-widget-header" width="15%">&nbsp;Total Metros :&nbsp;</td>
+	          			<td class="ui-state-default" width="25%">&nbsp;<?php echo number_format($MTSCORTE, 2, ',', '.') ?>&nbsp;<b>(mts)</b></td>
+	         		</tr>
+	         	</table>
+	         </div>
+	         <!--  FIN CONSOLIDADO DE CONTENIDO -->
+			<br><br><br>
+			
+<!-- FIN CORTE -->
+<?php }?>
+
+
+
+	         
+	         
+	         <!-- 	PIE DE PAGINA -->
+			<br><br>
+			<div class="contenido-general-inf">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+					<tr>
+						<td colspan="10" align="center"><b>PLASTICEL S.A - L&iacute;deres en la Tranformaci&oacute;n del Pl&aacute;stico</b></td>
+					</tr>
+					<tr>
+						<td colspan="10" align="center">Calle 15 #29-69 Acopi. Yumbo, Valle del Cauca Colombia Tel&eacute;fono (572) 6901010 www.plasticel.com e-mail info@plasticel.com </td>
+	          		</tr>
+	    		</table>
+			</div>
+			<!-- 	FIN PIE DE PAGINA -->
+	 	</div>
+<!-- 	FIN CONTENIDO GENERAL -->
+			<input type="hidden" name="arrop" id="arrop" value="<?php echo $arrop?>" />
+			<input type="hidden" name="codigo" id="codigo" value="<?php echo $codigo; ?>" />
+		</form>
+		<div id="msgwindow" title="Adsum Kallpa"><span id="msg"></span></div>
+  	</body>
+<?php if(!$codigo){ echo " -->"; } ?>
+</html>

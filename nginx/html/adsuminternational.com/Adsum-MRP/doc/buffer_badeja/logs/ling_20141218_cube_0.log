@@ -1,0 +1,4 @@
+2014-12-18 00:00:14 - sebastian.ceron => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.96.116
+2014-12-18 00:00:14 - sebastian.ceron => [Rango de Generacion 2014-12-18 - 2014-12-25 :: RNG_DATE_PER ] -> IP: 192.168.96.116
+2014-12-18 00:00:14 - sebastian.ceron => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.96.116
+2014-12-18 00:00:14 - sebastian.ceron => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 192.168.96.116

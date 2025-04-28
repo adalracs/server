@@ -1,0 +1,42 @@
+<?php
+function floadplanta($plantacodigo,$conn){
+
+	$result = fullscanplanta($conn);
+	if($result > 0){
+		$numReg=fncnumreg($result);
+	}
+	if($numReg){
+        for ($i=0;$i<$numReg;$i++){
+        	$arr=fncfetch($result,$i);
+			if($arr[plantacodigo] != $plantacodigo){
+            	echo "<option value =".$arr[plantacodigo].">".$arr[plantanombre]."</option>"."\n";
+            }
+		}
+	}
+}
+
+function floadsistema($sistemcodigo,$plantacodigo,$conn){
+	
+	$result = fullscansistemaot($plantacodigo,$conn);
+	$numReg=fncnumreg($result);
+	for ($i=0;$i<$numReg;$i++){
+            $arr = fncfetch($result,$i);
+            if ($arr[sistemcodigo] != $sistemcodigo){
+            	echo "<option value =".$arr[sistemcodigo].">".$arr[sistemnombre]."</option>"."\n";
+			}
+	}
+}
+
+
+function floadequipo($equipocodigo,$sistemcodigo,$conn){
+
+	$result = fullscanequipoot($sistemcodigo,$conn);
+	$numReg=fncnumreg($result);
+	for ($i=0;$i<$numReg;$i++){
+		$arr=fncfetch($result,$i);
+		if ($arr[equipocodigo] != $equipocodigo){
+			echo "<option value =".$arr[equipocodigo].">".$arr[equiponombre]."</option>"."\n";
+		}
+	}
+}
+?>

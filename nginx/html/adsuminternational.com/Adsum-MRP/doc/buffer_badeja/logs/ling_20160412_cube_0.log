@@ -1,0 +1,9 @@
+2016-04-12 14:42:50 - desarrollo => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 152.201.106.177
+2016-04-12 14:42:50 - desarrollo => [Rango de Generacion 2016-04-12 - 2016-04-19 :: RNG_DATE_PER ] -> IP: 152.201.106.177
+2016-04-12 14:42:51 - desarrollo => [PROGRAMACION 283 - [Generado] Se genero la orden de trabajo # 10660 :: GND_RNG_GEN_OT ] -> IP: 152.201.106.177
+2016-04-12 14:42:51 - desarrollo => [PROGRAMACION 283 - [Actualizado] Se actualizo la programacion con la fecha 2016-02-23 :: O_RNG_ACT_PG ] -> IP: 152.201.106.177
+2016-04-12 14:42:51 - desarrollo => [PROGRAMACION 283 - [Generado] Se genero la orden de trabajo # 10661 :: GND_RNG_GEN_OT ] -> IP: 152.201.106.177
+2016-04-12 14:42:51 - desarrollo => [PROGRAMACION 283 - [Actualizado] Se actualizo la programacion con la fecha 2016-03-23 :: O_RNG_ACT_PG ] -> IP: 152.201.106.177
+2016-04-12 14:42:51 - desarrollo => [PROGRAMACION 283 - No GENERA ORDEN / FECHA GENERACION [2016-04-23] MAYOR A FECHA LIMITE [2016-04-19] :: RNG_NOGEN_OT ] -> IP: 152.201.106.177
+2016-04-12 14:42:51 - desarrollo => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 152.201.106.177
+2016-04-12 14:42:51 - desarrollo => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 152.201.106.177

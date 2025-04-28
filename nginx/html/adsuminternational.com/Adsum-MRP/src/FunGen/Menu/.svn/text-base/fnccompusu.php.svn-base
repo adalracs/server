@@ -1,0 +1,45 @@
+<?php 
+/*
+Propiedad intelectual de Adsum (c).
+Funcion         : fnccompusu
+Decripcion      : Obtiene los componentes de menu que corresponden a grupos de usuarios. 
+Parametros      : Descripicion
+  $irecarreglo    Arreglo con los codigo de grupo a los que pertenece un usuario.
+Retorno         : Descripicion
+ $orectemp   	  Arreglo con todos los codigos de componente de menu a los que tiene derecho un usuario.		
+Autor           : agomez-freina
+Fecha           : 05-Dec-2001  
+*/
+function  fnccompusu($irecarreglo,$inuconn)
+{
+	define ("n",0);
+	define ("n1",1);
+	$cont = n;
+	
+	if ($irecarreglo)
+	{
+		$cant = count ($irecarreglo);
+		if($cant > n)
+		{
+			for($i = n; $i < $cant ;$i++)
+			{
+				$rectemp = fnccomgru ($irecarreglo[$i],$inuconn);
+				$cant1 = count ($rectemp);
+				for($i1 = n; $i1 < $cant1 ;$i1 ++)
+				{
+					$orectemp[$cont] = $rectemp[$i1];
+					$cont ++;
+				}
+			}
+			if($orectemp)
+			{
+				return $orectemp;
+			}
+			else
+			{
+				return n;
+			}
+		}
+	}
+}
+?>

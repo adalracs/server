@@ -1,0 +1,7 @@
+2012-05-29 06:29:06 - carlos.molano => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 200.93.164.51
+2012-05-29 06:29:06 - carlos.molano => [Rango de Generacion 2012-05-29 - 2012-06-05 :: RNG_DATE_PER ] -> IP: 200.93.164.51
+2012-05-29 06:29:06 - carlos.molano => [PROGRAMACION 2 - No GENERA ORDEN / FECHA GENERACION [2012-06-14] MAYOR A FECHA LIMITE [2012-06-05] :: RNG_NOGEN_OT ] -> IP: 200.93.164.51
+2012-05-29 06:29:06 - carlos.molano => [PROGRAMACION 3 - No GENERA ORDEN / FECHA GENERACION [2012-06-14] MAYOR A FECHA LIMITE [2012-06-05] :: RNG_NOGEN_OT ] -> IP: 200.93.164.51
+2012-05-29 06:29:06 - carlos.molano => [PROGRAMACION 4 - No GENERA ORDEN / FECHA GENERACION [2012-06-14] MAYOR A FECHA LIMITE [2012-06-05] :: RNG_NOGEN_OT ] -> IP: 200.93.164.51
+2012-05-29 06:29:06 - carlos.molano => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 200.93.164.51
+2012-05-29 06:29:06 - carlos.molano => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 200.93.164.51

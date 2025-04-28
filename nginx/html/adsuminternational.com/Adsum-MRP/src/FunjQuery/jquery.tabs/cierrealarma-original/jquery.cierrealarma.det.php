@@ -1,0 +1,129 @@
+
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" class="ui-widget-content">
+		<tr class="ui-state-default">
+			<td class="cont-title">&nbsp;Datos de la Alarma</td>
+		</tr>
+	</table>
+            
+            <table width="100%" border="0" cellspacing="1" cellpadding="1" align="center" >
+				<tr>
+					<td width="20%" class="NoiseFooterTD">&nbsp;Fecha Elaboraci&oacute;n&nbsp;</td>
+					<td colspan="3" class="NoiseDataTD">&nbsp;<?php echo ($alarmafecelb)? strtoupper($alarmafecelb) : '---' ; ?></td>
+		 		</tr>
+						  
+				<tr><td colspan="2" ></td></tr>
+				
+				<tr>
+				  <td width="20%" class="NoiseFooterTD">&nbsp;Mensaje&nbsp;</td>
+			  	</tr>
+				<tr>
+					<td colspan="3" class="NoiseDataTD">&nbsp;<?php echo ($alarmamensaj)? strtoupper($alarmamensaj) : '---' ; ?></td>
+				</tr> 
+				  
+			  	<tr></tr>
+		
+			    <tr>
+				    <td width="20%" class="NoiseFooterTD">&nbsp;Descripci&oacute;n&nbsp;</td>
+		      	</tr>
+				<tr>
+					<td colspan="3" class="NoiseDataTD">&nbsp;<?php echo ($alarmadescri)? strtoupper($alarmadescri) : '---' ; ?></td>
+				</tr>
+		
+		 		<tr></tr>
+		 		
+				<tr>
+				  <td width="20%" class="NoiseFooterTD">&nbsp;M&oacute;dulos Responsables&nbsp;</td>
+			  	</tr>
+			  	
+				<tr>
+				  	<td colspan="2">
+					  	<div id="filtrlistamodulo">
+					    <?php
+									$noAjax = true;
+									$flagdetallar = 1;
+									include '../src/FunjQuery/jquery.visors/jquery.vistaalarmagestion.php';  
+						?>
+					  	</div>
+			  		</td>
+			  	</tr>
+			  	
+				<tr>
+				  <td width="20%" class="NoiseFooterTD">&nbsp;M&oacute;dulos a Dirigir&nbsp;</td>
+			  	</tr>
+			  	
+				<tr>
+				 	<td colspan="2">
+					  	<div id="filtrlistamodulodir">
+					    <?php
+									$noAjax = true;
+									$flagdetallardir = 1;
+									include '../src/FunjQuery/jquery.visors/jquery.vistaalarmagestiondir.php';  
+						?>
+					    </div>
+		    		</td>
+		 	 	</tr>
+		 	 	
+				<tr>
+				  <td width="20%" class="NoiseFooterTD">&nbsp;Tipo Restricci&oacute;n&nbsp;</td>
+				  <td colspan="3" class="NoiseDataTD">&nbsp;<?php echo ($tipalanombre)? strtoupper($tipalanombre) : '---' ; ?></td>
+			  	</tr>
+		                          
+				<tr>
+				  <td width="20%" class="NoiseFooterTD">&nbsp;Tipo Nivel&nbsp;</td>
+				  <td colspan="3" class="NoiseDataTD">&nbsp;<?php echo ($nivalanombre)? strtoupper($nivalanombre) : '---' ; ?></td>
+			  	</tr>
+		
+				<tr style="display:<?php echo ($nivalacodigo == 2 )? 'auto':'none';?>">
+				  <td class="NoiseFooterTD">&nbsp;Cliente</td>
+				  <td class="NoiseDataTD"><?php echo $sbreg[ordcomcodcli]; ?></td>
+			    </tr>
+			    
+			   <?php if ($nivalacodigo == 1 ){ ?>
+			   	<tr>
+				  <td colspan="2" class="ui-state-default">Item</td>
+				</tr>
+				
+			  	<tr>
+				  	<td colspan="2">
+					  <div id="filtrlistaproduccoduno">
+					    <?php
+									$noAjax = true;
+									$flagdetallardir = 1;
+									include '../src/FunjQuery/jquery.visors/jquery.productos.php';  
+						?>
+					    </div>
+				    </td>
+			  	</tr>
+			  	<?php } ?>
+			  
+				<tr>
+					<td width="20%" class="NoiseFooterTD">&nbsp;Usuario&nbsp;</td>
+					<td colspan="3" class="NoiseDataTD">&nbsp;<?php echo ($usuanombre)? strtoupper($usuanombre) : '---' ; ?></td>
+				</tr>
+		                          
+				<tr>
+					<td width="20%" class="NoiseFooterTD">&nbsp;Estado&nbsp;</td>
+					<td colspan="3" class="NoiseDataTD">&nbsp;<?php echo ($estalanombre)? strtoupper($estalanombre) : '---' ; ?></td>
+			  	</tr>
+		 
+			</table> 
+
+	<table width="218%" border="0" cellspacing="0" cellpadding="0" align="center" class="ui-widget-content">
+		<tr>
+			<td colspan="2" class="ui-state-default">&nbsp;Cierre Alarma</td>
+		</tr>
+	</table>
+	
+	<table width="218%" border="0" cellspacing="1" cellpadding="1" align="center" class="ui-widget-content">
+		<tr>
+			<td width="10%" class="NoiseFooterTD"><?php if($campnomb["estalacodigo1"] == 1){ $estalacodigo1 = null; echo "*";}?>&nbsp;Estado&nbsp;</td>
+		</tr>
+	
+		<tr>
+			<td width="10%" class="NoiseFooterTD"><?php if($campnomb["alagesdescri"] == 1){ $alagesdescri = null; echo "*";}?>&nbsp;Observaci&oacute;n&nbsp;</td>
+		<tr>
+  			<td colspan="4" rowspan="3" class="NoiseDataTD">&nbsp;<?php echo $alagesdescri; ?></td>
+ 		</tr>
+	</table>
+

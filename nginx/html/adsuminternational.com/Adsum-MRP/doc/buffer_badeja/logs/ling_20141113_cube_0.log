@@ -1,0 +1,4 @@
+2014-11-13 10:02:46 - wilson.ospina => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.67.23
+2014-11-13 10:02:46 - wilson.ospina => [Rango de Generacion 2014-11-13 - 2014-11-20 :: RNG_DATE_PER ] -> IP: 192.168.67.23
+2014-11-13 10:02:46 - wilson.ospina => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.67.23
+2014-11-13 10:02:46 - wilson.ospina => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 192.168.67.23

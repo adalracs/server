@@ -1,0 +1,4 @@
+2014-11-12 21:40:29 - ralvear => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.32.23
+2014-11-12 21:40:29 - ralvear => [Rango de Generacion 2014-11-12 - 2014-11-19 :: RNG_DATE_PER ] -> IP: 192.168.32.23
+2014-11-12 21:40:29 - ralvear => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.32.23
+2014-11-12 21:40:29 - ralvear => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 192.168.32.23

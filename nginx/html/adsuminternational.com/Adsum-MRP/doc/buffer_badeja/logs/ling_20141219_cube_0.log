@@ -1,0 +1,4 @@
+2014-12-19 00:00:09 - hector.jurado => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.65.59
+2014-12-19 00:00:09 - hector.jurado => [Rango de Generacion 2014-12-19 - 2014-12-26 :: RNG_DATE_PER ] -> IP: 192.168.65.59
+2014-12-19 00:00:09 - hector.jurado => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.65.59
+2014-12-19 00:00:09 - hector.jurado => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 192.168.65.59

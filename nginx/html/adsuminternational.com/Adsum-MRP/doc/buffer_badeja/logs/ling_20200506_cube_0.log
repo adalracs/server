@@ -1,0 +1,5 @@
+2020-05-06 18:10:40 - desarrollo => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 190.69.114.166
+2020-05-06 18:10:40 - desarrollo => [Rango de Generacion 2020-05-06 - 2020-05-13 :: RNG_DATE_PER ] -> IP: 190.69.114.166
+2020-05-06 18:10:40 - desarrollo => [PROGRAMACION 283 - No GENERA ORDEN / FECHA GENERACION [2020-05-23] MAYOR A FECHA LIMITE [2020-05-13] :: RNG_NOGEN_OT ] -> IP: 190.69.114.166
+2020-05-06 18:10:40 - desarrollo => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 190.69.114.166
+2020-05-06 18:10:40 - desarrollo => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 190.69.114.166

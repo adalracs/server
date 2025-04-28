@@ -1,0 +1,4 @@
+2014-10-07 00:00:19 - wilson.vasquez => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 190.242.58.154
+2014-10-07 00:00:19 - wilson.vasquez => [Rango de Generacion 2014-10-07 - 2014-10-14 :: RNG_DATE_PER ] -> IP: 190.242.58.154
+2014-10-07 00:00:19 - wilson.vasquez => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 190.242.58.154
+2014-10-07 00:00:19 - wilson.vasquez => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 190.242.58.154

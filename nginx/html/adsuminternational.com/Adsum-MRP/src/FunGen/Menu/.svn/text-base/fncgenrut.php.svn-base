@@ -1,0 +1,78 @@
+<?php 
+/*
+Propiedad intelectual de Adsum (c).
+Funcion         : fncgenrut
+Decripcion      : Genera un arreglo con las rutas de los componentes del menu a el que tiene derecho un determinado usuario.
+Parametros      : Descripicion
+   $irecentrada      array con los componentes del menu a los cuales un usuario	tiene derecho.
+Retorno         : Descripicion
+  true $orecsalida     array con los componentes de las rutas del menu.
+Autor           : agomez-freina
+Fecha           : 18-sep-2001  
+*/
+
+function  fncgenrut($irecentrada,$inuconn)
+{
+	define ("n",0);
+	define ("n1",1);
+	define ("e_conn",-1);
+	define ("e_db",-2);
+	define ("e_empty",-3);
+	$sbflag  =n;
+	
+	sort ($irecentrada);
+ 	$cant = count ($irecentrada);
+	for ($i = n; $i < $cant; $i++ )
+	{
+		$recresult = call_user_func('loadrecordmenucomp',
+		$irecentrada[$i],$inuconn);
+		if($recresult && $recresult != e_empty && $recresult != e_db
+		&& $recresult != e_conn)
+		{
+			if ($flag == n)
+			{
+				$recvector[n] = $recresult[mecocodi];
+				$recvector[n1] = $recresult[mecocopa];
+				$flag =n1;
+			}
+			else
+			{
+				do
+				{
+					$flag1 = n;
+					$flag2= n;
+					$cant1 = count($recvector);
+					for($g = n ; $g < $cant1 ;$g++)
+					{
+						if($recresult[mecocodi] == $recvector[$g])
+						{
+							$flag1 = n1;
+						}
+						if($recresult[mecocopa] == $recvector[$g])
+						{
+							$flag2 = n2;
+						}
+					}
+					if ($flag1 != n1)
+					{
+						$recvector[$cant1] = $recresult[mecocodi];
+						$cant1++;
+		 			}
+					if ($flag2 != n2)
+					{
+						$recvector[$cant1] = $recresult[mecocopa];
+					}
+					
+					$recresult = call_user_func('loadrecordmenucomp',
+					$recresult[mecocopa],$inuconn);
+					
+				} 
+				while ($recresult[mecocopa] != n && $recresult != e_empty);	
+			}	
+		}
+	}
+	$orecsalida = $recvector;
+	return $orecsalida;
+}
+	  //  fncgenrut($argv[1]);
+?>

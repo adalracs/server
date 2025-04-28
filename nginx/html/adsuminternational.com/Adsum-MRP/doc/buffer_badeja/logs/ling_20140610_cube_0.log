@@ -1,0 +1,4 @@
+2014-06-10 00:00:14 - jorge.suarez => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 190.242.58.154
+2014-06-10 00:00:14 - jorge.suarez => [Rango de Generacion 2014-06-10 - 2014-06-17 :: RNG_DATE_PER ] -> IP: 190.242.58.154
+2014-06-10 00:00:14 - jorge.suarez => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 190.242.58.154
+2014-06-10 00:00:14 - jorge.suarez => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 190.242.58.154

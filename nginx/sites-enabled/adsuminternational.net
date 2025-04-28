@@ -1,11 +1,30 @@
+# Configuración HTTP (redirige a HTTPS)
 server {
     listen 80;
     listen [::]:80;
+    server_name adsuminternational.net www.adsuminternational.net verify.adsuminternational.net;
+    return 301 https://$host$request_uri;
+}
+
+# Configuración HTTPS
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    server_name adsuminternational.net www.adsuminternational.net verify.adsuminternational.net;
+
+    # Ruta de los certificados
+    ssl_certificate /etc/letsencrypt/live/adsuminternational.net/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/adsuminternational.net/privkey.pem;
 
     root /var/www/html/adsuminternational.net;
     index index.html index.htm;
 
-    server_name adsuminternational.net www.adsuminternational.net;
+    # Configuración para tu API en /CreateUser
+    location /CreateUser/ {
+        include proxy_params;
+	proxy_set_header SCRIPT_NAME "";
+        proxy_pass http://unix:/var/www/html/adsuminternational.net/CreateUser/tmp/gunicorn_createuser.sock;
+    }
 
     location / {
         try_files $uri $uri/ =404;

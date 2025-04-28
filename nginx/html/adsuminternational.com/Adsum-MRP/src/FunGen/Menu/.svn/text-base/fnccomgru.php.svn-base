@@ -1,0 +1,48 @@
+<?php 
+/*
+Propiedad intelectual de Adsum (c).
+Funcion         : fnccomgru
+Decripcion      : determina los componentes del menu a los cuales tiene
+ derecho un grupo.
+Parametros      : Descripicion
+   $iintgrupcodi     Id del grupo.
+Retorno         : Descripicion
+  true $orecgrupos      array con los id de los componentes de menu 
+a los cuales un grupo tiene derecho.
+  false = 0            no tiene componentes asignados.
+Autor           : agomez-freina
+Fecha           : 17-sep-2001  
+*/
+
+function  fnccomgru($iintgrupcodi,$inuconn)
+{
+	define ("n",0);
+	define ("n1",1);
+	define ("e_conn",-1);
+	define ("e_db",-2);
+	define ("e_empty",-3);
+		
+	$recgrupcomp = array("grupcodi"=>$iintgrupcodi);
+	$recgrupcomp1 = array("grupcodi"=>'=');
+	$nuresult = call_user_func ('dinamicscanopgrupcomp',$recgrupcomp,
+								$recgrupcomp1,$inuconn);
+	if ($nuresult && $nuresult != e_empty && $nuresult != e_db
+	&& $nuresult != e_conn)
+	{ 
+		 $nucantrow = fncnumreg($nuresult);
+		 if($nucantrow > n)
+		 {
+		 	for($i = n ; $i < $nucantrow ; $i++)
+			{
+				$reccadena = fncfetch ($nuresult,$i);
+				$oreccomp[$i] = $reccadena[mecocodi];
+			}
+		 }
+		 return $oreccomp;
+	}
+	else
+	{
+		return n;
+	}
+}
+?>

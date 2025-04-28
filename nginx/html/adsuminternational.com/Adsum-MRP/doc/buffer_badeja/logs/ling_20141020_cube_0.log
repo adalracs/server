@@ -1,0 +1,4 @@
+2014-10-20 00:00:24 - mauricio.martan => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 190.242.58.154
+2014-10-20 00:00:24 - mauricio.martan => [Rango de Generacion 2014-10-20 - 2014-10-27 :: RNG_DATE_PER ] -> IP: 190.242.58.154
+2014-10-20 00:00:24 - mauricio.martan => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 190.242.58.154
+2014-10-20 00:00:24 - mauricio.martan => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 190.242.58.154

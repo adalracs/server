@@ -1,0 +1,4 @@
+2015-01-03 00:00:18 - jhon.bustos => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.66.103
+2015-01-03 00:00:18 - jhon.bustos => [Rango de Generacion 2015-01-03 - 2015-01-10 :: RNG_DATE_PER ] -> IP: 192.168.66.103
+2015-01-03 00:00:18 - jhon.bustos => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.66.103
+2015-01-03 00:00:18 - jhon.bustos => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 192.168.66.103

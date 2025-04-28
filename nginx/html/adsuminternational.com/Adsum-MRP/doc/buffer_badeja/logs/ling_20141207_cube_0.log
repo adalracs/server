@@ -1,0 +1,4 @@
+2014-12-07 00:00:33 - orlando.rancruel => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.65.160
+2014-12-07 00:00:33 - orlando.rancruel => [Rango de Generacion 2014-12-07 - 2014-12-14 :: RNG_DATE_PER ] -> IP: 192.168.65.160
+2014-12-07 00:00:33 - orlando.rancruel => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.65.160
+2014-12-07 00:00:33 - orlando.rancruel => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 192.168.65.160

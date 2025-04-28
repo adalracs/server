@@ -1,0 +1,581 @@
+<?php
+function nuloestadoalarma($arg) 
+{
+	return (($arg == "0")) ? "0" : (! ($arg)) ? "NULL" : "'" . $arg . "'";
+}
+
+/* 
+    Generado con generador Adsum (c). 
+Funci�n: Loadestadoalarma 
+Descripcion: Accesa el Registro indicado de la tabla 
+Parametros:  
+$iintestalacodigo Campo parte de la llave primaria 
+Retorno:  
+TRUE = Registro solicitado 
+FALSE = Error de base de datos o de conecci�n 
+Autor: ADSUM 
+Fecha: 29-August-2004 
+Modificaci�n | Fecha | Autor 
+*/
+function loadrecordestadoalarma($iintestalacodigo, $nuConn)
+{
+	defined('e_connection') || define("e_connection",-1);
+	defined('e_db') || define("e_db",-2);
+	defined('e_empty') || define("e_empty",-3);
+	defined('cero') || define("cero",0);
+	
+	if($nuConn) 
+	{
+		$sbSql = "SELECT * FROM estadoalarma WHERE estalacodigo = '".$iintestalacodigo."'";
+		$nuResult = @pg_exec ( $nuConn, $sbSql );
+		unset ( $sbSql );
+		
+		if ($nuResult) 
+		{
+			$nuCantRow = pg_numrows ( $nuResult );
+			
+			if ($nuCantRow > cero) 
+			{
+				$nuCantFields = pg_numfields ( $nuResult );
+				$sbRow = pg_fetch_row ( $nuResult, cero );
+				$sbLista = array (
+					"estalacodigo" => $sbRow [0], 
+					"estalanombre" => $sbRow [1], 
+					"estaladescri" => $sbRow [2],
+					"tipalatipo" => $sbRow [3]
+				);
+				return $sbLista;
+			
+			} 
+			else
+				return e_empty;
+		} 
+		else 
+			return e_db;
+	} 
+	else 
+		return e_connection;
+}
+
+/* 
+    Generado con generador Adsum (c). 
+Funci�n: fullscanestadoalarma 
+Descripcion: Accesa todos los Registros  de la tabla 
+Parametros:  
+Retorno:  
+TRUE = Id de transaccion 
+FALSE = Error de base de datos o de conecci�n 
+Autor: ADSUM 
+Fecha: 29-August-2004 
+Modificaci�n | Fecha | Autor 
+*/
+function fullscanestadoalarma($nuConn) 
+{
+	defined('e_connection') || define("e_connection",-1);
+	defined('e_db') || define("e_db",-2);
+	defined('e_empty') || define("e_empty",-3);
+	defined('cero') || define("cero",0);
+	
+	if ($nuConn) 
+	{
+		$sbSql = "SELECT * FROM estadoalarma where tipalatipo='1' ORDER BY estalanombre";
+		$nuResult = pg_exec ( $nuConn, $sbSql );
+		unset ( $sbSql );
+		
+		if ($nuResult) 
+		{
+			$nuCantRow = pg_numrows ( $nuResult );
+			
+			if ($nuCantRow > cero) 
+				return $nuResult;
+			else
+				return e_empty;
+		} 
+		else 
+			return e_db;
+	} 
+	else 
+		return e_connection;
+}
+
+
+//funcion para los estados de tipo 0 (estados de alarma cerrados)
+function fullscanestadoalarma2($nuConn) 
+{
+ defined('e_connection') || define("e_connection",-1);
+ defined('e_db') || define("e_db",-2);
+ defined('e_empty') || define("e_empty",-3);
+ defined('cero') || define("cero",0);
+ 
+ if ($nuConn) 
+ {
+  $sbSql = "SELECT * FROM estadoalarma where tipalatipo='0' ORDER BY estalanombre";
+  $nuResult = pg_exec ( $nuConn, $sbSql );
+  unset ( $sbSql );
+  
+  if ($nuResult) 
+  {
+   $nuCantRow = pg_numrows ( $nuResult );
+   
+   if ($nuCantRow > cero) 
+    return $nuResult;
+   else
+    return e_empty;
+  } 
+  else 
+   return e_db;
+ } 
+ else 
+  return e_connection;
+}
+
+
+
+
+/**
+ * Function sintaxconsqlestadoalarma
+ * Metodo para evitar errores de indices inexistente al momento de complementar el SQL
+ * 
+ * @param $ircRecord
+ * @param $ircRecordop
+ * @return string
+ */
+function sintaxconsqlestadoalarma($ircRecord, $ircRecordop)
+{
+	$flagestadoalarma = 0;
+	$sbSql = "";
+	
+	if(is_array($ircRecord) && count($ircRecord) > 0)
+	{
+		foreach($ircRecord as $kField => $vField)
+		{
+			if(is_array($ircRecordop))
+				$sbSql .= (array_key_exists($kField, $ircRecordop)) ? sintaxisopestadoalarma($vField, $kField, $flagestadoalarma, $ircRecordop[$kField]) : sintaxisestadoalarma($vField, $kField, $flagestadoalarma);
+			else
+				$sbSql .= sintaxisestadoalarma($vField, $kField, $flagestadoalarma);
+		}
+	}
+	
+	return $sbSql;
+}
+
+/* 
+    Generado con generador Adsum (c). 
+Funci�n: Sintaxisestadoalarma 
+Descripcion: Verifica sintaxis de la consulta en dinamicScan 
+Parametros:  
+ $arg Valor del campo 
+ $campo Nombre del campo 
+ $flagestadoalarma Bandera que define si se utiliza AND 
+Retorno:  
+TRUE =  
+FALSE =  
+Autor: ariascos 
+Fecha: 29-August-2004 
+Modificaci�n | Fecha | Autor 
+*/
+function sintaxisestadoalarma($arg, $campo, &$flagestadoalarma) 
+{
+	$aux = ($flagestadoalarma) ? " AND" : "";
+
+	if ($arg == "")
+		return "";
+	else 
+	{
+		$flagestadoalarma = 1;
+		if (strpos($campo, 'codi') && $campo != 'estalacodigo')
+			return $aux." ".$campo." = '".$arg. "'";
+		else
+			return $aux." LOWER(".$campo."::text) like '%".strtolower($arg)."%'";
+			
+	}
+}
+
+/* 
+    Generado con generador Adsum (c). 
+Funci�n: DinamicScanestadoalarma 
+Descripcion: Accesa el registro que hace match con la entrada 
+Parametros:  
+$iintestalacodigo Campo parte de la llave primaria 
+Retorno:  
+TRUE = Id. de transaccion. 
+FALSE = Error de base de datos o de conecci�n 
+Autor: ariascos 
+Fecha: 29-August-2004 
+Modificaci�n | Fecha | Autor 
+*/
+function dinamicscanestadoalarma($ircRecord, $nuConn) 
+{
+	defined('e_connection') || define("e_connection",-1);
+	defined('e_db') || define("e_db",-2);
+	defined('e_empty') || define("e_empty",-3);
+	defined('cero') || define("cero",0);
+	
+	if ($nuConn) 
+	{
+		$sbSql = "SELECT * FROM estadoalarma WHERE ".sintaxconsqlestadoalarma($ircRecord, null)." ORDER BY estalanombre";
+
+		$nuResult = pg_exec ( $nuConn, $sbSql );
+		unset ( $sbSql );
+		
+		if ($nuResult) 
+		{
+			$nuCantRow = pg_numrows ( $nuResult );
+			
+			if ($nuCantRow > cero)
+				return $nuResult;
+			else
+				return e_empty;
+		} 
+		else 
+			return e_db;
+	} 
+	else 
+		return e_connection;
+}
+
+/* 
+    Generado con generador Adsum (c). 
+Funci�n: Sintaxisopestadoalarma 
+Descripcion: Verifica sintaxis de la consulta en dinamicScan 
+Parametros:  
+$iintestalacodigo Campo parte de la llave primaria 
+Retorno:  
+TRUE =  
+FALSE =  
+Autor: ariascos 
+Fecha: 29-August-2004 
+Modificaci�n | Fecha | Autor 
+*/
+function sintaxisopestadoalarma($arg, $campo, &$flagestadoalarma, $oper) 
+{
+	$aux = ($flagestadoalarma) ? " AND" : "";
+
+	if ($arg == "")
+		return "";
+	else 
+	{
+		$flagestadoalarma = 1;
+		switch ($oper) :
+			case "like":	return $aux." LOWER(".$campo."::text) like '%".strtolower($arg)."%'";	break;
+			case "=":		return $aux." LOWER(".$campo."::text) = '".strtolower($arg)."'";		break;
+			case "<":		return $aux." ".$campo." < ".$arg;										break;
+			case "<=":		return $aux." ".$campo." <= ".$arg;										break;
+			case ">":		return $aux." ".$campo." > ".$arg;										break;
+			case ">=":		return $aux." ".$campo." >= ".$arg;										break;
+			case "<>":		return $aux." ".$campo." <> ".$arg;										break;
+			case "like%_":	return $aux." LOWER(".$campo."::text) like '%".strtolower($arg)."'";	break;
+			case "like_%":	return $aux." LOWER(".$campo."::text) like '".strtolower($arg)."%'";	break;
+			case "IN" : 	return $aux . " " . $campo . " IN (" . $arg . ")"; break;
+		endswitch;
+	}
+}
+
+/* 
+    Generado con generador Adsum (c). 
+Funci�n: DinamicScanopestadoalarma 
+Descripcion: Accesa el registro que hace match con la entrada 
+Parametros:  
+$iintestalacodigo Campo parte de la llave primaria 
+Retorno:  
+TRUE = Id. de transaccion. 
+FALSE = Error de base de datos o de conecci�n 
+Autor: ariascos 
+Fecha: 29-August-2004 
+Modificaci�n | Fecha | Autor 
+*/
+function dinamicscanopestadoalarma($ircrecord, $ircrecordop, $nuconn)
+{
+	defined('e_connection') || define("e_connection",-1);
+	defined('e_db') || define("e_db",-2);
+	defined('e_empty') || define("e_empty",-3);
+	defined('cero') || define("cero",0);
+	
+	if ($nuconn)
+	{
+		$sbSql = "SELECT * FROM estadoalarma WHERE ".sintaxconsqlestadoalarma($ircrecord, $ircrecordop)." ORDER BY estalanombre";
+		$nuResult = pg_exec ( $nuconn, $sbSql );
+		unset ( $sbSql );
+		
+		if ($nuResult) 
+		{
+			$nuCantRow = pg_numrows ( $nuResult );
+			
+			if ($nuCantRow > cero)
+				return $nuResult;
+			else
+				return e_empty;
+		} 
+		else 
+			return e_db;
+	} 
+	else 
+		return e_connection;
+}
+
+
+/* 
+    Generado con generador Adsum (c). 
+Funci�n: DinamicLimitScanestadoalarma 
+Descripcion: Accesa el registro que hace match con la entrada 
+Parametros:  
+$iintestalacodigo Campo parte de la llave primaria 
+Retorno:  
+TRUE = Id. de transaccion. 
+FALSE = Error de base de datos o de conecci�n 
+Autor: ariascos 
+Fecha: 29-August-2004 
+Modificaci�n | Fecha | Autor 
+*/
+function dinamiclimitscanestadoalarma($ircRecord, $inucant, $inupos, $nuConn,$ircOrderby = null) 
+{
+	defined('e_connection') || define("e_connection",-1);
+	defined('e_db') || define("e_db",-2);
+	defined('e_empty') || define("e_empty",-3);
+	defined('cero') || define("cero",0);
+	
+	if ($nuConn)
+	{
+		$sbSql = "SELECT * FROM estadoalarma WHERE ".sintaxconsqlestadoalarma($ircRecord, null).(($ircOrderby) ? ' ORDER BY '.$ircOrderby : "")." LIMIT ".$inucant." OFFSET ".$inupos;
+		$nuResult = pg_exec ( $nuConn, $sbSql );
+		unset ( $sbSql );
+		
+		if ($nuResult)
+		{
+			$nuCantRow = pg_numrows ( $nuResult );
+			
+			if ($nuCantRow > cero)
+				return $nuResult;
+			else
+				return e_empty;
+		}
+		else
+			return e_db;
+	}
+	else 
+		return e_connection;
+}
+
+/* 
+    Generado con generador Adsum (c). 
+Funci�n: DinamicLimitScanopestadoalarma 
+Descripcion: Accesa el registro que hace match con la entrada 
+Parametros:  
+$iintestalacodigo Campo parte de la llave primaria 
+Retorno:  
+TRUE = Id. de transaccion. 
+FALSE = Error de base de datos o de conecci�n 
+Autor: ariascos 
+Fecha: 29-August-2004 
+Modificaci�n | Fecha | Autor 
+*/
+function dinamiclimitscanopestadoalarma($ircrecord, $ircrecordop, $inucant, $inupos, $nuconn)
+{
+	defined('e_connection') || define("e_connection",-1);
+	defined('e_db') || define("e_db",-2);
+	defined('e_empty') || define("e_empty",-3);
+	defined('cero') || define("cero",0);
+	
+	if ($nuconn) 
+	{
+		$sbSql = "SELECT * FROM estadoalarma WHERE ".sintaxconsqlestadoalarma($ircrecord, $ircrecordop)." LIMIT ".$inucant." OFFSET ".$inupos;
+		$nuResult = pg_exec ( $nuconn, $sbSql );
+		unset ( $sbSql );
+		
+		if ($nuResult)
+		{
+			$nuCantRow = pg_numrows ( $nuResult );
+			
+			if ($nuCantRow > cero)
+				return $nuResult;
+			else
+				return e_empty;
+		}
+		else
+			return e_db;
+	} 
+	else 
+		return e_connection;
+}
+
+/**
+ * Function sintaxupdsqlestadoalarma
+ * 
+ * @param $ircRecord
+ * @param $ircRecordop
+ * @return string
+ */
+function sintaxupdsqlestadoalarma($ircRecord)
+{
+	$sbSql = "";
+	
+	if(is_array($ircRecord) && count($ircRecord) > 0)
+	{
+		foreach($ircRecord as $kField => $vField)
+			$sbSql .= (($sbSql) ? "," : "").$kField." = ".nuloestadoalarma($vField);
+	}
+	return $sbSql;
+}
+
+/* 
+    Generado con generador Adsum (c). 
+Funci�n: UpRecordestadoalarma 
+Descripcion: Actualiza un registro en la tabla partir de un 
+	record 
+Parametros:  
+ $ircRecordRegistro a  modificar en la tabla 
+Retorno:  
+TRUE = True 
+FALSE = Error de base de datos o de conecci�n 
+Autor: ADSUM 
+Fecha: 29-August-2004 
+Modificaci�n | Fecha | Autor 
+*/
+function uprecordestadoalarma($ircRecord, $nuConn)
+{
+	defined('e_connection') || define("e_connection",-1);
+	defined('e_db') || define("e_db",-2);
+	defined('e_empty') || define("e_empty",-3);
+	defined('cero') || define("cero",0);
+	define ( "n1", 1 );
+	
+	if ($nuConn)
+	{
+		$sbSql = "UPDATE estadoalarma SET ".sintaxupdsqlestadoalarma($ircRecord)." WHERE estalacodigo = '".$ircRecord['estalacodigo']."'";
+		
+		
+		$nuResult = pg_exec ( $nuConn, $sbSql );
+		unset ( $sbSql );
+		
+		if (! $nuResult) 
+			return e_db;
+	} 
+	else 
+		return e_connection;
+	return n1;
+}
+
+/* 
+    Generado con generador Adsum (c). 
+Funci�n: Consulmetaestadoalarma 
+Descripcion: Consulta tipo de dato 
+Parametros:  
+$iintestalacodigo Campo parte de la llave primaria 
+Retorno:  
+TRUE = True 
+FALSE = Error de base de datos o de conecci�n 
+Autor: ariascos-lfolaya 
+Fecha: 29-August-2004 
+Modificaci�n | Fecha | Autor 
+*/
+function consulmetaestadoalarma($metaestadoalarma1, $metaestadoalarma2, $nuConn) 
+{
+	define ( "uno", 1 );
+	defined('cero') || define("cero",0);
+	
+	$sbSql = "SELECT DISTINCT(camptida) FROM campo WHERE campnomb = '".$metaestadoalarma1."'";
+	$nuResult = pg_exec ( $nuConn, $sbSql );
+	unset ( $sbSql );
+	
+	$arr = pg_fetch_array ( $nuResult );
+	$fncvalida = "valida" . $arr [0];
+	$result = $fncvalida ( $metaestadoalarma2 );
+	
+	if ($result > 0)
+		return uno;
+	else
+		return cero;
+}
+
+/**
+ * Function sintaxinssqlestadoalarma
+ * 
+ * @param $ircRecord
+ * @param $ircRecordop
+ * @return string
+ */
+function sintaxinssqlestadoalarma($ircRecord)
+{
+	$strField = "";
+	$strValue = "";
+	
+	if(is_array($ircRecord) && count($ircRecord) > 0)
+	{
+		foreach($ircRecord as $kField => $vField)
+		{
+			$strField .= (($strField) ? "," : "").$kField; 		
+			$strValue .= (($strValue) ? "," : "").nuloestadoalarma($vField);
+		}
+	}
+	return "({$strField}) VALUES ({$strValue})";
+}
+
+/* 
+    Generado con generador Adsum (c). 
+Funci�n: InsRecordestadoalarma 
+Descripcion: Adiciona registro a la Tabla 
+Parametros:  
+ $ircRecordRegistro a insertar en la tabla 
+Retorno:  
+TRUE = True 
+FALSE = Error de base de datos o de conecci�n 
+Autor: ariascos 
+Fecha: 29-August-2004 
+Modificaci�n | Fecha | Autor 
+*/
+function insrecordestadoalarma($ircRecord, $nuConn) 
+{
+	defined('e_connection') || define("e_connection",-1);
+	defined('e_db') || define("e_db",-2);
+	defined('e_empty') || define("e_empty",-3);
+	defined('cero') || define("cero",0);
+	define ( "n1", 1 );
+	
+	if ($nuConn)
+	{
+		$sbSql = "INSERT INTO estadoalarma ".sintaxinssqlestadoalarma($ircRecord);
+		$nuResult = pg_exec ( $nuConn, $sbSql );
+		unset ( $sbSql );
+		
+		if (! $nuResult)
+			return e_db;
+	}
+	else
+		return e_connection;
+	return n1;
+}
+
+/* 
+    Generado con generador Adsum (c). 
+Funci�n: DelRecordestadoalarma 
+Descripcion: Borra el registro indicado de la Tabla 
+Parametros:  
+$iintestalacodigo Campo parte de la llave primaria 
+Retorno:  
+TRUE = True 
+FALSE = Error de base de datos o de conecci�n 
+Autor: ariascos 
+Fecha: 29-August-2004 
+Modificaci�n | Fecha | Autor 
+*/
+function delrecordestadoalarma($iintestalacodigo, $nuConn)
+{
+	defined('e_connection') || define("e_connection",-1);
+	defined('e_db') || define("e_db",-2);
+	defined('e_empty') || define("e_empty",-3);
+	defined('cero') || define("cero",0);
+	define ( "n1", 1 );
+	
+	if ($nuConn)
+	{
+		$sbSql = "DELETE FROM estadoalarma WHERE estalacodigo = '".$iintestalacodigo."'";
+		$nuResult = pg_exec ( $nuConn, $sbSql );
+		unset ( $sbSql );
+		
+		if (! $nuResult)
+			return e_db;
+	} 
+	else 
+		return e_connection;
+	return n1;
+}

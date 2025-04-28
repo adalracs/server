@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="register.title">Complete Registration - Adsum Blockchain</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 5px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .required:after {
+            content: " *";
+            color: red;
+        }
+        .error {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 5px;
+            display: none;
+        }
+        .columns {
+            display: flex;
+            gap: 20px;
+        }
+        .column {
+            flex: 1;
+        }
+        .biometric-container {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        #biometricCapture {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            background: #eee;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .btn-submit {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .language-selector {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="language-selector">
+        <button onclick="changeLanguage('en')">English</button>
+        <button onclick="changeLanguage('es')">Español</button>
+    </div>
+
+    <div class="system-status-alert success">
+        <h3 data-i18n="register.validation_success">Validation Successful</h3>
+        <p data-i18n="register.complete_info">Please complete your information to finish the registration process.</p>
+    </div>
+
+    <header>
+        <h2 data-i18n="register.header">Adsum Blockchain Registration</h2>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <form id="registrationForm" action="/complete-registration/{{ user_id }}/{{ token }}" method="post">
+                <input type="hidden" name="user_id" value="{{ user_id }}">
+                <input type="hidden" name="token" value="{{ token }}">
+                
+                <div class="columns">
+                    <div class="column">
+                        <!-- Mainchain data -->
+                        <h3 data-i18n="register.personal_info">Personal Information</h3>
+                        
+                        <div class="form-group">
+                            <label for="documentType" class="required" data-i18n="register.document_type">Document Type</label>
+                            <select id="documentType" name="document_type" required>
+                                <option value="" data-i18n="register.select_option">Select an option</option>
+                                <option value="passport" data-i18n="register.passport">Passport</option>
+                                <option value="id_card" data-i18n="register.id_card">ID Card</option>
+                                <option value="driving_license" data-i18n="register.driving_license">Driving License</option>
+                            </select>
+                            <div class="error" id="documentTypeError" data-i18n="register.document_type_error">Please select a document type</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="documentNumber" class="required" data-i18n="register.document_number">Document Number</label>
+                            <input type="text" id="documentNumber" name="document_number" required>
+                            <div class="error" id="documentNumberError" data-i18n="register.document_number_error">Please enter a valid document number</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="firstName" class="required" data-i18n="register.first_name">First Name</label>
+                            <input type="text" id="firstName" name="first_name" required>
+                            <div class="error" id="firstNameError" data-i18n="register.first_name_error">Please enter your first name</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lastName" class="required" data-i18n="register.last_name">Last Name</label>
+                            <input type="text" id="lastName" name="last_name" required>
+                            <div class="error" id="lastNameError" data-i18n="register.last_name_error">Please enter your last name</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="required" data-i18n="register.email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                            <div class="error" id="emailError" data-i18n="register.email_error">Please enter a valid email address</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="country" class="required" data-i18n="register.country">Country</label>
+                            <select id="country" name="country" required>
+                                <option value="" data-i18n="register.select_country">Select a country</option>
+                                <option value="US" data-i18n="register.united_states">United States</option>
+                                <option value="CA" data-i18n="register.canada">Canada</option>
+                                <option value="MX" data-i18n="register.mexico">Mexico</option>
+                                <option value="CO" data-i18n="register.colombia">Colombia</option>
+                                <option value="BR" data-i18n="register.brazil">Brazil</option>
+                                <option value="AR" data-i18n="register.argentina">Argentina</option>
+                                <option value="ES" data-i18n="register.spain">Spain</option>
+                            </select>
+                            <div class="error" id="countryError" data-i18n="register.country_error">Please select a country</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="city" class="required" data-i18n="register.city">City</label>
+                            <input type="text" id="city" name="city" required>
+                            <div class="error" id="cityError" data-i18n="register.city_error">Please enter your city</div>
+                        </div>
+                    </div>
+
+                    <div class="column">
+                        <!-- Shard0 data -->
+                        <h3 data-i18n="register.additional_info">Additional Information</h3>
+                        
+                        <div class="form-group">
+                            <label for="secondLastName" data-i18n="register.second_last_name">Second Last Name</label>
+                            <input type="text" id="secondLastName" name="second_last_name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone" class="required" data-i18n="register.phone">Mobile Phone</label>
+                            <input type="tel" id="phone" name="phone" required>
+                            <div class="error" id="phoneError" data-i18n="register.phone_error">Please enter a valid phone number</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="backupEmail" data-i18n="register.backup_email">Backup Email</label>
+                            <input type="email" id="backupEmail" name="backup_email">
+                            <div class="error" id="backupEmailError" data-i18n="register.backup_email_error">Please enter a valid email address</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="state" class="required" data-i18n="register.state">State/Province</label>
+                            <input type="text" id="state" name="state" required>
+                            <div class="error" id="stateError" data-i18n="register.state_error">Please enter your state or province</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="address" class="required" data-i18n="register.address">Address</label>
+                            <input type="text" id="address" name="address" required>
+                            <div class="error" id="addressError" data-i18n="register.address_error">Please enter your address</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="postalCode" data-i18n="register.postal_code">Postal Code</label>
+                            <input type="text" id="postalCode" name="postal_code">
+                            <div class="error" id="postalCodeError" data-i18n="register.postal_code_error">Please enter a valid postal code</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Biometric Data (Mainchain) -->
+                <h3 data-i18n="register.biometric">Biometric Data</h3>
+                <div class="biometric-container">
+                    <div id="biometricCapture" onclick="captureBiometric()">
+                        <span data-i18n="register.click_capture">Click to capture</span>
+                    </div>
+                    <input type="hidden" id="biometricData" name="biometric_data" value="">
+                    <div class="error" id="biometricError" data-i18n="register.biometric_error">Biometric data is required</div>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn-submit" data-i18n="register.complete_registration">Complete Registration</button>
+                </div>
+            </form>
+        </div>
+    </main>
+    
+    <footer>
+        <p data-i18n="footer.description">Adsum Blockchain is designed to democratize access to blockchain technology</p>
+        <p data-i18n="footer.copyright">&copy; 2025 Adsum Blockchain. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Simple form validation
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            let isValid = true;
+            
+            // Validate required fields
+            const requiredFields = [
+                {id: 'documentType', errorId: 'documentTypeError'},
+                {id: 'documentNumber', errorId: 'documentNumberError'},
+                {id: 'firstName', errorId: 'firstNameError'},
+                {id: 'lastName', errorId: 'lastNameError'},
+                {id: 'email', errorId: 'emailError'},
+                {id: 'country', errorId: 'countryError'},
+                {id: 'city', errorId: 'cityError'},
+                {id: 'phone', errorId: 'phoneError'},
+                {id: 'state', errorId: 'stateError'},
+                {id: 'address', errorId: 'addressError'}
+            ];
+            
+            requiredFields.forEach(field => {
+                const input = document.getElementById(field.id);
+                const error = document.getElementById(field.errorId);
+                
+                if (!input.value.trim()) {
+                    error.style.display = 'block';
+                    isValid = false;
+                } else {
+                    error.style.display = 'none';
+                }
+            });
+            
+            // Validate email format
+            const emailField = document.getElementById('email');
+            const emailError = document.getElementById('emailError');
+            if (emailField.value && !validateEmail(emailField.value)) {
+                emailError.style.display = 'block';
+                isValid = false;
+            }
+            
+            // Check backup email if provided
+            const backupEmailField = document.getElementById('backupEmail');
+            const backupEmailError = document.getElementById('backupEmailError');
+            if (backupEmailField.value && !validateEmail(backupEmailField.value)) {
+                backupEmailError.style.display = 'block';
+                isValid = false;
+            }
+            
+            // Check biometric data
+            const biometricData = document.getElementById('biometricData');
+            const biometricError = document.getElementById('biometricError');
+            if (!biometricData.value) {
+                biometricError.style.display = 'block';
+                isValid = false;
+            }
+            
+            if (!isValid) {
+                e.preventDefault();
+            }
+        });
+        
+        function validateEmail(email) {
+            const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            return re.test(email);
+        }
+        
+        // Simulated biometric capture
+        function captureBiometric() {
+            const biometricArea = document.getElementById('biometricCapture');
+            biometricArea.innerHTML = '<div class="spinner"></div>';
+            biometricArea.style.backgroundColor = '#f0f0f0';
+            
+            // Simulate capture process
+            setTimeout(() => {
+                biometricArea.innerHTML = '<span data-i18n="register.captured">✓ Captured</span>';
+                biometricArea.style.backgroundColor = '#d4edda';
+                document.getElementById('biometricData').value = 'simulated_biometric_data_' + Date.now();
+                translateElement(biometricArea.querySelector('[data-i18n]'));
+            }, 2000);
+        }
+        
+        // Multi-language support
+        let currentLanguage = 'en';
+        const translations = {
+            'en': {
+                'register.title': 'Complete Registration - Adsum Blockchain',
+                'register.validation_success': 'Validation Successful',
+                'register.complete_info': 'Please complete your information to finish the registration process.',
+                'register.header': 'Adsum Blockchain Registration',
+                'register.personal_info': 'Personal Information',
+                'register.additional_info': 'Additional Information',
+                'register.document_type': 'Document Type',
+                'register.select_option': 'Select an option',
+                'register.passport': 'Passport',
+                'register.id_card': 'ID Card',
+                'register.driving_license': 'Driving License',
+                'register.document_type_error': 'Please select a document type',
+                'register.document_number': 'Document Number',
+                'register.document_number_error': 'Please enter a valid document number',
+                'register.first_name': 'First Name',
+                'register.first_name_error': 'Please enter your first name',
+                'register.last_name': 'Last Name',
+                'register.last_name_error': 'Please enter your last name',
+                'register.second_last_name': 'Second Last Name',
+                'register.email': 'Email',
+                'register.email_error': 'Please enter a valid email address',
+                'register.backup_email': 'Backup Email',
+                'register.backup_email_error': 'Please enter a valid email address',
+                'register.phone': 'Mobile Phone',
+                'register.phone_error': 'Please enter a valid phone number',
+                'register.country': 'Country',
+                'register.select_country': 'Select a country',
+                'register.united_states': 'United States',
+                'register.canada': 'Canada',
+                'register.mexico': 'Mexico',
+                'register.colombia': 'Colombia',
+                'register.brazil': 'Brazil',
+                'register.argentina': 'Argentina',
+                'register.spain': 'Spain',
+                'register.country_error': 'Please select a country',
+                'register.state': 'State/Province',
+                'register.state_error': 'Please enter your state or province',
+                'register.city': 'City',
+                'register.city_error': 'Please enter your city',
+                'register.address': 'Address',
+                'register.address_error': 'Please enter your address',
+                'register.postal_code': 'Postal Code',
+                'register.postal_code_error': 'Please enter a valid postal code',
+                'register.biometric': 'Biometric Data',
+                'register.click_capture': 'Click to capture',
+                'register.captured': '✓ Captured',
+                'register.biometric_error': 'Biometric data is required',
+                'register.complete_registration': 'Complete Registration',
+                'footer.description': 'Adsum Blockchain is designed to democratize access to blockchain technology',
+                'footer.copyright': '© 2025 Adsum Blockchain. All rights reserved.'
+            },
+            'es': {
+                'register.title': 'Completar Registro - Adsum Blockchain',
+                'register.validation_success': 'Validación Exitosa',
+                'register.complete_info': 'Por favor complete su información para finalizar el proceso de registro.',
+                'register.header': 'Registro Adsum Blockchain',
+                'register.personal_info': 'Información Personal',
+                'register.additional_info': 'Información Adicional',
+                'register.document_type': 'Tipo de Documento',
+                'register.select_option': 'Seleccione una opción',
+                'register.passport': 'Pasaporte',
+                'register.id_card': 'Cédula',
+                'register.driving_license': 'Licencia de Conducir',
+                'register.document_type_error': 'Por favor seleccione un tipo de documento',
+                'register.document_number': 'Número de Documento',
+                'register.document_number_error': 'Por favor ingrese un número de documento válido',
+                'register.first_name': 'Nombres',
+                'register.first_name_error': 'Por favor ingrese sus nombres',
+                'register.last_name': 'Primer Apellido',
+                'register.last_name_error': 'Por favor ingrese su primer apellido',
+                'register.second_last_name': 'Segundo Apellido',
+                'register.email': 'Correo Electrónico',
+                'register.email_error': 'Por favor ingrese un correo electrónico válido',
+                'register.backup_email': 'Correo Electrónico de Respaldo',
+                'register.backup_email_error': 'Por favor ingrese un correo electrónico válido',
+                'register.phone': 'Teléfono Móvil',
+                'register.phone_error': 'Por favor ingrese un número de teléfono válido',
+                'register.country': 'País',
+                'register.select_country': 'Seleccione un país',
+                'register.united_states': 'Estados Unidos',
+                'register.canada': 'Canadá',
+                'register.mexico': 'México',
+                'register.colombia': 'Colombia',
+                'register.brazil': 'Brasil',
+                'register.argentina': 'Argentina',
+                'register.spain': 'España',
+                'register.country_error': 'Por favor seleccione un país',
+                'register.state': 'Estado/Departamento',
+                'register.state_error': 'Por favor ingrese su estado o departamento',
+                'register.city': 'Ciudad',
+                'register.city_error': 'Por favor ingrese su ciudad',
+                'register.address': 'Dirección',
+                'register.address_error': 'Por favor ingrese su dirección',
+                'register.postal_code': 'Código Postal',
+                'register.postal_code_error': 'Por favor ingrese un código postal válido',
+                'register.biometric': 'Datos Biométricos',
+                'register.click_capture': 'Haga clic para capturar',
+                'register.captured': '✓ Capturado',
+                'register.biometric_error': 'Los datos biométricos son obligatorios',
+                'register.complete_registration': 'Completar Registro',
+                'footer.description': 'Adsum Blockchain está diseñado para democratizar el acceso a la tecnología blockchain',
+                'footer.copyright': '© 2025 Adsum Blockchain. Todos los derechos reservados.'
+            }
+        };
+
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(translateElement);
+        }
+
+        function translateElement(element) {
+            const key = element.getAttribute('data-i18n');
+            if (translations[currentLanguage] && translations[currentLanguage][key]) {
+                element.innerHTML = translations[currentLanguage][key];
+            }
+        }
+
+        // Apply translations on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(translateElement);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<?php 
+	//validamos que se obtenga el nit del cliente para ingresar a la funcion
+	if($ordcomcodcli)
+	{
+		unset($ircRecord,$ircRecordop);
+		$ircRecord['nivalacodigo'] = 2;
+		$ircRecord['ordcomcodcli'] = $ordcomcodcli;
+		$ircRecordop['nivalacodigo'] = '=';
+		$ircRecordop['ordcomcodcli'] = '=';
+		$rsAlarma = dinamicscanopalarma($ircRecord,$ircRecordop,$idcon);
+		$nrAlarma = fncnumreg($rsAlarma);
+		if($nrAlarma > 0)
+		{
+			for($a = 0; $a < $nrAlarma; $a++)
+			{
+				$rwAlarma = fncfetch($rsAlarma,$a);
+				unset($ircRecord,$ircRecordop);
+				$ircRecord['alarmacodigo'] = $rwAlarma['alarmacodigo'];
+				$ircRecord['modulocodigo'] = $MODULOCODIGO;
+				$ircRecordop['alarmacodigo'] = '=';
+				$ircRecordop['modulocodigo'] = '=';
+				$rsAlarmaModulo = dinamicscanopalarmamodulo($ircRecord,$ircRecordop,$idcon);
+				$nrAlarmaModulo = fncnumreg($rsAlarmaModulo);
+				
+				unset($ircRecord,$ircRecordop);
+				$ircRecord['alarmacodigo'] = $rwAlarma['alarmacodigo'];
+				$ircRecordop['alarmacodigo'] = '=';
+				$rsAlarmaGestion = dinamicscanopvistaalarmagestion($ircRecord,$ircRecordop,$idcon);
+				$nrAlarmaGestion = fncnumreg($rsAlarmaGestion);
+				
+				unset($ircRecord,$ircRecordop);
+				$ircRecord['alarmacodigo'] = $rwAlarma['alarmacodigo'];
+				$ircRecord['modulocodigo'] = $MODULOCODIGO;
+				$ircRecord['alamodirres'] = '1';//1 si es responsable y 0 si es dirigido
+				$ircRecordop['alarmacodigo'] = '=';
+				$ircRecordop['modulocodigo'] = '=';
+				$ircRecord['alamodirres'] = '=';
+				$rsAlarmaModulo1 = dinamicscanopalarmamodulo($ircRecord,$ircRecordop,$idcon);
+				$nrAlarmaModulo1 = fncnumreg($rsAlarmaModulo1);
+				
+				if($nrAlarmaModulo >= 1 && $nrAlarmaGestion >= 1)
+				{
+					if($rwAlarma['tipoalacodigo'] == '1' && $nrAlarmaModulo1 < 1)//alarma 1 restrictiva
+					{
+						echo '<script language="javascript">';
+						echo '<!--//'."\n";
+						echo 'alert("Mensaje de alarma restrictiva: '.$rwAlarma['alarmamensaj'].'")';
+						echo '//-->'."\n";
+						echo '</script>';
+						
+						if(!$rutamodulo)
+							$rutamodulo  = 'main.php';
+							echo '<script language="javascript">';
+							echo '<!--//'."\n";
+							echo 'location ="'.$rutamodulo.'?codigo='.$codigo.';"';
+							echo '//-->'."\n";
+							echo '</script>';	
+					}
+					elseif($rwAlarma['tipoalacodigo'] == '1' && $nrAlarmaModulo1 >= 1)//alarma 2 informativa
+					{
+						$varMsj = 
+							'<tr>
+								<td>
+									<div class="ui-widget">
+										<div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;"> 
+											<p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+											<strong>Mensaje de alarma:</strong> '.$rwAlarma['alarmamensaj'].'</p>
+										</div>
+									</div>
+								</td>
+							</tr>';
+					} 
+					else
+					{
+						$varMsj = 
+							'<tr>
+								<td>
+									<div class="ui-widget">
+										<div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;"> 
+											<p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+											<strong>Mensaje de alarma:</strong> '.$rwAlarma['alarmamensaj'].'</p>
+										</div>
+									</div>
+								</td>
+							</tr>';
+					}
+				}
+			}
+		}
+	}
+	
+	if($produccoduno)
+	{
+		unset($ircRecord,$ircRecordop);
+		$ircRecord['nivalacodigo'] = '1';
+		$ircRecordop['nivalacodigo'] = '=';
+		$rsAlarma = dinamicscanopalarma($ircRecord,$ircRecordop,$idcon);
+		$nrAlarma = fncnumreg($rsAlarma);
+		if($nrAlarma > 0)
+		{
+			for($a = 0; $a < $nrAlarma; $a++)
+			{
+				$rwAlarma = fncfetch($rsAlarma,$a);
+				unset($ircRecord,$ircRecordop);
+				$ircRecord['alarmacodigo'] = $rwAlarma['alarmacodigo'];
+				$ircRecord['modulocodigo'] = $MODULOCODIGO;
+				$ircRecordop['alarmacodigo'] = '=';
+				$ircRecordop['modulocodigo'] = '=';
+				$rsAlarmaModulo = dinamicscanopalarmamodulo($ircRecord,$ircRecordop,$idcon);
+				$nrAlarmaModulo = fncnumreg($rsAlarmaModulo);
+				
+				
+				unset($ircRecord,$ircRecordop);
+				$ircRecord['alarmacodigo'] = $rwAlarma['alarmacodigo'];
+				$ircRecord['produccoduno'] = $produccoduno;
+				$ircRecordop['alarmacodigo'] = '=';
+				$ircRecordop['produccoduno'] = '=';
+				$rsAlarmaItem = dinamicscanopalarmaitem($ircRecord,$ircRecordop,$idcon);
+				$nrAlarmaItem = fncnumreg($rsAlarmaItem);
+				
+				unset($ircRecord,$ircRecordop);
+				$ircRecord['alarmacodigo'] = $rwAlarma['alarmacodigo'];
+				$ircRecordop['alarmacodigo'] = '=';
+				$rsAlarmaGestion = dinamicscanopvistaalarmagestion($ircRecord,$ircRecordop,$idcon);
+				$nrAlarmaGestion = fncnumreg($rsAlarmaGestion);
+				
+				unset($ircRecord,$ircRecordop);
+				$ircRecord['alarmacodigo'] = $rwAlarma['alarmacodigo'];
+				$ircRecord['modulocodigo'] = $MODULOCODIGO;
+				$ircRecord['alamodirres'] = '1';//1 si es responsable y 0 si es dirigido
+				$ircRecordop['alarmacodigo'] = '=';
+				$ircRecordop['modulocodigo'] = '=';
+				$ircRecord['alamodirres'] = '=';
+				$rsAlarmaModulo1 = dinamicscanopalarmamodulo($ircRecord,$ircRecordop,$idcon);
+				$nrAlarmaModulo1 = fncnumreg($rsAlarmaModulo1);
+				
+				if($nrAlarmaItem >= 1 && $nrAlarmaGestion >= 1 && $nrAlarmaModulo >= 1)
+				{
+					if($rwAlarma['tipoalacodigo'] == '1' && $nrAlarmaModulo1 < 1)//alarma 1 restrictiva
+					{
+						echo '<script language="javascript">';
+						echo '<!--//'."\n";
+						echo 'alert("Mensaje de alarma restrictiva: '.$rwAlarma['alarmamensaj'].'")';
+						echo '//-->'."\n";
+						echo '</script>';
+						if(!$rutamodulo)
+							$rutamodulo  = 'main.php';
+							echo '<script language="javascript">';
+							echo '<!--//'."\n";
+							echo 'location ="'.$rutamodulo.'?codigo='.$codigo.';"';
+							echo '//-->'."\n";
+							echo '</script>';	
+					}
+					elseif($rwAlarma['tipoalacodigo'] == '1' && $nrAlarmaModulo1 >= 1)//alarma 2 informativa
+					{
+						$varMsj = 
+							'<tr>
+								<td>
+									<div class="ui-widget">
+										<div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;"> 
+											<p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+											<strong>Mensaje de alarma:</strong> '.$rwAlarma['alarmamensaj'].'</p>
+										</div>
+									</div>
+								</td>
+							</tr>';
+					}
+					else
+					{
+						$varMsj = 
+							'<tr>
+								<td>
+									<div class="ui-widget">
+										<div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;"> 
+											<p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+											<strong>Mensaje de alarma:</strong> '.$rwAlarma['alarmamensaj'].'</p>
+										</div>
+									</div>
+								</td>
+							</tr>';
+					}
+				}
+			}
+		}	
+	}
+?>

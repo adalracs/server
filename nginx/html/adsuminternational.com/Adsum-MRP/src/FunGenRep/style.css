@@ -1,0 +1,7 @@
+body {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px}
+.smallFont {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 9px}
+h1 {  color: #000099; font-style: normal; font-weight: normal}
+h2 {  color: #000099; font-weight: normal}
+h3 {  color: #000099; font-weight: normal}
+a {  color: #000099; text-decoration: none; font-weight: bold}
+li {  list-style-type: circle}

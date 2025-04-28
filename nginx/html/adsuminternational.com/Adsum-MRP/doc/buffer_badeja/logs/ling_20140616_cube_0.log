@@ -1,0 +1,4 @@
+2014-06-16 00:00:19 - jose.caicedo => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 190.242.58.154
+2014-06-16 00:00:19 - jose.caicedo => [Rango de Generacion 2014-06-16 - 2014-06-23 :: RNG_DATE_PER ] -> IP: 190.242.58.154
+2014-06-16 00:00:19 - jose.caicedo => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 190.242.58.154
+2014-06-16 00:00:19 - jose.caicedo => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 190.242.58.154

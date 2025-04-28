@@ -1,0 +1,4 @@
+2015-04-26 00:00:10 - edwin.fernandez => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.65.41
+2015-04-26 00:00:10 - edwin.fernandez => [Rango de Generacion 2015-04-26 - 2015-05-03 :: RNG_DATE_PER ] -> IP: 192.168.65.41
+2015-04-26 00:00:10 - edwin.fernandez => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.65.41
+2015-04-26 00:00:10 - edwin.fernandez => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 192.168.65.41

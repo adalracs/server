@@ -1,0 +1,4 @@
+2014-12-17 00:00:16 - edinson.ramirez => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.66.27
+2014-12-17 00:00:16 - edinson.ramirez => [Rango de Generacion 2014-12-17 - 2014-12-24 :: RNG_DATE_PER ] -> IP: 192.168.66.27
+2014-12-17 00:00:16 - edinson.ramirez => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.66.27
+2014-12-17 00:00:16 - edinson.ramirez => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 192.168.66.27

@@ -1,0 +1,7 @@
+2017-05-08 11:19:06 - desarrollo => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 190.146.221.21
+2017-05-08 11:19:06 - desarrollo => [Rango de Generacion 2017-05-08 - 2017-05-15 :: RNG_DATE_PER ] -> IP: 190.146.221.21
+2017-05-08 11:19:07 - desarrollo => [PROGRAMACION 283 - [Generado] Se genero la orden de trabajo # 10674 :: GND_RNG_GEN_OT ] -> IP: 190.146.221.21
+2017-05-08 11:19:07 - desarrollo => [PROGRAMACION 283 - [Actualizado] Se actualizo la programacion con la fecha 2017-04-23 :: O_RNG_ACT_PG ] -> IP: 190.146.221.21
+2017-05-08 11:19:07 - desarrollo => [PROGRAMACION 283 - No GENERA ORDEN / FECHA GENERACION [2017-05-23] MAYOR A FECHA LIMITE [2017-05-15] :: RNG_NOGEN_OT ] -> IP: 190.146.221.21
+2017-05-08 11:19:07 - desarrollo => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 190.146.221.21
+2017-05-08 11:19:07 - desarrollo => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 190.146.221.21

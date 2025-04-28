@@ -1,0 +1,7 @@
+2015-10-08 12:41:49 - aariascos => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 190.99.221.232
+2015-10-08 12:41:49 - aariascos => [Rango de Generacion 2015-10-08 - 2015-10-15 :: RNG_DATE_PER ] -> IP: 190.99.221.232
+2015-10-08 12:41:49 - aariascos => [PROGRAMACION 283 - [Generado] Se genero la orden de trabajo # 10655 :: GND_RNG_GEN_OT ] -> IP: 190.99.221.232
+2015-10-08 12:41:49 - aariascos => [PROGRAMACION 283 - [Actualizado] Se actualizo la programacion con la fecha 2015-09-23 :: O_RNG_ACT_PG ] -> IP: 190.99.221.232
+2015-10-08 12:41:49 - aariascos => [PROGRAMACION 283 - No GENERA ORDEN / FECHA GENERACION [2015-10-23] MAYOR A FECHA LIMITE [2015-10-15] :: RNG_NOGEN_OT ] -> IP: 190.99.221.232
+2015-10-08 12:41:49 - aariascos => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 190.99.221.232
+2015-10-08 12:41:49 - aariascos => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 190.99.221.232

@@ -1,0 +1,208 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0"
+	align="center" class="ui-widget-content">
+	<tr class="ui-state-default">
+		<td class="cont-title">&nbsp;<a onClick="return verocultar('filreporteopp',3);" href="javascript:animatedcollapse.toggle('filreporteopp');"><img id="row3" align="middle" align="top" src="temas/Noise/DescOn.gif" border="0">Historial Reportes</a></td>
+	</tr>
+</table>
+<div id="filreporteopp" style="padding: 2px 2px 2px 2px; display: none;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" class="ui-widget-content">
+	<?php
+	$rsreporteopp = dinamicscanreporteopp(array( 'ordoppcodigo' => $ordoppcodigo, 'repopptipo' => 1 ),$idcon);
+	$nrreporteopp = fncnumreg($rsreporteopp);
+	if(!$nrreporteopp)
+	{
+		?>
+	<tr>
+		<td>
+			<div class="ui-widget">
+				<div style="margin-top: 1px; padding: 0 .7em;" class="ui-state-highlight ui-corner-all">
+					<p><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-info"></span> <b>No se encontraron gestiones.</b></p>
+				</div>
+			</div>
+		</td>
+	</tr>
+	<?php
+	}
+
+	for( $a = 0; $a < $nrreporteopp; $a++)
+	{
+		$rwreporteopp = fncfetch($rsreporteopp,$a);
+		?>
+	<tr>
+		<td class="ui-state-default" width="3%">#</td>
+		<td class="ui-state-default" width="27%">Usuario</td>
+		<td class="ui-state-default" width="18%">Fecha / Hora</td>
+		<td class="ui-state-default" width="52%">Motivo / Aclaraci&oacute;n</td>
+	</tr>
+	<tr>
+		<td class="NoiseDataTD row-soliserv">&nbsp;<?php echo ($a + 1) ?></td>
+		<td class="NoiseDataTD row-soliserv">&nbsp;<?php echo cargausuanombre($rwreporteopp['usuacodi'],$idcon); ?></td>
+		<td class="NoiseDataTD row-soliserv">&nbsp;<?php echo $rwreporteopp['repoppfecha'].' - '.$rwreporteopp['repopphora']?></td>
+		<td class="NoiseDataTD row-soliserv">&nbsp;<?php echo $rwreporteopp['repoppdescri']; ?></td>
+	</tr>
+	<tr>
+		<td class="ui-state-default" width="3%">&nbsp;</td>
+		<td colspan="4" class="ui-state-default" width="3%">Material implicado</td>
+	</tr>
+	<?php 
+
+		$rsReporteoppmaterial = dinamicscanreporteoppmaterial(array('repoppcodigo' => $rwreporteopp['repoppcodigo']),$idcon);
+		$nrReporteoppmaterial = fncnumreg($rsReporteoppmaterial);
+
+		for( $c = 0; $c < $nrReporteoppmaterial; $c++)
+		{
+			$rwReporteoppmaterial = fncfetch($rsReporteoppmaterial,$c);
+			$rwGestionoppreporte = loadrecordgestionoppreporte($rwReporteoppmaterial['geoprecodigo'],$idcon);
+	?>
+	<tr>
+		<td class="NoiseDataTD row-soliserv">&nbsp;</td>
+		<td colspan="3">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0"
+			align="center">
+			<tr>
+				<td class="NoiseDataTD row-soliserv" width="5%">&nbsp;</td>
+				<td class="NoiseDataTD row-soliserv" width="65%">&nbsp;<b>Item</b>&nbsp;<?php echo carganombitemdesa1($rwGestionoppreporte['itedescodigo'],$idcon)?></td>
+				<td class="NoiseDataTD row-soliserv" width="15%">&nbsp;<?php echo $rwReporteoppmaterial['reopmtcantkg'];?>&nbsp;<b>(kgs)</b></td>
+				<td class="NoiseDataTD row-soliserv" width="15%">&nbsp;<?php echo $rwReporteoppmaterial['reopmtcantmt'];?>&nbsp;<b>(mts)</b></td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<?php
+		}
+	?>
+	<tr>
+		<td class="ui-state-default" width="3%">&nbsp;</td>
+		<td colspan="4" class="ui-state-default" width="3%">Desperdicio</td>
+	</tr>
+	<?php 
+
+		$rsReporteoppdesperdiciopn = dinamicscanreporteoppdesperdiciopn(array('repoppcodigo' => $rwreporteopp['repoppcodigo']),$idcon);
+		$nrReporteoppdesperdiciopn = fncnumreg($rsReporteoppdesperdiciopn);
+
+		for( $c = 0; $c < $nrReporteoppdesperdiciopn; $c++)
+		{
+			$rwReporteoppdesperdiciopn = fncfetch($rsReporteoppdesperdiciopn,$c);
+			$rwDesperdicionpn = loadrecorddesperdiciopn($rwReporteoppdesperdiciopn['despercodigo'],$idcon);
+	?>
+	<tr>
+		<td class="NoiseDataTD row-soliserv">&nbsp;</td>
+		<td colspan="3">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0"
+			align="center">
+			<tr>
+				<td class="NoiseDataTD row-soliserv" width="5%">&nbsp;</td>
+				<td class="NoiseDataTD row-soliserv" width="65%">&nbsp;<?php echo ($rwDesperdicionpn['despernombre'])? strtoupper($rwDesperdicionpn['despernombre']) : '---' ;?></td>
+				<td class="NoiseDataTD row-soliserv" width="15%">&nbsp;<?php echo $rwReporteoppdesperdiciopn['reopdecantkg'];?>&nbsp;<b>(kgs)</b></td>
+				<td class="NoiseDataTD row-soliserv" width="15%">&nbsp;<?php echo $rwReporteoppdesperdiciopn['reopdecantmt'];?>&nbsp;<b>(mts)</b></td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<?php
+		}
+	?>
+	<tr>
+		<td class="ui-state-default" width="3%">&nbsp;</td>
+		<td colspan="4" class="ui-state-default" width="3%">Tiempos</td>
+	</tr>
+	<?php 
+
+		$rsReporteopptiempopn = dinamicscanreporteopptiempopn(array('repoppcodigo' => $rwreporteopp['repoppcodigo']),$idcon);
+		$nrReporteopptiempopn = fncnumreg($rsReporteopptiempopn);
+
+		for( $c = 0; $c < $nrReporteopptiempopn; $c++)
+		{
+			$rwReporteopptiempopn = fncfetch($rsReporteopptiempopn,$c);
+			$rwTiempopn = loadrecordtiempopn($rwReporteopptiempopn['tiempocodigo'],$idcon);
+	?>
+	<tr>
+		<td class="NoiseDataTD row-soliserv">&nbsp;</td>
+		<td colspan="3">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+			<tr>
+				<td class="NoiseDataTD row-soliserv" width="5%">&nbsp;</td>
+				<td class="NoiseDataTD row-soliserv" width="65%">&nbsp;<?php echo ($rwTiempopn['tiemponombre'])? strtoupper($rwTiempopn['tiemponombre']) : '---' ;?></td>
+				<td class="NoiseDataTD row-soliserv" width="15%">&nbsp;<?php echo $rwReporteopptiempopn['reoptihorini'];?>&nbsp;</td>
+				<td class="NoiseDataTD row-soliserv" width="15%">&nbsp;<?php echo $rwReporteopptiempopn['reoptihorfin'];?>&nbsp;</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<?php
+		}
+	?>
+	<tr>
+		<td class="ui-state-default" width="3%">&nbsp;</td>
+		<td colspan="4" class="ui-state-default" width="3%">Banderas</td>
+	</tr>
+	<?php 
+
+		$rsReporteoppflagproduccion = dinamicscanreporteoppflagproduccion(array('repoppcodigo' => $rwreporteopp['repoppcodigo']),$idcon);
+		$nrReporteoppflagproduccion = fncnumreg($rsReporteoppflagproduccion);
+
+		for( $c = 0; $c < $nrReporteopptiempopn; $c++)
+		{
+			$rwReporteoppflagproduccion = fncfetch($rsReporteoppflagproduccion,$c);
+			$rwFlagproduccion = loadrecordflagproduccion($rwReporteoppflagproduccion['flaprocodigo'],$idcon);
+	?>
+	<tr>
+		<td class="NoiseDataTD row-soliserv">&nbsp;</td>
+		<td colspan="3">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0"
+			align="center">
+			<tr>
+				<td class="NoiseDataTD row-soliserv" width="5%">&nbsp;</td>
+				<td class="NoiseDataTD row-soliserv" colspan="3">&nbsp;<?php echo ($rwFlagproduccion['flapronombre'])? strtoupper($rwFlagproduccion['flapronombre']) : '---' ;?></td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<?php
+		}
+	?>
+	<tr>
+		<td class="ui-state-default" width="3%">&nbsp;</td>
+		<td colspan="4" class="ui-state-default" width="3%">Reporte pn</td>
+	</tr>
+	<?php 
+
+		$rsReporteoppreportepn = dinamicscanreporteoppreportepn(array('repoppcodigo' => $rwreporteopp['repoppcodigo']),$idcon);
+		$nrReporteoppreportepn = fncnumreg($rsReporteoppreportepn);
+
+		for( $c = 0; $c < $nrReporteoppreportepn; $c++)
+		{
+			$rwReporteoppreportepn = fncfetch($rsReporteoppreportepn,$c);
+	?>
+	<tr>
+		<td class="NoiseDataTD row-soliserv">&nbsp;</td>
+		<td colspan="3">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+				<tr>
+					<td class="NoiseDataTD row-soliserv" width="5%">&nbsp;</td>
+					<td class="NoiseDataTD row-soliserv" width="65%">&nbsp;Kilogramos reportados :&nbsp;</td>
+					<td class="NoiseDataTD row-soliserv" colspan="2">&nbsp;<?php echo $rwReporteoppreportepn['reoppncantkg']; ?>&nbsp;<b>(kgs)</b></td>
+				</tr>
+				<tr>
+					<td class="NoiseDataTD row-soliserv" width="5%">&nbsp;</td>
+					<td class="NoiseDataTD row-soliserv" width="65%">&nbsp;Metros reportados :&nbsp;</td>
+					<td class="NoiseDataTD row-soliserv" colspan="2">&nbsp;<?php echo $rwReporteoppreportepn['reoppncantmt']; ?>&nbsp;<b>(mts)</b></td>
+				</tr>
+				<tr>
+					<td class="NoiseDataTD row-soliserv" width="5%">&nbsp;</td>
+					<td class="NoiseDataTD row-soliserv" width="65%">&nbsp;Unidades reportados :&nbsp;</td>
+					<td class="NoiseDataTD row-soliserv" colspan="2">&nbsp;<?php echo $rwReporteoppreportepn['reoppncantun']; ?>&nbsp;<b>(und)</b></td>
+				</tr>
+				<tr>
+					<td class="NoiseDataTD row-soliserv" width="5%">&nbsp;</td>
+					<td class="NoiseDataTD row-soliserv" colspan="3">&nbsp;Nota :&nbsp;<?php echo $rwReporteoppreportepn['reoppndescri']; ?></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<?php
+		}
+	}
+	?>
+</table>
+</div>

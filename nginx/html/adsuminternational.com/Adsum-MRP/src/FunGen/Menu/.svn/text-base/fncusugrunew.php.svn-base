@@ -1,0 +1,45 @@
+<?php 
+/*
+Propiedad intelectual de Adsum (c).
+Funcion         : fncusugru
+Decripcion      : determina los grupos a los que pertenece un usuario.
+Parametros      : Descripicion
+   $iintusuacodi     Id del usuario.
+Retorno         : Descripicion
+  true $orecgrupos      array con los grupos a los que pertenece el usuario.
+  false = 0            no pertenece a ningun grupo.
+Autor           : ariascos
+Fecha           : 17-sep-2001  
+*/
+
+function  fncusugrunew($iintusuacodi,$inuconn)
+{
+	define ("n",0);
+	define ("n1",1);
+	define ("e_conn",-1);
+	define ("e_db",-2);
+	define ("e_empty",-3);
+		
+	$rec = array("usuacodi"=>$iintusuacodi);
+	$rec1 = array("usuacodi"=>'=');
+	$nuresult = call_user_func ('dinamicscanopusuagrup',$rec,$rec1,$inuconn);
+	if ($nuresult && $nuresult != e_empty && $nuresult != e_db
+	&& $nuresult != e_conn)
+	{ 
+		 $nucantrow = fncnumreg ($nuresult);
+		 if($nucantrow > n)
+		 {
+		 	for($i = n ; $i < $nucantrow ; $i++)
+			{
+				$reccadena = fncfetch ($nuresult,$i);
+				$orecgrupos[$i] = $reccadena[grupcodi];
+			}
+			return $orecgrupos;
+		 }
+	}
+	else
+	{
+		return n;
+	}
+}
+?>

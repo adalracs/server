@@ -1,0 +1,4 @@
+2014-06-07 00:00:13 - breth.perafan => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 190.242.58.154
+2014-06-07 00:00:13 - breth.perafan => [Rango de Generacion 2014-06-07 - 2014-06-14 :: RNG_DATE_PER ] -> IP: 190.242.58.154
+2014-06-07 00:00:13 - breth.perafan => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 190.242.58.154
+2014-06-07 00:00:13 - breth.perafan => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 190.242.58.154

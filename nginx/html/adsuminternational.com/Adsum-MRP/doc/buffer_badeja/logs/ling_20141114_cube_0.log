@@ -1,0 +1,4 @@
+2014-11-14 07:33:58 - henry.aguilar => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.97.131
+2014-11-14 07:33:58 - henry.aguilar => [Rango de Generacion 2014-11-14 - 2014-11-21 :: RNG_DATE_PER ] -> IP: 192.168.97.131
+2014-11-14 07:33:58 - henry.aguilar => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.97.131
+2014-11-14 07:33:58 - henry.aguilar => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 192.168.97.131

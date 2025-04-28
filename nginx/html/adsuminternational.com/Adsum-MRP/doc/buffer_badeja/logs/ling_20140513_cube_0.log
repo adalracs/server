@@ -1,0 +1,4 @@
+2014-05-13 00:00:17 - franklin.cuenu => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 200.93.164.51
+2014-05-13 00:00:17 - franklin.cuenu => [Rango de Generacion 2014-05-13 - 2014-05-20 :: RNG_DATE_PER ] -> IP: 200.93.164.51
+2014-05-13 00:00:17 - franklin.cuenu => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 200.93.164.51
+2014-05-13 00:00:17 - franklin.cuenu => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 200.93.164.51

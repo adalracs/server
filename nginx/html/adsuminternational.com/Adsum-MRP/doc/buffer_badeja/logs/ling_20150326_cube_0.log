@@ -1,0 +1,4 @@
+2015-03-26 00:00:06 - franklin.cuenu => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.65.84
+2015-03-26 00:00:06 - franklin.cuenu => [Rango de Generacion 2015-03-26 - 2015-04-02 :: RNG_DATE_PER ] -> IP: 192.168.65.84
+2015-03-26 00:00:06 - franklin.cuenu => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.65.84
+2015-03-26 00:00:06 - franklin.cuenu => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 192.168.65.84

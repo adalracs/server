@@ -1,0 +1,5 @@
+2015-08-03 00:00:04 - gustavo.bastidas => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.66.42
+2015-08-03 00:00:04 - gustavo.bastidas => [Rango de Generacion 2015-08-03 - 2015-08-10 :: RNG_DATE_PER ] -> IP: 192.168.66.42
+2015-08-03 00:00:04 - gustavo.bastidas => [PROGRAMACION 283 - No GENERA ORDEN / FECHA GENERACION [2015-08-23] MAYOR A FECHA LIMITE [2015-08-10] :: RNG_NOGEN_OT ] -> IP: 192.168.66.42
+2015-08-03 00:00:04 - gustavo.bastidas => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.66.42
+2015-08-03 00:00:04 - gustavo.bastidas => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 192.168.66.42

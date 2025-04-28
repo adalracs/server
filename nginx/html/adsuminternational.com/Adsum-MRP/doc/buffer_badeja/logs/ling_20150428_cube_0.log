@@ -1,0 +1,4 @@
+2015-04-28 00:00:02 - alejandro.pinzon => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.66.13
+2015-04-28 00:00:02 - alejandro.pinzon => [Rango de Generacion 2015-04-28 - 2015-05-05 :: RNG_DATE_PER ] -> IP: 192.168.66.13
+2015-04-28 00:00:02 - alejandro.pinzon => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.66.13
+2015-04-28 00:00:02 - alejandro.pinzon => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 192.168.66.13

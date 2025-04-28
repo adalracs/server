@@ -1,0 +1,4 @@
+2015-05-12 00:00:09 - ferney.moreno => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.66.103
+2015-05-12 00:00:09 - ferney.moreno => [Rango de Generacion 2015-05-12 - 2015-05-19 :: RNG_DATE_PER ] -> IP: 192.168.66.103
+2015-05-12 00:00:09 - ferney.moreno => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.66.103
+2015-05-12 00:00:09 - ferney.moreno => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 192.168.66.103

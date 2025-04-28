@@ -1,0 +1,559 @@
+<?php
+function nulovistaalarmacierre($arg){
+	return (($arg == "0")) ? "0" : (! ($arg)) ? "NULL" : "'" . $arg . "'";
+}
+
+/* 
+    Generado con generador Adsum (c). 
+Funci�n: Loadvistaalarmacierre 
+Descripcion: Accesa el Registro indicado de la tabla 
+Parametros:  
+$iintestsolcodigo Campo parte de la llave primaria 
+Retorno:  
+TRUE = Registro solicitado 
+FALSE = Error de base de datos o de conecci�n 
+Autor: ADSUM 
+Fecha: 29-August-2004 
+Modificaci�n | Fecha | Autor 
+*/
+function loadrecordvistaalarmacierre($iintalarmacodigo, $nuConn)
+{
+	defined('e_connection') || define("e_connection",-1);
+	defined('e_db') || define("e_db",-2);
+	defined('e_empty') || define("e_empty",-3);
+	defined('cero') || define("cero",0);
+	
+	if($nuConn){				
+
+		$sbSql = "SELECT * FROM vistaalarmacierre WHERE alarmacodigo = '".$iintalarmacodigo."'";
+		$nuResult = @pg_exec ( $nuConn, $sbSql );
+		unset ( $sbSql );
+		
+		if ($nuResult) 
+		{
+			$nuCantRow = pg_numrows ( $nuResult );
+			
+			if ($nuCantRow > cero) 
+			{
+				$nuCantFields = pg_numfields ( $nuResult );
+				$sbRow = pg_fetch_row ( $nuResult, cero );
+				$sbLista = array (
+					"alarmacodigo" => $sbRow [0], 
+					"usuanombre" => $sbRow [1],
+					"alarmafecelb" => $sbRow [2],
+					"alarmafecvig" => $sbRow [3],
+					"alarmamensaj" => $sbRow [4],
+					"alarmadescri" => $sbRow [5],
+					"tipalanombre" => $sbRow [6],
+					"nivalanombre" => $sbRow [7],
+					"ordcomcodcli" => $sbRow [8],
+					"nivalacodigo" => $sbRow [9],
+					"modulos_respo" => $sbRow [10],
+					"modulos_dir" => $sbRow [11],
+					"tipoalacodigo" => $sbRow [12],
+					"estalacodigo" => $sbRow [13],
+					"estalanombre" => $sbRow [14]
+				);
+				return $sbLista;
+			
+			} 
+			else
+				return e_empty;
+		} 
+		else 
+			return e_db;
+	} 
+	else 
+		return e_connection;
+}
+
+/* 
+    Generado con generador Adsum (c). 
+Funci�n: fullscanvistaalarmacierre 
+Descripcion: Accesa todos los Registros  de la tabla 
+Parametros:  
+Retorno:  
+TRUE = Id de transaccion 
+FALSE = Error de base de datos o de conecci�n 
+Autor: ADSUM 
+Fecha: 29-August-2004 
+Modificaci�n | Fecha | Autor 
+*/
+function fullscanvistaalarmacierre($nuConn) 
+{
+	defined('e_connection') || define("e_connection",-1);
+	defined('e_db') || define("e_db",-2);
+	defined('e_empty') || define("e_empty",-3);
+	defined('cero') || define("cero",0);
+	
+	if ($nuConn) 
+	{
+		$sbSql = "SELECT * FROM vistaalarmacierre ORDER BY alarmafecelb";
+		$nuResult = pg_exec ( $nuConn, $sbSql );
+		unset ( $sbSql );
+
+		if ($nuResult) 
+		{
+			$nuCantRow = pg_numrows ( $nuResult );
+			
+			if ($nuCantRow > cero) 
+				return $nuResult;
+			else
+				return e_empty;
+		} 
+		else 
+			return e_db;
+	} 
+	else 
+		return e_connection;
+}
+
+/**
+ * Function sintaxconsqlvistaalarmacierre
+ * Metodo para evitar errores de indices inexistente al momento de complementar el SQL
+ * 
+ * @param $ircRecord
+ * @param $ircRecordop
+ * @return string
+ */
+function sintaxconsqlvistaalarmacierre($ircRecord, $ircRecordop)
+{
+	$flagvistaalarmacierre = 0;
+	$sbSql = "";
+	
+	if(is_array($ircRecord) && count($ircRecord) > 0)
+	{
+		foreach($ircRecord as $kField => $vField)
+		{
+			if(is_array($ircRecordop))
+				$sbSql .= (array_key_exists($kField, $ircRecordop)) ? sintaxisopvistaalarmacierre($vField, $kField, $flagvistaalarmacierre, $ircRecordop[$kField]) : sintaxisvistaalarmacierre($vField, $kField, $flagvistaalarmacierre);
+			else
+				$sbSql .= sintaxisvistaalarmacierre($vField, $kField, $flagvistaalarmacierre);
+		}
+	}
+	
+	return $sbSql;
+}
+
+/* 
+    Generado con generador Adsum (c). 
+Funci�n: Sintaxisvistaalarmacierre 
+Descripcion: Verifica sintaxis de la consulta en dinamicScan 
+Parametros:  
+ $arg Valor del campo 
+ $campo Nombre del campo 
+ $flagvistaalarmacierre Bandera que define si se utiliza AND 
+Retorno:  
+TRUE =  
+FALSE =  
+Autor: ariascos 
+Fecha: 29-August-2004 
+Modificaci�n | Fecha | Autor 
+*/
+function sintaxisvistaalarmacierre($arg, $campo, &$flagvistaalarmacierre) 
+{
+	$aux = ($flagvistaalarmacierre) ? " AND" : "";
+
+	if ($arg == "")
+		return "";
+	else 
+	{
+		$flagvistaalarmacierre = 1;
+		if (strpos($campo, 'codi') && $campo != 'alarmacodigo')
+			return $aux." ".$campo." = '".$arg. "'";
+		else
+			return $aux." LOWER(".$campo."::text) like '%".strtolower($arg)."%'";
+			
+	}
+}
+
+/* 
+    Generado con generador Adsum (c). 
+Funci�n: DinamicScanvistaalarmacierre 
+Descripcion: Accesa el registro que hace match con la entrada 
+Parametros:  
+$iintalarmacodigo Campo parte de la llave primaria 
+Retorno:  
+TRUE = Id. de transaccion. 
+FALSE = Error de base de datos o de conecci�n 
+Autor: ariascos 
+Fecha: 29-August-2004 
+Modificaci�n | Fecha | Autor 
+*/
+function dinamicscanvistaalarmacierre($ircRecord, $nuConn) 
+{
+	defined('e_connection') || define("e_connection",-1);
+	defined('e_db') || define("e_db",-2);
+	defined('e_empty') || define("e_empty",-3);
+	defined('cero') || define("cero",0);
+	
+	if ($nuConn) 
+	{
+		$sbSql = "SELECT * FROM vistaalarmacierre WHERE ".sintaxconsqlvistaalarmacierre($ircRecord, null)." ORDER BY alarmafecelb";
+
+		$nuResult = pg_exec ( $nuConn, $sbSql );
+		unset ( $sbSql );
+
+		if ($nuResult) 
+		{
+			$nuCantRow = pg_numrows ( $nuResult );
+			
+			if ($nuCantRow > cero)
+				return $nuResult;
+			else
+				return e_empty;
+		} 
+		else 
+			return e_db;
+	} 
+	else 
+		return e_connection;
+}
+
+/* 
+    Generado con generador Adsum (c). 
+Funci�n: Sintaxisopvistaalarmacierre 
+Descripcion: Verifica sintaxis de la consulta en dinamicScan 
+Parametros:  
+$iintalarmacodigo Campo parte de la llave primaria 
+Retorno:  
+TRUE =  
+FALSE =  
+Autor: ariascos 
+Fecha: 29-August-2004 
+Modificaci�n | Fecha | Autor 
+*/
+function sintaxisopvistaalarmacierre($arg, $campo, &$flagvistaalarmacierre, $oper) 
+{
+	$aux = ($flagvistaalarmacierre) ? " AND" : "";
+
+	if ($arg == "")
+		return "";
+	else 
+	{
+		$flagvistaalarmacierre = 1;
+		switch ($oper) :
+			case "like":	return $aux." LOWER(".$campo."::text) like '%".strtolower($arg)."%'";	break;
+			case "=":		return $aux." LOWER(".$campo."::text) = '".strtolower($arg)."'";		break;
+			case "<":		return $aux." ".$campo." < ".$arg;										break;
+			case "<=":		return $aux." ".$campo." <= ".$arg;										break;
+			case ">":		return $aux." ".$campo." > ".$arg;										break;
+			case ">=":		return $aux." ".$campo." >= ".$arg;										break;
+			case "<>":		return $aux." ".$campo." <> ".$arg;										break;
+			case "like%_":	return $aux." LOWER(".$campo."::text) like '%".strtolower($arg)."'";	break;
+			case "like_%":	return $aux." LOWER(".$campo."::text) like '".strtolower($arg)."%'";	break;
+			case "IN" : 	return $aux . " " . $campo . " IN (" . $arg . ")"; break;
+		endswitch;
+	}
+}
+
+/* 
+    Generado con generador Adsum (c). 
+Funci�n: DinamicScanopvistaalarmacierre 
+Descripcion: Accesa el registro que hace match con la entrada 
+Parametros:  
+$iintalarmacodigo Campo parte de la llave primaria 
+Retorno:  
+TRUE = Id. de transaccion. 
+FALSE = Error de base de datos o de conecci�n 
+Autor: ariascos 
+Fecha: 29-August-2004 
+Modificaci�n | Fecha | Autor 
+*/
+function dinamicscanopvistaalarmacierre($ircrecord, $ircrecordop, $nuconn)
+{
+	defined('e_connection') || define("e_connection",-1);
+	defined('e_db') || define("e_db",-2);
+	defined('e_empty') || define("e_empty",-3);
+	defined('cero') || define("cero",0);
+
+
+	if ($nuconn)
+	{
+		$sbSql = "SELECT * FROM vistaalarmacierre WHERE ".sintaxconsqlvistaalarmacierre($ircrecord, $ircrecordop)." ORDER BY alarmafecelb";
+		$nuResult = pg_exec ( $nuconn, $sbSql );
+		unset ( $sbSql );
+		
+		if ($nuResult) 
+		{
+			$nuCantRow = pg_numrows ( $nuResult );
+			
+			if ($nuCantRow > cero)
+				return $nuResult;
+			else
+				return e_empty;
+		} 
+		else 
+			return e_db;
+	} 
+	else 
+		return e_connection;
+}
+
+
+/* 
+    Generado con generador Adsum (c). 
+Funci�n: DinamicLimitScanvistaalarmacierre 
+Descripcion: Accesa el registro que hace match con la entrada 
+Parametros:  
+$iintalarmacodigo Campo parte de la llave primaria 
+Retorno:  
+TRUE = Id. de transaccion. 
+FALSE = Error de base de datos o de conecci�n 
+Autor: ariascos 
+Fecha: 29-August-2004 
+Modificaci�n | Fecha | Autor 
+*/
+function dinamiclimitscanvistaalarmacierre($ircRecord, $inucant, $inupos, $nuConn,$ircOrderby = null) 
+{
+	defined('e_connection') || define("e_connection",-1);
+	defined('e_db') || define("e_db",-2);
+	defined('e_empty') || define("e_empty",-3);
+	defined('cero') || define("cero",0);
+	
+	if ($nuConn)
+	{
+		$sbSql = "SELECT * FROM vistaalarmacierre WHERE ".sintaxconsqlvistaalarmacierre($ircRecord, null).(($ircOrderby) ? ' ORDER BY '.$ircOrderby : "")." LIMIT ".$inucant." OFFSET ".$inupos;
+		$nuResult = pg_exec ( $nuConn, $sbSql );
+		unset ( $sbSql );
+		
+		if ($nuResult)
+		{
+			$nuCantRow = pg_numrows ( $nuResult );
+			
+			if ($nuCantRow > cero)
+				return $nuResult;
+			else
+				return e_empty;
+		}
+		else
+			return e_db;
+	}
+	else 
+		return e_connection;
+}
+
+/* 
+    Generado con generador Adsum (c). 
+Funci�n: DinamicLimitScanopvistaalarmacierre 
+Descripcion: Accesa el registro que hace match con la entrada 
+Parametros:  
+$iintalarmacodigo Campo parte de la llave primaria 
+Retorno:  
+TRUE = Id. de transaccion. 
+FALSE = Error de base de datos o de conecci�n 
+Autor: ariascos 
+Fecha: 29-August-2004 
+Modificaci�n | Fecha | Autor 
+*/
+function dinamiclimitscanopvistaalarmacierre($ircrecord, $ircrecordop, $inucant, $inupos, $nuconn)
+{
+	defined('e_connection') || define("e_connection",-1);
+	defined('e_db') || define("e_db",-2);
+	defined('e_empty') || define("e_empty",-3);
+	defined('cero') || define("cero",0);
+	
+	if ($nuconn) 
+	{
+		$sbSql = "SELECT * FROM vistaalarmacierre WHERE ".sintaxconsqlvistaalarmacierre($ircrecord, $ircrecordop)." LIMIT ".$inucant." OFFSET ".$inupos;
+		$nuResult = pg_exec ( $nuconn, $sbSql );
+		unset ( $sbSql );
+		
+		if ($nuResult)
+		{
+			$nuCantRow = pg_numrows ( $nuResult );
+			
+			if ($nuCantRow > cero)
+				return $nuResult;
+			else
+				return e_empty;
+		}
+		else
+			return e_db;
+	} 
+	else 
+		return e_connection;
+}
+
+/**
+ * Function sintaxupdsqlvistaalarmacierre
+ * 
+ * @param $ircRecord
+ * @param $ircRecordop
+ * @return string
+ */
+function sintaxupdsqlvistaalarmacierre($ircRecord)
+{
+	$sbSql = "";
+	
+	if(is_array($ircRecord) && count($ircRecord) > 0)
+	{
+		foreach($ircRecord as $kField => $vField)
+			$sbSql .= (($sbSql) ? "," : "").$kField." = ".nulovistaalarmacierre($vField);
+	}
+	return $sbSql;
+}
+
+/* 
+    Generado con generador Adsum (c). 
+Funci�n: UpRecordvistaalarmacierre 
+Descripcion: Actualiza un registro en la tabla partir de un 
+	record 
+Parametros:  
+ $ircRecordRegistro a  modificar en la tabla 
+Retorno:  
+TRUE = True 
+FALSE = Error de base de datos o de conecci�n 
+Autor: ADSUM 
+Fecha: 29-August-2004 
+Modificaci�n | Fecha | Autor 
+*/
+function uprecordvistaalarmacierre($ircRecord, $nuConn)
+{
+	defined('e_connection') || define("e_connection",-1);
+	defined('e_db') || define("e_db",-2);
+	defined('e_empty') || define("e_empty",-3);
+	defined('cero') || define("cero",0);
+	define ( "n1", 1 );
+	
+	if ($nuConn)
+	{
+		$sbSql = "UPDATE vistaalarmacierre SET ".sintaxupdsqlvistaalarmacierre($ircRecord)." WHERE alarmacodigo = '".$ircRecord['alarmacodigo']."'";
+		
+		
+		$nuResult = pg_exec ( $nuConn, $sbSql );
+		unset ( $sbSql );
+		
+		if (! $nuResult) 
+			return e_db;
+	} 
+	else 
+		return e_connection;
+	return n1;
+}
+
+/* 
+    Generado con generador Adsum (c). 
+Funci�n: Consulmetavistaalarmacierre 
+Descripcion: Consulta tipo de dato 
+Parametros:  
+$iintalarmacodigo Campo parte de la llave primaria 
+Retorno:  
+TRUE = True 
+FALSE = Error de base de datos o de conecci�n 
+Autor: ariascos-lfolaya 
+Fecha: 29-August-2004 
+Modificaci�n | Fecha | Autor 
+*/
+function consulmetavistaalarmacierre($metavistaalarmacierre1, $metavistaalarmacierre2, $nuConn) 
+{
+	define ( "uno", 1 );
+	defined('cero') || define("cero",0);
+	
+	$sbSql = "SELECT DISTINCT(camptida) FROM campo WHERE campnomb = '".$metavistaalarmacierre1."'";
+	$nuResult = pg_exec ( $nuConn, $sbSql );
+	unset ( $sbSql );
+	
+	$arr = pg_fetch_array ( $nuResult );
+	$fncvalida = "valida" . $arr [0];
+	$result = $fncvalida ( $metavistaalarmacierre2 );
+	
+	if ($result > 0)
+		return uno;
+	else
+		return cero;
+}
+
+/**
+ * Function sintaxinssqlvistaalarmacierre
+ * 
+ * @param $ircRecord
+ * @param $ircRecordop
+ * @return string
+ */
+function sintaxinssqlvistaalarmacierre($ircRecord)
+{
+	$strField = "";
+	$strValue = "";
+	
+	if(is_array($ircRecord) && count($ircRecord) > 0)
+	{
+		foreach($ircRecord as $kField => $vField)
+		{
+			$strField .= (($strField) ? "," : "").$kField; 		
+			$strValue .= (($strValue) ? "," : "").nulovistaalarmacierre($vField);
+		}
+	}
+	return "({$strField}) VALUES ({$strValue})";
+}
+
+/* 
+    Generado con generador Adsum (c). 
+Funci�n: InsRecordvistaalarmacierre 
+Descripcion: Adiciona registro a la Tabla 
+Parametros:  
+ $ircRecordRegistro a insertar en la tabla 
+Retorno:  
+TRUE = True 
+FALSE = Error de base de datos o de conecci�n 
+Autor: ariascos 
+Fecha: 29-August-2004 
+Modificaci�n | Fecha | Autor 
+*/
+function insrecordvistaalarmacierre($ircRecord, $nuConn) 
+{
+	defined('e_connection') || define("e_connection",-1);
+	defined('e_db') || define("e_db",-2);
+	defined('e_empty') || define("e_empty",-3);
+	defined('cero') || define("cero",0);
+	define ( "n1", 1 );
+	
+	if ($nuConn)
+	{
+		$sbSql = "INSERT INTO vistaalarmacierre ".sintaxinssqlvistaalarmacierre($ircRecord);
+		$nuResult = pg_exec ( $nuConn, $sbSql );
+		unset ( $sbSql );
+		
+		if (! $nuResult)
+			return e_db;
+	}
+	else
+		return e_connection;
+	return n1;
+}
+
+/* 
+    Generado con generador Adsum (c). 
+Funci�n: DelRecordvistaalarmacierre 
+Descripcion: Borra el registro indicado de la Tabla 
+Parametros:  
+$iintalarmacodigo Campo parte de la llave primaria 
+Retorno:  
+TRUE = True 
+FALSE = Error de base de datos o de conecci�n 
+Autor: ariascos 
+Fecha: 29-August-2004 
+Modificaci�n | Fecha | Autor 
+*/
+function delrecordvistaalarmacierre($iintalarmacodigo, $nuConn)
+{
+	defined('e_connection') || define("e_connection",-1);
+	defined('e_db') || define("e_db",-2);
+	defined('e_empty') || define("e_empty",-3);
+	defined('cero') || define("cero",0);
+	define ( "n1", 1 );
+	
+	if ($nuConn)
+	{
+		$sbSql = "DELETE FROM vistaalarmacierre WHERE alarmacodigo = '".$iintalarmacodigo."'";
+		$nuResult = pg_exec ( $nuConn, $sbSql );
+		unset ( $sbSql );
+		
+		if (! $nuResult)
+			return e_db;
+	} 
+	else 
+		return e_connection;
+	return n1;
+}
+?>

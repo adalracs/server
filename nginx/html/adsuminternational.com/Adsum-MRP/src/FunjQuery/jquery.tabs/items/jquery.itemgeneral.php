@@ -1,0 +1,260 @@
+<div id="opt-tab1">
+	<div id="item_sessiona">
+		<table width="100%" border="0" cellspacing="1" cellpadding="0" align="center" class="ui-widget-content">
+			<?php if($tipevecodigo != 4){  //Caso Seleccion de Muestra ?>
+			<tr>
+  				<td class="NoiseFooterTD"><?php if ($campnomb['pedvencodven'] == 1) { $pedvencodven = null; echo "*";}?>&nbsp;Codigo vendedor</td>
+				<?php if($tipevecodigo == 1){ ?>
+				<td class="NoiseDataTD"><input type="text" name="pedvencodven" id="pedvencodven" value="<?php echo $pedvencodven;?>" onkeypress="return event.keyCode!=13" />
+				<?php }else{?>
+				<td class="NoiseDataTD"><input type="hidden" name="pedvencodven" id="pedvencodven" value="<?php echo $pedvencodven;?>" onkeypress="return event.keyCode!=13" />
+				<span id="lb_pedvencodven"><?php echo ($pedvencodven)? $pedvencodven : '[NINGUNO]'; ?></span>
+				<?php } ?>
+				</td> 
+				<td class="NoiseFooterTD"><?php if ($campnomb['pedvenvendedor'] == 1) { $pedvenvendedor = null; echo "<b style='font-size:15px; color:red;'>*</b>";}?>&nbsp;Vendedor</td>
+				<!--td class="NoiseDataTD"><input type="hidden" name="pedvenvendedor" id="pedvenvendedor" value="<?php //echo $pedvenvendedor;?>" onkeypress="return event.keyCode!=13"/-->
+				<td class="NoiseDataTD"><input type="text" name="pedvenvendedor" id="pedvenvendedor" value="<?php echo $pedvenvendedor;?>" onkeypress="return event.keyCode!=13"/>
+				<!--span id="lb_pedvenvendedor"><?php //echo ($pedvenvendedor)? $pedvenvendedor : '[NINGUNO]'; ?></span-->
+				</td> 
+  			</tr>
+			<tr>
+  				<td width="20%" class="NoiseFooterTD">&nbsp;Elaborado por</td>
+  				<td width="30%" class="NoiseDataTD"><?php echo $nombre ?></td>
+  				<td width="20%" class="NoiseFooterTD"><?php if ($campnomb['pedvenfecent'] == 1) { $pedvenfecent = null; echo "<b style='font-size:15px; color:red;'>*</b>";}?>&nbsp;Fecha de entrega</td> 
+				<td width="30%" class="NoiseDataTD"><input type="text" name="pedvenfecent" id="pedvenfecent" value="<?php echo $pedvenfecent;?>" size="15" onfocus="this.blur();"/></td>
+  			</tr>
+			<tr>
+  				<td width="20%" class="NoiseFooterTD"><?php if ($campnomb['pedvennumero'] == 1) { $pedvennumero = null; echo "<b style='font-size:15px; color:red;'>*</b>";}?>&nbsp;No. Pedido de venta</td>
+  				<td width="30%" class="NoiseDataTD"><input type="text" name="pedvennumero" id="pedvennumero" value="<?php echo $pedvennumero; ?>" onkeypress="return event.keyCode!=13"/>
+  				<td width="20%" class="NoiseFooterTD"><?php if ($campnomb['codigosap'] == 1) { $codigosap = null; echo "<b style='font-size:15px; color:red;'>*</b>";}?>&nbsp;Codigo Cliente</td> 
+				<td width="30%" class="NoiseDataTD"><input type="text" name="codigosap" id="codigosap" value="<?php echo $codigosap;?>" size="15" onkeypress="return event.keyCode!=13" /></td>
+			</tr>
+			<tr> 
+				<td class="NoiseFooterTD"><?php if ($campnomb['produccoduno'] == 1) { $produccoduno = null; echo "<b style='font-size:15px; color:red;'>*</b>";}?>&nbsp;Item</td>
+				<!--td class="NoiseDataTD"><input type="hidden" name="produccoduno" id="produccoduno" value="<?php //echo $produccoduno;?>" onkeypress="return event.keyCode!=13"/-->
+				<td class="NoiseDataTD"><input type="text" name="produccoduno" id="produccoduno" value="<?php echo $produccoduno;?>" onkeypress="return event.keyCode!=13" /><?php if($tipevecodigo == 2 || $tipevecodigo == 3): ?><button id="button">Cargar</button><?php endif; ?></td>
+				<!--span id="lb_produccoduno"><?php //echo ($produccoduno)? $produccoduno : '[NINGUNO]'; ?></span-->
+				</td> 
+  				<td class="NoiseFooterTD"><?php if ($campnomb['pedvendiapac'] == 1) { $pedvendiapac = null; echo "<b style='font-size:15px; color:red;'>*</b>";}?>&nbsp;D&iacute;as pactados</td>
+  				<td class="NoiseDataTD"><input type="text" name="pedvendiapac" id="pedvendiapac" size="15" value="<?php echo $pedvendiapac; ?>" onkeypress="return event.keyCode!=13"></td>
+  			</tr>
+			<tr> 
+				<td class="NoiseFooterTD">&nbsp;Nombre de cliente</td>
+				<td class="NoiseDataTD"><input type="hidden" name="clientcodigo" id="clientcodigo" value="<?php echo trim($clientcodigo); ?>" />
+				<!--input type="hidden" name="clientnombre" id="clientnombre" value="<?php //echo $clientnombre?>"/-->
+				<input type="text" name="clientnombre" id="clientnombre" value="<?php echo $clientnombre?>"/>
+				<!--span id="lb_clientnombre"><?php //echo ($clientnombre)? $clientnombre : '[NINGUNO]'; ?></span-->
+				</td>
+				<td class="NoiseFooterTD"><?php if ($campnomb['producnombre'] == 1) { $producnombre = null; echo "<b style='font-size:15px; color:red;'>*</b>";}?>&nbsp;Nombre/Item</td> 
+				<!--td class="NoiseDataTD"><input type="hidden" name="producnombre" id="producnombre" size="37" value="<?php echo $producnombre?>"-->
+				<td class="NoiseDataTD"><input type="text" name="producnombre" id="producnombre" size="37" value="<?php echo $producnombre?>">
+				<!--span id="lb_producnombre"><?php //echo ($producnombre)? $producnombre : '[NINGUNO]' ;?></span-->
+				</td>
+			</tr>
+			<tr><td colspan="4" class="NoiseErrorDataTD"></td></tr>
+			<tr><td colspan="4" class="NoiseFooterTD"><?php if($campnomb["pedvenobserv"]	 == 1){$pedvenobserv = null; echo "<b style='font-size:15px; color:red;'>*</b>";}?>&nbsp;Nota</td></tr>
+			<tr><td colspan="4" rowspan="2" class="NoiseDataTD"><textarea name="pedvenobserv" id="pedvenobserv" rows="3" cols="130"><?php echo $pedvenobserv ?></textarea>  </td></tr>
+			<?php }else{ ?>
+			<tr>
+  				<td width="20%" class="NoiseFooterTD">&nbsp;Elaborado por</td>
+  				<td width="80%" class="NoiseDataTD"><?php echo $nombre ?></td>
+  			</tr>
+			<?php }?>
+		</table>
+					
+		<table width="100%" border="0" cellspacing="1" cellpadding="0" align="center" class="ui-widget-content">
+			<?php if($tipevecodigo != 4){  //Caso Seleccion de Muestra ?>
+			<tr>
+				<td width="20%" class="NoiseFooterTD"><?php if ($campnomb['ordcomnumero'] == 1) { $ordcomnumero = null; echo "<b style='font-size:15px; color:red;'>*</b>";}?>&nbsp;No. Orden de compra</td> 
+				<td width="30%" class="NoiseDataTD"><input type="text" name="ordcomnumero" id="ordcomnumero" value="<?php echo trim($ordcomnumero);?>" onkeypress="return event.keyCode!=13"/></td>
+				<td width="20%" class="NoiseFooterTD"><?php if ($campnomb['pedvenfecelb'] == 1) { $pedvenfecrec = null; echo "<b style='font-size:15px; color:red;'>*</b>";}?>&nbsp;Fecha de elaboracion </td>
+				<td width="30%" class="NoiseDataTD"><input type="text" name="pedvenfecelb" id="pedvenfecelb" value="<?php echo $pedvenfecelb;?>" size="15" onfocus="this.blur();"></td> 
+			</tr>
+			<tr>
+		  		<td class="NoiseFooterTD <?php if($arrCampertipproCAL[$arrCampertipproCOD['precio']] > 0){echo 'ui-state-error ui-corner-all';}?>"><?php if ($campnomb['precio'] == 1) { $precio = null; echo "<b style='font-size:15px; color:red;'>*</b>";}?>&nbsp;Precio</td>
+		  		<td class="NoiseDataTD"><input type="text" name="precio" id="precio" value="<?php echo $precio ?>" onkeypress="return event.keyCode!=13"/></td>
+		  		<td class="NoiseFooterTD <?php if($arrCampertipproCAL[$arrCampertipproCOD['moneda']] > 0){echo 'ui-state-error ui-corner-all';}?>"><?php if ($campnomb['moneda'] == 1) { $moneda = null; echo "<b style='font-size:15px; color:red;'>*</b>";}?>&nbsp;Moneda</td>
+		  		<td class="NoiseDataTD"><select name="moneda">
+		  		<option value="">--Seleccione--</option>
+		  		<option value="COP" <?php if($moneda == 'COP'){echo 'selected';}?>>COP</option>
+		  		<option value="USD" <?php if($moneda == 'USD'){echo 'selected';}?>>USD</option>
+		  		<option value="EUR" <?php if($moneda == 'EUR'){echo 'selected';}?>>EUR</option>
+		  		</select></td>
+		  	</tr>
+		  	<tr>
+		  		<td class="NoiseFooterTD <?php if($arrCampertipproCAL[$arrCampertipproCOD['exportacion']] > 0){echo 'ui-state-error ui-corner-all';}?>"><?php if ($campnomb['exportacion'] == 1) { $exportacion = null; echo "<b style='font-size:15px; color:red;'>*</b>";}?>&nbsp;Exportaci&oacute;n</td>
+		  		<td class="NoiseDataTD">&nbsp;Si&nbsp;<input type="radio" name="exportacion" id="exportacion" value="si" <?php if($exportacion == 'si'){echo 'checked';}?> />&nbsp;&nbsp;&nbsp;No&nbsp;<input type="radio" name="exportacion" id="exportacion" value="no" <?php if($exportacion == 'no'){echo 'checked';}?> /></td>
+		  		<td class="NoiseFooterTD <?php if($arrCampertipproCAL[$arrCampertipproCOD['cartera']] > 0){echo 'ui-state-error ui-corner-all';}?>"><?php if ($campnomb['cartera'] == 1) { $cartera = null; echo "<b style='font-size:15px; color:red;'>*</b>";}?>&nbsp;Cartera Cumple</td>
+		  		<td class="NoiseDataTD">&nbsp;Si&nbsp;<input type="radio" name="cartera" id="cartera" value="si" <?php if($cartera == 'si'){echo 'checked';}?> />&nbsp;&nbsp;&nbsp;No&nbsp;<input type="radio" name="cartera" id="cartera" value="no" <?php if($cartera == 'no'){echo 'checked';}?> /></td>
+		  	</tr>
+		  	<tr>
+		  		<td class="NoiseFooterTD <?php if($arrCampertipproCAL[$arrCampertipproCOD['cobro_fotopo']] > 0){echo 'ui-state-error ui-corner-all';}?>"><?php if ($campnomb['cobro_fotopo'] == 1) { $cobro_fotopo = null; echo "<b style='font-size:15px; color:red;'>*</b>";}?>&nbsp;Cobro de fotopolimeros</td>
+		  		<td class="NoiseDataTD">&nbsp;Si&nbsp;<input type="radio" name="cobro_fotopo" id="cobro_fotopo" value="si" <?php if($cobro_fotopo == 'si'){echo 'checked';}?> />&nbsp;&nbsp;&nbsp;No&nbsp;<input type="radio" name="cobro_fotopo" id="cobro_fotopo" value="no" <?php if($cobro_fotopo == 'no'){echo 'checked';}?> /></td>
+		  		<td class="NoiseFooterTD"><?php if ($campnomb['pedvenfecrec'] == 1) { $pedvenfecrec = null; echo "<b style='font-size:15px; color:red;'>*</b>";}?>&nbsp;Fecha de recepci&oacute;n (OC)</td>
+				<td class="NoiseDataTD"><input type="text" name="pedvenfecrec" id="pedvenfecrec" value="<?php echo $pedvenfecrec;?>" size="15" onfocus="this.blur();"></td> 
+		  	</tr>
+		  	<tr>
+		  		<td class="NoiseFooterTD <?php if($arrCampertipproCAL[$arrCampertipproCOD['version_arte']] > 0){echo 'ui-state-error ui-corner-all';}?>"><?php if ($campnomb['version_arte'] == 1) { $cobro_fotopo = null; echo "<b style='font-size:15px; color:red;'>*</b>";}?>&nbsp;Version del arte / Fecha</td>
+		  		<td colspan="3" class="NoiseDataTD"><input type="text" name="version_arte" id="version_arte" value="<?php echo $version_arte ?>" onkeypress="return event.keyCode!=13"/></td>
+		  	</tr>
+		  	<?php if($flagOtros){ ?>
+	      		<tr><td class="ui-state-default" colspan="4"></td></tr>
+				<tr><td class="NoiseFooterTD <?php if($arrCampertipproCAL[$arrCampertipproCOD['otros']] > 0){echo 'ui-state-error ui-corner-all';}?>" colspan="4" >&nbsp;Otros</td></tr>
+				<tr>
+					<td class="NoiseDataTD" colspan="4">&nbsp;<?php echo ($otros)? $otros : '---'; ?>
+						<input type="hidden" name="otros" value="<?php echo ($otros)? $otros : '-'; ?>"> 
+					</td>
+				</tr>
+				<tr><td colspan="4" class="ui-state-default"></td></tr>	
+					  	
+			<?php }	?>
+      		<tr><td class="ui-state-default" colspan="4">&nbsp;
+      			<a onClick="return verocultar('uploadfile',0);" href="javascript:animatedcollapse.toggle('filuploadfile');"><img id="row0" align="middle" align="top"  src="temas/Noise/<?php if($uploadfile){ echo 'AscOn'; }else{ echo 'DescOn'; } ?>.gif" border="0">&nbsp;Adjuntar documentos</a>
+      			<input name="uploadfile" id="uploadfile" type="hidden" value="<?php echo $uploadfile; ?>">
+      		</td></tr>
+      		
+      		<tr>
+				<td colspan="4">
+					<div id="filuploadfile">
+					<div class="ui-widget">
+						<div class="ui-state-Highlight ui-corner-all" style="padding: 0 .7em;"> 
+							<p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span> 
+							Selecciona los archivos que deseas importar</p>
+						</div>
+					</div>
+					
+					<table border="0" cellspacing="1" cellpadding="1" align="center" width="100%">
+						<tr><td class="ui-state-default">&nbsp;Archivos a importar  </td></tr>					
+						<tr>
+							<td>
+			
+		       					<div style="float:left;">
+									<div id="reportot_file_upload">Ocurrio un problema con el sistema!</div>
+									<div id="reportot_custom-queue" class="uploadifyQueue"></div>
+								</div>
+
+								<div style="height:2px;"></div>
+								<div class="ui-widget-content content">
+									<div id="reportot_file_load" class="file-upname">
+										<?php 
+											if($uploadocumen):
+												$arrUpload = explode('::', $uploadocumen);
+												$arrUploadSize = explode('::', $uploadocumensize);
+												
+												for($a = 0; $a < count($arrUpload); $a++):
+										?>
+										<div class="uploadifyQueueItem completed"><div class="cancel"><a href="javascript: void(0);" onclick="deleteFileUpload('<?php echo $a ?>');"><img border="0" src="temas/upload/cancel.png"></a></div><span class="fileName"><?php echo $arrUpload[$a].' ('.$arrUploadSize[$a].')' ?></span></div>
+										<?php												
+												endfor;
+											endif;
+										?>
+									</div>
+									<input type="hidden" name="uploadocumen" id="uploadocumen" value="<?php echo $uploadocumen?>">
+									<input type="hidden" name="uploadocumensize" id="uploadocumensize" value="<?php echo $uploadocumensize ?>">
+								</div>
+							</td>
+						</tr>
+					</table>
+					</div>
+       			</td>
+       		</tr>
+       	</table>
+       	<?php } ?>
+	</div>
+				       			
+    <?php 
+    if($tipevecodigo == 4): 
+		$idcon = fncconn();
+    		$rwNumerado = loadrecordnumerado(114,$idcon);
+    		($rwNumerado[numeprox] < 1)?$consec = 1: $consec = $rwNumerado[numeprox];
+    	fncclose($idcon);
+    ?>
+	<div id="item_sessionb">
+		<table width="100%" border="0" cellspacing="1" cellpadding="0" align="center" class="ui-widget-content"> 	
+			<tr>
+  				<td class="NoiseFooterTD"><?php if ($campnomb['pedvenconsec'] == 1) { $pedvenconsec = null; echo "<b style='font-size:15px; color:red;'>*</b>";}?>&nbsp;Consecutivo</td>
+  				<td class="NoiseDataTD">M-O<span id="consec"><?php echo $consec;?></span></td>
+  				<td class="NoiseFooterTD"><?php if ($campnomb['pedvenfecent'] == 1) { $pedvenfecent = null; echo "<b style='font-size:15px; color:red;'>*</b>";}?>&nbsp;Fecha de Entrega</td>
+  				<td class="NoiseDataTD"><input type="text" name="pedvenfecent" id="pedvenfecent" value="<?php echo $pedvenfecent ?>" onfocus="this.blur();"/></td>
+  			</tr>
+			<tr>
+  				<td width="20%" class="NoiseFooterTD"><?php if ($campnomb['pedvennompro'] == 1) { $pedvennompro = null; echo "<b style='font-size:15px; color:red;'>*</b>";}?>&nbsp;Nombre del proyecto</td>
+  				<td width="30%" class="NoiseDataTD"><input type="text" name="pedvennompro" id="pedvennompro"	value="<?php echo $pedvennompro; ?>" onkeypress="return event.keyCode!=13"/></td>
+  				<td width="20%" class="NoiseFooterTD"><?php if ($campnomb['pedvenmotmue'] == 1) { $pedvenmotmue = null; echo "<b style='font-size:15px; color:red;'>*</b>";}?>&nbsp;Motivo de la muestra</td>
+  				<td width="30%" class="NoiseDataTD"><input type="text" name="pedvenmotmue" name="pedvenmotmue"	value="<?php echo $pedvenmotmue; ?>" onkeypress="return event.keyCode!=13"/></td>
+  			</tr>
+  			<tr>
+		  		<td class="NoiseFooterTD <?php if($arrCampertipproCAL[$arrCampertipproCOD['precio']] > 0){echo 'ui-state-error ui-corner-all';}?>"><?php if ($campnomb['precio'] == 1) { $precio = null; echo "<b style='font-size:15px; color:red;'>*</b>";}?>&nbsp;Precio</td>
+		  		<td class="NoiseDataTD"><input type="text" name="precio" id="precio"	value="<?php echo $precio ?>" onkeypress="return event.keyCode!=13"/></td>
+		  		<td class="NoiseFooterTD <?php if($arrCampertipproCAL[$arrCampertipproCOD['cobro_fotopo']] > 0){echo 'ui-state-error ui-corner-all';}?>"><?php if ($campnomb['cobro_fotopo'] == 1) { $cobro_fotopo = null; echo "<b style='font-size:15px; color:red;'>*</b>";}?>&nbsp;Cobro de fotopolimeros</td>
+		  		<td class="NoiseDataTD">&nbsp;Si&nbsp;<input type="radio" name="cobro_fotopo" id="cobro_fotopo" value="si" <?php if($cobro_fotopo == 'si'){echo 'checked';}?> />&nbsp;&nbsp;&nbsp;No&nbsp;<input type="radio" name="cobro_fotopo" id="cobro_fotopo" value="no" <?php if($cobro_fotopo == 'no'){echo 'checked';}?> onkeypress="return event.keyCode!=13"/></td>
+		  	</tr>
+		  	<tr>
+		  		<td class="NoiseFooterTD <?php if($arrCampertipproCAL[$arrCampertipproCOD['moneda']] > 0){echo 'ui-state-error ui-corner-all';}?>"><?php if ($campnomb['moneda'] == 1) { $moneda = null; echo "<b style='font-size:15px; color:red;'>*</b>";}?>&nbsp;Moneda</td>
+		  		<td colspan="3" class="NoiseDataTD"><select name="moneda">
+		  		<option value="">--Seleccione--</option>
+		  		<option value="COP" <?php if($moneda == 'COP'){echo 'selected';}?>>COP</option>
+		  		<option value="USD" <?php if($moneda == 'USD'){echo 'selected';}?>>USD</option>
+		  		<option value="EUR" <?php if($moneda == 'EUR'){echo 'selected';}?>>EUR</option>
+		  		</select></td>
+		  	</tr>
+		  	<?php if($flagOtros){ ?>
+	      		<tr><td class="ui-state-default" colspan="4"></td></tr>
+				<tr><td class="NoiseFooterTD <?php if($arrCampertipproCAL[$arrCampertipproCOD['otros']] > 0){echo 'ui-state-error ui-corner-all';}?>" colspan="4" >&nbsp;Otros</td></tr>
+				<tr>
+					<td class="NoiseDataTD" colspan="4">&nbsp;<?php echo ($otros)? $otros : '---'; ?></td>
+				</tr>
+				<tr><td colspan="4" class="ui-state-default"></td></tr>		  	
+			<?php }	?>
+  		</table>
+  		<table width="100%" border="0" cellspacing="1" cellpadding="0" align="center" class="ui-widget-content">
+  			<tr>
+				<td colspan="4">
+					<div id="filuploadfile">
+					<div class="ui-widget">
+						<div class="ui-state-Highlight ui-corner-all" style="padding: 0 .7em;"> 
+							<p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span> 
+							Selecciona los archivos que deseas importar</p>
+						</div>
+					</div>
+					
+					<table border="0" cellspacing="1" cellpadding="1" align="center" width="100%">
+						<tr><td class="ui-state-default">&nbsp;Archivos a importar  </td></tr>					
+						<tr>
+							<td>
+			
+		       					<div style="float:left;">
+									<div id="reportot_file_upload">Ocurrio un problema con el sistema!</div>
+									<div id="reportot_custom-queue" class="uploadifyQueue"></div>
+								</div>
+
+								<div style="height:2px;"></div>
+								<div class="ui-widget-content content">
+									<div id="reportot_file_load" class="file-upname">
+										<?php 
+											if($uploadocumen):
+												$arrUpload = explode('::', $uploadocumen);
+												$arrUploadSize = explode('::', $uploadocumensize);
+												
+												for($a = 0; $a < count($arrUpload); $a++):
+										?>
+										<div class="uploadifyQueueItem completed"><div class="cancel"><a href="javascript: void(0);" onclick="deleteFileUpload('<?php echo $a ?>');"><img border="0" src="temas/upload/cancel.png"></a></div><span class="fileName"><?php echo $arrUpload[$a].' ('.$arrUploadSize[$a].')' ?></span></div>
+										<?php												
+												endfor;
+											endif;
+										?>
+									</div>
+									<input type="hidden" name="uploadocumen" id="uploadocumen" value="<?php echo $uploadocumen?>">
+									<input type="hidden" name="uploadocumensize" id="uploadocumensize" value="<?php echo $uploadocumensize ?>">
+								</div>
+							</td>
+						</tr>
+					</table>
+					</div>
+       			</td>
+       		</tr>
+       	</table>
+  	</div>
+  	
+  	<?php endif ?>
+</div>

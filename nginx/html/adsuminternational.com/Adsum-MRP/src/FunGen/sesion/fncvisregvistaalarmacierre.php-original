@@ -1,0 +1,158 @@
+<?php
+
+
+include ( '../src/FunPerSecNiv/fncfieldname.php');
+include ( '../src/FunGen/cargainput.php');
+
+function  fncvisregvistaalarmacierre($isbtabla,$irecllave,$irectipo,$idtrans)
+{
+	define ("n",0);
+	define ("n1",1);
+	define ("n2",2);
+	define ("linea1",'miem');
+	define ("linea2",'desc');
+	define ("porctot",100);
+	define ("priporc",3);
+	define ("secporc",92);
+	define ("str",'s');
+	define ("num",'n');
+	$flag = n1;
+	
+	if($idtrans)
+	{
+		$nuCantRow = fncnumreg($idtrans);
+		
+	}
+	if($nuCantRow > n)
+	{
+			
+		// aqui se dermina si la tabla tiene algun nomb o desc
+		// esto influira en la forma como sera visualizado el registro.
+
+		$sbCadena = fncfetch($idtrans,n);
+		
+		$cant = count($irecllave);
+		$cant1 = count($sbCadena)/n2;
+
+		for($i = n; $i < $cant1;$i++)
+		{
+			$sblabel = strtolower($key = fncfieldname ($idtrans,$i));
+			$nupos   = strpos ($sblabel,linea1);
+			$nupos1  = strpos ($sblabel,linea2);
+			
+			if(!($nupos === false))
+			{
+				$flag = n1;
+				$sbtemp = $sblabel;
+				break;
+			}
+			else
+			{
+				if(!($nupos1 === false))
+				{
+					$flag = n1;
+					$sbtemp = $sblabel;
+					break;
+				}
+			}
+		}
+		
+		if($flag)
+		{
+			$nuresto = secporc % ($cant + n1);
+			$nuporcamp  = (secporc - $nuresto) / ($cant + n1);
+			$nuporcultcamp = $nuporcamp + $nuresto;
+		}
+		else
+		{
+			$nuresto = secporc % $cant;
+			$nuporcamp  = (secporc - $nuresto) / $cant;
+			$nuporcultcamp = $nuporcamp + $nuresto;
+		}
+		// ----------------------------------
+
+		// aqui se arma el checkbox
+		if($flagcheck)
+			echo '<input type="hidden" name="seltack" id="seltack">';		
+		
+		$idcon = fncconn();
+		for ($i1=n;$i1<$nuCantRow;$i1++)
+		{
+			$sbCadena1 = fncfetch($idtrans,$i1);
+
+			if (($i1 % 2) == 0){
+				echo '              <tr bgcolor="#f0f6ff" id="fila'.($i1+ 1).'" onmouseover="cambiar_color_over(this)" onmouseout="cambiar_color_out1(this)" onclick="selec_opt('.($i1+ 1).','."'".$flagcheck."'".')">'."\n";
+			}else{
+				echo '<tr bgcolor="#E8F0F6"   id="fila'.($i1+ 1).'" onmouseover="cambiar_color_over(this)" onmouseout="cambiar_color_out2(this)" onclick="selec_opt('.($i1+ 1).','."'".$flagcheck."'".')">'."\n";
+			}
+			echo '                <td width="'.priporc.'%">'."\n";
+			echo '                  <input type="radio"  name="radiobutton" id="rdobutt'.($i1+ 1).'" onclick="document.form1.seltack.value ='.($i1+ 1).';"  value="';
+			// aqui se pinta el valor.
+
+			$cont = n;
+
+			for($i2=n;$i2<$cant;$i2++)
+			{
+				$cont ++;
+
+				if($cont < $cant)
+				{
+					switch ($irectipo[$i2]):
+					case str:
+						echo $sbCadena1[$irecllave[$i2]].'|s,';
+						break;
+					case num:
+						echo $sbCadena1[$irecllave[$i2]].'|n,';
+						break;
+						endswitch;
+				}
+				else
+				{
+					
+					if($cont == $cant)
+					{
+						switch ($irectipo[$i2]):
+						case str:
+							echo $sbCadena1[$irecllave[$i2]].'|s';
+							break;
+						case num:
+							echo $sbCadena1[$irecllave[$i2]].'|n';
+							break;
+							endswitch;
+					}
+				}
+			}
+			
+			
+			echo '">'."\n";
+			echo '                </td>'."\n";
+			
+			// ----------------------------------
+			if($flag)
+
+			{
+//alarmacodigo,usuanombre,alarmafecelb,alarmafecvig, tipalanombre, nivalanombre				
+				echo '<td width="3%" align="center">'.$sbCadena1[alarmacodigo].'</td>'."\n";
+				echo '<td width="13%" align="center">'.$sbCadena1[usuanombre].'</td>'."\n";
+				echo '<td width="25%" align="center">'.$sbCadena1[modulos_respo].'</td>'."\n";
+				echo '<td width="25%" align="center">'.$sbCadena1[modulos_dir].'</td>'."\n";
+				echo '<td width="8%" align="center">'.$sbCadena1[alarmafecelb].'</td>'."\n";
+				echo '<td width="8%" align="center">'.$sbCadena1[alarmafecvig].'</td>'."\n";
+				echo '<td width="10%" align="center">'.$sbCadena1[tipalanombre].'</td>'."\n";
+				echo '<td width="10%" align="center">'.$sbCadena1[nivalanombre].'</td>'."\n";
+			}
+			else
+			{
+
+				for($j2=n;$j2<($cant - n1);$j2++)
+				{
+					echo '<td width="'.$nuporcamp.'%">&nbsp;'.$sbCadena1[$irecllave[$j2]].'</td>'."\n";
+				}
+				echo '    <td width="'.$nuporcultcamp.'%">&nbsp;'.$sbCadena1[$irecllave[$j2]].'</td>'."\n";
+			}
+			echo '              </tr>'."\n";
+		}
+		fncclose($idcon);
+	}
+}
+?>

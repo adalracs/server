@@ -1,0 +1,58 @@
+<html>
+<body bgcolor="#FFFFFF">
+  <!-- BEGIN b_store -->
+<table align="center" width="600" bordercolor="#FFFFFF">
+  <tr>
+    <td bgcolor="#CCCCCC" ><b>{store}</b></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#EEEEEE" align="right"> 
+      <!-- BEGIN b_description -->
+      <table width="550" >
+        <tr bgcolor="#EEEEEE"> 
+          <td colspan=4><b>{description}</b></td>
+        </tr>
+        <tr bgcolor="#FFFFFF"> 
+          <td> Aquis. date</td>
+          <td> Qtd </td>
+          <td> Unit value</td>
+          <td> Total </td>
+        </tr>
+        <!-- BEGIN values -->
+        <tr bgcolor="#FFFFFF"> 
+          <td> {valid} </td>
+          <td> {qtd} </td>
+          <td> {value} </td>
+          <td> {total} </td>
+        </tr>
+        <!-- END values -->
+        <!-- BEGIN totals -->
+        <tr bgcolor="#DDDDDD"> 
+          <td align="right"><b>Total</b> </td>
+          <td> {qtd}</td>
+          <td> {value}</td>
+          <td> {total}</td>
+        </tr>
+        <!-- END totals -->
+      </table>
+      <!-- END b_description -->
+    </td>
+  </tr>
+ </table> 
+<!-- END b_store -->
+<!-- BEGIN gran_totals -->
+<table align="center" width="600" bordercolor="#FFFFFF">
+  <tr> 
+    <td bgcolor="#CCCCCC" colspan="4" ><b>Final result:</b></td>
+  </tr>
+  <tr bgcolor="#EEEEEE"> 
+    <td width="191" ><b>Total qtd.:</b></td>
+    <td width="126" ><b>{qtd}</b></td>
+    <td width="145" ><b>Total Value:</b></td>
+    <td width="118" ><b>{total}</b></td>
+  </tr>
+</table>
+<!-- END gran_totals --> 
+<br>
+<a href="../index.php">back</a> | <a href="../index-pt_br.php">voltar</a><br>
+</html>

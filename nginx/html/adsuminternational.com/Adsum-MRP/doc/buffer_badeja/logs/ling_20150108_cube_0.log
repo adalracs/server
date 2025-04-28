@@ -1,0 +1,4 @@
+2015-01-08 00:00:23 - Jose.Mercado => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.65.59
+2015-01-08 00:00:23 - Jose.Mercado => [Rango de Generacion 2015-01-08 - 2015-01-15 :: RNG_DATE_PER ] -> IP: 192.168.65.59
+2015-01-08 00:00:23 - Jose.Mercado => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.65.59
+2015-01-08 00:00:23 - Jose.Mercado => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 192.168.65.59

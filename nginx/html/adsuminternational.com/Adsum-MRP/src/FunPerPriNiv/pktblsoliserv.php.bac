@@ -1,0 +1,786 @@
+<?php 
+function nulosoliserv ($arg){
+	return (($arg == "0"))?"0":(!($arg))?"NULL":"'".$arg."'";
+}
+
+
+/*
+Generado con generador Adsum (c).
+
+Funci�n: Loadsoliserv
+Descripcion: Accesa el Registro indicado de la tabla
+Parametros:
+$iintsolsercodigo Campo parte de la llave primaria
+Retorno:
+TRUE = Registro solicitado
+FALSE = Error de base de datos o de conexion
+Autor: ADSUM
+Fecha: 29-August-2004
+Modificacion | Fecha | Autor
+*/
+
+function loadrecordsoliserv($iintsolsercodigo,$nuConn){
+
+	define("e_connection",-1);
+	define("e_db",-2);
+	define("e_empty",-3);
+	define("cero",0);
+
+	if ($nuConn){
+		$sbSql = "SELECT * FROM soliserv WHERE solsercodigo = "."'".$iintsolsercodigo."'";
+
+		$nuResult = @pg_exec($nuConn,$sbSql);
+
+		unset($sbSql);
+		if ($nuResult){
+			$nuCantRow = pg_numrows($nuResult);
+
+			if ($nuCantRow > cero){
+
+				$nuCantFields = pg_numfields($nuResult);
+				$sbRow = pg_fetch_row ($nuResult,cero);
+				$sbLista = array(
+				"solsercodigo"=>$sbRow[0],
+				"usuacodi"=>$sbRow[1],
+				"tipfalcodigo"=>$sbRow[2],
+				"estsolcodigo"=>$sbRow[3],
+				"solsermotivo"=>$sbRow[4],
+				"solserfecha"=>$sbRow[5],
+				"plantacodigo"=>$sbRow[6],
+				"sistemcodigo"=>$sbRow[7],
+				"equipocodigo"=>$sbRow[8]
+				);//se modifico la lista a causa: se agragaron los campos plantacodigo y sistemcodigo //cbedoya -12-sep-2007
+				return $sbLista;
+			}
+			else{
+
+				return  e_empty;
+
+			}
+		}
+		else{
+			// echo"Ha ocurrido un error \n";
+			// echo $php_errormsg;
+			return  e_db;
+		}
+	}
+	else{
+		// echo"Fallo Intento de Conexion \n";
+		return  e_connection;
+	}
+}
+
+/*
+Generado con generador Adsum (c).
+
+Funci�n: fullscansoliserv
+Descripcion: Accesa todos los Registros  de la tabla
+Parametros:
+Retorno:
+TRUE = Id de transaccion
+FALSE = Error de base de datos o de conexion
+Autor: ADSUM
+Fecha: 29-August-2004
+Modificacion | Fecha | Autor
+*/
+
+function fullscansoliserv($nuConn){
+
+	define("e_connection",-1);
+	define("e_db",-2);
+	define("e_empty",-3);
+	define("cero",0);
+
+	if ($nuConn){
+		$sbSql = "SELECT * FROM soliserv order by solsercodigo desc";
+
+		$nuResult = pg_exec($nuConn,$sbSql);
+
+		if ($nuResult){
+			$nuCantRow = pg_numrows($nuResult);
+
+			unset($sbSql);
+			if ($nuCantRow > cero){
+				return $nuResult;
+			}
+			else{
+				return  e_empty;
+			}
+		}
+		else{
+			// echo"Ha ocurrido un error \n";
+			// echo $php_errormsg;
+			return  e_db;
+		}
+	}
+	else{
+		// echo"Fallo Intento de Conexion \n";
+		return  e_connection;
+	}
+}
+
+/*
+Generado con generador Adsum (c).
+
+Funci�n: Sintaxissoliserv
+Descripcion: Verifica sintaxis de la consulta en dinamicScan
+Parametros:
+$arg Valor del campo
+$campo Nombre del campo
+$flagsoliserv Bandera que define si se utiliza AND
+Retorno:
+TRUE =
+FALSE =
+Autor: ariascos
+Fecha: 29-August-2004
+Modificacion | Fecha | Autor
+*/
+
+function sintaxissoliserv ($arg, $campo, &$flagsoliserv){
+	if ($flagsoliserv){
+		$aux = "AND";
+	}
+	if ($arg==""){
+		return "";
+	}
+	else{
+		$flagsoliserv = 1;
+		return $aux." ".$campo." like '%".$arg."%'";
+	}
+}
+
+/*
+Generado con generador Adsum (c).
+
+Funcion: DinamicScansoliserv
+Descripcion: Accesa el registro que hace match con la entrada
+Parametros:
+$iintsolsercodigo Campo parte de la llave primaria
+Retorno:
+TRUE = Id. de transaccion.
+FALSE = Error de base de datos o de conexion
+Autor: ariascos
+Fecha: 29-August-2004
+Modificacion | Fecha | Autor
+*/
+
+function dinamicscansoliserv($ircRecord,$nuConn){
+	define("e_connection",-1);
+	define("e_db",-2);
+	define("e_empty",-3);
+	define("cero",0);
+	$flagsoliserv = cero;
+
+	if ($nuConn){
+		$sbSql = "SELECT * FROM soliserv WHERE".
+		sintaxissoliserv($ircRecord[solsercodigo],"solsercodigo",$flagsoliserv).
+		sintaxissoliserv($ircRecord[usuacodi],"usuacodi",$flagsoliserv).
+		sintaxissoliserv($ircRecord[tipfalcodigo],"tipfalcodigo",$flagsoliserv).
+		sintaxissoliserv($ircRecord[estsolcodigo],"estsolcodigo",$flagsoliserv).
+		sintaxissoliserv($ircRecord[solsermotivo],"solsermotivo",$flagsoliserv).
+		sintaxissoliserv($ircRecord[solserfecha],"solserfecha",$flagsoliserv).
+		sintaxissoliserv($ircRecord[plantacodigo],"plantacodigo",$flagsoliserv).
+		sintaxissoliserv($ircRecord[sistemcodigo],"sistemcodigo",$flagsoliserv).
+		sintaxissoliserv($ircRecord[equipocodigo],"equipocodigo",$flagsoliserv);
+
+		$nuResult = pg_exec($nuConn,$sbSql);
+
+		unset($sbSql);
+
+		if ($nuResult){
+			$nuCantRow = pg_numrows($nuResult);
+
+			if ($nuCantRow > cero){
+				return $nuResult;
+			}
+			else{
+				return  e_empty;
+			}
+		}
+		else{
+			// echo"Ha ocurrido un error \n";
+			// echo $php_errormsg;
+			return  e_db;
+		}
+	}
+	else{
+		// echo"Fallo Intento de Conexion \n";
+		return  e_connection;
+	}
+}
+
+/*
+Generado con generador Adsum (c).
+
+Funcion: Sintaxisopsoliserv
+Descripcion: Verifica sintaxis de la consulta en dinamicScan
+Parametros:
+$iintsolsercodigo Campo parte de la llave primaria
+Retorno:
+TRUE =
+FALSE =
+Autor: ariascos
+Fecha: 29-August-2004
+Modificacion | Fecha | Autor
+*/
+
+function sintaxisopsoliserv ($arg,$campo,&$flagsoliserv,$oper){
+	if ($flagsoliserv){
+		$aux = "AND";
+	}
+	if ($arg==""){
+		return "";
+	}
+	else{
+		$flagsoliserv = 1;
+		switch ($oper):
+		case "like":
+			return $aux." ".$campo." like '%".$arg."%'";
+			break;
+		case "=":
+			return $aux." ".$campo." = '".$arg."'";
+			break;
+		case "<":
+			return $aux." ".$campo." < ".$arg;
+			break;
+		case "<=":
+			return $aux." ".$campo." <= ".$arg;
+			break;
+		case ">":
+			return $aux." ".$campo." > ".$arg;
+			break;
+		case ">=":
+			return $aux." ".$campo." >= ".$arg;
+			break;
+		case "<>":
+			return $aux." ".$campo." <> ".$arg;
+			break;
+		case "like%_":
+			return $aux." ".$campo." like '%".$arg."'";
+			break;
+		case "like_%":
+			return $aux." ".$campo." like '".$arg."%'";
+			break;
+			endswitch;
+	}
+}
+
+/*
+Generado con generador Adsum (c).
+
+Funcion: DinamicScanopsoliserv
+Descripcion: Accesa el registro que hace match con la entrada
+Parametros:
+$iintsolsercodigo Campo parte de la llave primaria
+Retorno:
+TRUE = Id. de transaccion.
+FALSE = Error de base de datos o de conexion
+Autor: ariascos
+Fecha: 29-August-2004
+Modificacion | Fecha | Autor
+*/
+
+function dinamicscanopsoliserv($ircrecord,$ircrecordop,$nuconn){
+
+	define("e_connection",-1);
+	define("e_db",-2);
+	define("e_empty",-3);
+	define("cero",0);
+	$flagsoliserv = cero;
+
+	if ($nuconn){
+
+		$sbSql = "SELECT * FROM soliserv WHERE".
+		sintaxisopsoliserv($ircrecord[solsercodigo],"solsercodigo",$flagsoliserv,
+		$ircrecordop[solsercodigo]).
+		sintaxisopsoliserv($ircrecord[usuacodi],"usuacodi",$flagsoliserv,
+		$ircrecordop[usuacodi]).
+		sintaxisopsoliserv($ircrecord[tipfalcodigo],"tipfalcodigo",$flagsoliserv,
+		$ircrecordop[tipfalcodigo]).
+		sintaxisopsoliserv($ircrecord[estsolcodigo],"estsolcodigo",$flagsoliserv,
+		$ircrecordop[estsolcodigo]).
+		sintaxisopsoliserv($ircrecord[solsermotivo],"solsermotivo",$flagsoliserv,
+		$ircrecordop[solsermotivo]).
+		sintaxisopsoliserv($ircrecord[solserfecha],"solserfecha",$flagsoliserv,
+		$ircrecordop[solserfecha]).
+		sintaxisopsoliserv($ircrecord[plantacodigo],"plantacodigo",$flagsoliserv,
+		$ircrecordop[plantacodigo]).
+		sintaxisopsoliserv($ircrecord[sistemcodigo],"sistemcodigo",$flagsoliserv,
+		$ircrecordop[sistemcodigo]).
+		sintaxisopsoliserv($ircrecord[equipocodigo],"equipocodigo",$flagsoliserv,
+		$ircrecordop[equipocodigo]);
+
+		$nuResult = pg_exec($nuconn,$sbSql);
+
+		unset($sbSql);
+
+		if ($nuResult){
+			$nuCantRow = pg_numrows($nuResult);
+
+			if ($nuCantRow > cero){
+
+				return $nuResult;
+			}
+			else{
+				return  e_empty;
+			}
+		}
+		else{
+			// echo"Ha ocurrido un error \n";
+			// echo $php_errormsg;
+			return  e_db;
+		}
+	}
+	else{
+		// echo"Fallo Intento de Conexion \n";
+		return  e_connection;
+	}
+}
+
+/*
+Generado con generador Adsum (c).
+
+Funcion: DinamicLimitScansoliserv
+Descripcion: Accesa el registro que hace match con la entrada
+Parametros:
+$iintsolsercodigo Campo parte de la llave primaria
+Retorno:
+TRUE = Id. de transaccion.
+FALSE = Error de base de datos o de conexion
+Autor: ariascos
+Fecha: 29-August-2004
+Modificacion | Fecha | Autor
+*/
+
+function dinamiclimitscansoliserv($ircRecord,$inucant,$inupos,$nuConn){
+	define("e_connection",-1);
+	define("e_db",-2);
+	define("e_empty",-3);
+	define("cero",0);
+	$flagsoliserv = cero;
+
+	if ($nuConn){
+
+		$sbSql = "SELECT * FROM soliserv WHERE".
+		sintaxissoliserv($ircRecord[solsercodigo],"solsercodigo",$flagsoliserv).
+		sintaxissoliserv($ircRecord[usuacodi],"usuacodi",$flagsoliserv).
+		sintaxissoliserv($ircRecord[tipfalcodigo],"tipfalcodigo",$flagsoliserv).
+		sintaxissoliserv($ircRecord[estsolcodigo],"estsolcodigo",$flagsoliserv).
+		sintaxissoliserv($ircRecord[solsermotivo],"solsermotivo",$flagsoliserv).
+		sintaxissoliserv($ircRecord[solserfecha],"solserfecha",$flagsoliserv).
+		sintaxissoliserv($ircRecord[plantacodigo],"plantacodigo",$flagsoliserv).
+		sintaxissoliserv($ircRecord[sistemcodigo],"sistemcodigo",$flagsoliserv).
+		sintaxissoliserv($ircRecord[equipocodigo],"equipocodigo",$flagsoliserv).
+		" LIMIT ".$inucant." OFFSET ".$inupos;
+
+		$nuResult = pg_exec($nuConn,$sbSql);
+
+		unset($sbSql);
+
+		if ($nuResult){
+			$nuCantRow = pg_numrows($nuResult);
+
+			if ($nuCantRow > cero){
+				return $nuResult;
+			}
+			else{
+				return  e_empty;
+			}
+		}
+		else{
+			// echo"Ha ocurrido un error \n";
+			// echo $php_errormsg;
+			return  e_db;
+		}
+	}
+	else{
+		// echo"Fallo Intento de Conexion \n";
+		return  e_connection;
+	}
+}
+
+/*
+Generado con generador Adsum (c).
+
+Funcion: DinamicLimitScanopsoliserv
+Descripcion: Accesa el registro que hace match con la entrada
+Parametros:
+$iintsolsercodigo Campo parte de la llave primaria
+Retorno:
+TRUE = Id. de transaccion.
+FALSE = Error de base de datos o de conexion
+Autor: ariascos
+Fecha: 29-August-2004
+Modificacion | Fecha | Autor
+*/
+
+function dinamiclimitscanopsoliserv($ircrecord,$ircrecordop,$inucant,$inupos,$nuconn){
+
+	define("e_connection",-1);
+	define("e_db",-2);
+	define("e_empty",-3);
+	define("cero",0);
+	$flagsoliserv = cero;
+
+	if ($nuconn){
+
+		$sbSql = "SELECT * FROM soliserv WHERE".
+		sintaxisopsoliserv($ircrecord[solsercodigo],"solsercodigo",$flagsoliserv,
+		$ircrecordop[solsercodigo]).
+		sintaxisopsoliserv($ircrecord[usuacodi],"usuacodi",$flagsoliserv,
+		$ircrecordop[usuacodi]).
+		sintaxisopsoliserv($ircrecord[tipfalcodigo],"tipfalcodigo",$flagsoliserv,
+		$ircrecordop[tipfalcodigo]).
+		sintaxisopsoliserv($ircrecord[estsolcodigo],"estsolcodigo",$flagsoliserv,
+		$ircrecordop[estsolcodigo]).
+		sintaxisopsoliserv($ircrecord[solsermotivo],"solsermotivo",$flagsoliserv,
+		$ircrecordop[solsermotivo]).
+		sintaxisopsoliserv($ircrecord[solserfecha],"solserfecha",$flagsoliserv,
+		$ircrecordop[solserfecha]).
+		sintaxisopsoliserv($ircrecord[plantacodigo],"plantacodigo",$flagsoliserv,
+		$ircrecordop[plantacodigo]).
+		sintaxisopsoliserv($ircrecord[sistemcodigo],"sistemcodigo",$flagsoliserv,
+		$ircrecordop[sistemcodigo]).
+		sintaxisopsoliserv($ircrecord[equipocodigo],"equipocodigo",$flagsoliserv,
+		$ircrecordop[equipocodigo])." LIMIT ".$inucant." OFFSET ".$inupos;
+
+		$nuResult = pg_exec($nuconn,$sbSql);
+
+		unset($sbSql);
+
+		if ($nuResult){
+			$nuCantRow = pg_numrows($nuResult);
+
+			if ($nuCantRow > cero){
+				return $nuResult;
+			}
+			else{
+				return  e_empty;
+			}
+		}
+		else{
+			// echo"Ha ocurrido un error \n";
+			// echo $php_errormsg;
+			return  e_db;
+		}
+	}
+	else{
+		// echo"Fallo Intento de Conexion \n";
+		return  e_connection;
+	}
+}
+
+/*
+Generado con generador Adsum (c).
+
+Funcion: UpRecordsoliserv
+Descripcion: Actualiza un registro en la tabla partir de un
+record
+Parametros:
+$ircRecordRegistro a  modificar en la tabla
+Retorno:
+TRUE = True
+FALSE = Error de base de datos o de conexion
+Autor: ADSUM
+Fecha: 29-August-2004
+Modificacion | Fecha | Autor
+*/
+
+function uprecordsoliserv($ircRecord,$nuConn){
+
+	define("e_connection",-1);
+	define("e_db",-2);
+	define("e_empty",-3);
+	define("cero",0);
+	define("n1",1);
+
+
+	if ($nuConn){
+		$sbSql = "UPDATE soliserv SET
+ solsercodigo =  ".nulosoliserv($ircRecord[solsercodigo]).", 
+ usuacodi =  ".nulosoliserv($ircRecord[usuacodi]).", 
+ tipfalcodigo =  ".nulosoliserv($ircRecord[tipfalcodigo]).", 
+ estsolcodigo =  ".nulosoliserv($ircRecord[estsolcodigo]).", 
+ solsermotivo =  ".nulosoliserv($ircRecord[solsermotivo]).", 
+ solserfecha =  ".nulosoliserv($ircRecord[solserfecha]).",
+ plantacodigo =  ".nulosoliserv($ircRecord[plantacodigo]).", 
+ sistemcodigo =  ".nulosoliserv($ircRecord[sistemcodigo]).", 
+ equipocodigo =  ".nulosoliserv($ircRecord[equipocodigo])."
+	             WHERE 
+ solsercodigo =  "."'".$ircRecord[solsercodigo]."'"; 
+
+		$nuResult = pg_exec($nuConn,$sbSql);
+
+		unset($sbSql);
+		if (!$nuResult){
+			// echo "Ha ocurrido un error \n";
+			// echo $php_errormsg;
+			return e_db;
+		}
+	}
+	else{
+		// echo "Fallo Intento de Conexion \n";
+		return e_connection;
+	}
+	return n1;
+}
+
+/*
+Generado con generador Adsum (c).
+
+Funci�n: Consulmetasoliserv
+Descripcion: Consulta tipo de dato
+Parametros:
+$iintsolsercodigo Campo parte de la llave primaria
+Retorno:
+TRUE = True
+FALSE = Error de base de datos o de conecci�n
+Autor: ariascos-lfolaya
+Fecha: 29-August-2004
+Modificaci�n | Fecha | Autor
+*/
+
+function consulmetasoliserv($metasoliserv1,$metasoliserv2,$nuConn){
+	
+	define("uno",1);
+	define("cero",0);
+
+
+	$sbSql = "SELECT DISTINCT(camptida) FROM campo WHERE campnomb="."'".$metasoliserv1."'"; 
+
+	$nuResult = pg_exec($nuConn,$sbSql);
+
+	unset($sbSql);
+
+	$arr = pg_fetch_array($nuResult);
+	$fncvalida = "valida".$arr[0];
+	$result = $fncvalida($metasoliserv2);
+	if ($result > 0){
+		return uno;
+	}
+	else{
+		return cero;
+	}
+}
+
+/*
+Generado con generador Adsum (c).
+
+Funci�n: InsRecordsoliserv
+Descripcion: Adiciona registro a la Tabla
+Parametros:
+$ircRecordRegistro a insertar en la tabla
+Retorno:
+TRUE = True
+FALSE = Error de base de datos o de conecci�n
+Autor: ariascos
+Fecha: 29-August-2004
+Modificaci�n | Fecha | Autor
+*/
+
+function insrecordsoliserv($ircRecord,$nuConn)
+
+{
+	define("e_connection",-1);
+	define("e_db",-2);
+	define("e_empty",-3);
+	define("cero",0);
+	define("n1",1);
+
+
+	if ($nuConn)
+	{
+
+		$sbSql = "INSERT INTO soliserv (
+ solsercodigo,  
+ usuacodi,  
+ tipfalcodigo,  
+ estsolcodigo,
+ solsermotivo,  
+ solserfecha,
+ plantacodigo,  
+ sistemcodigo,  
+ equipocodigo)  
+VALUES (". 
+		nulosoliserv($ircRecord[solsercodigo]).",".
+		nulosoliserv($ircRecord[usuacodi]).",".
+		nulosoliserv($ircRecord[tipfalcodigo]).",".
+		nulosoliserv($ircRecord[estsolcodigo]).",".
+		nulosoliserv($ircRecord[solsermotivo]).",".
+		nulosoliserv($ircRecord[solserfecha]).",".
+		nulosoliserv($ircRecord[plantacodigo]).",".
+		nulosoliserv($ircRecord[sistemcodigo]).",".
+		nulosoliserv($ircRecord[equipocodigo]).")";
+
+		$nuResult = pg_exec($nuConn,$sbSql);
+
+		unset($sbSql);
+		if (!$nuResult){
+			// echo "Ha ocurrido un error \n";
+			// echo $php_errormsg;
+			return e_db;
+		}
+	}
+	else{
+		// echo "Fallo Intento de Conexion \n";
+		return e_connection;
+	}
+	return n1;
+}
+
+/*
+Generado con generador Adsum (c).
+
+Funci�n: DelRecordsoliserv
+Descripcion: Borra el registro indicado de la Tabla
+Parametros:
+$iintsolsercodigo Campo parte de la llave primaria
+Retorno:
+TRUE = True
+FALSE = Error de base de datos o de conecci�n
+Autor: ariascos
+Fecha: 29-August-2004
+Modificaci�n | Fecha | Autor
+*/
+
+function delrecordsoliserv($iintsolsercodigo,$nuConn){
+
+	define("e_connection",-1);
+	define("e_db",-2);
+	define("e_empty",-3);
+	define("cero",0);
+	define("n1",1);
+
+	if ($nuConn){
+		$sbSql = "DELETE FROM soliserv WHERE solsercodigo =  "."'".$iintsolsercodigo."'"; 
+
+		$nuResult = @pg_exec($nuConn,$sbSql);
+
+		unset($sbSql);
+		if (!$nuResult){
+			// echo"Ha ocurrido un error \n";
+			// echo $php_errormsg;
+			return  e_db;
+		}
+	}
+	else{
+		// echo"Fallo Intento de Conexion \n";
+		return  e_connection;
+	}
+	return n1;
+}
+
+
+/*
+Generado con generador Adsum (c).
+
+Funci�n: loadrecordvalsoliserv
+Descripcion: selecciona los campos solsercodigo,equipocodigo,tipfalcodigo,solserfecha
+Parametros:
+$nuConn Campo parte de la llave primaria
+Retorno:
+TRUE = True
+FALSE = Error de base de datos o de conecci�n
+Autor: lflaya
+Fecha: 14-12-2004
+Modificaci�n | Fecha | Autor
+*/
+
+function loadrecordvalsoliserv($nuConn){
+	define("e_connection",-1);
+	define("e_db",-2);
+	define("e_empty",-3);
+	define("cero",0);
+	define("n1",1);
+
+	if ($nuConn){
+		$sbSql = " select solsercodigo, plantacodigo, sistemcodigo, equipocodigo,tipfalcodigo, solserfecha from soliserv";
+
+		$nuResult = pg_exec($nuConn,$sbSql);
+
+		if ($nuResult){
+			$nuCantRow = pg_numrows($nuResult);
+
+			unset($sbSql);
+			if ($nuCantRow > cero){
+
+				return $nuResult;
+			}
+			else{
+				return  e_empty;
+			}
+		}
+		else{
+			// echo"Ha ocurrido un error \n";
+			// echo $php_errormsg;
+			return  e_db;
+		}
+	}
+	else{
+		// echo"Fallo Intento de Conexion \n";
+		return  e_connection;
+	}
+	return n1;
+}
+/*
+Generado con generador Adsum (c).
+
+Funcipn: cargadatossoliserv
+Descripcion: Accesa el Registro indicado de la tabla
+Parametros:
+$iintsolsercodigo Campo parte de la llave primaria
+Retorno:
+TRUE = Registro solicitado
+FALSE = Error de base de datos o de conexion
+Autor: ariascos
+Fecha: 06-julio-2007
+Modificacion | Fecha | Autor
+*/
+////////// REVISAR AL FINAL PARA SABER EL VALOR DE UTILIDAD DE LA FUNCION
+function cargadatossoliserv($iintequipocodigo,$nuConn){
+
+	define("e_connection",-1);
+	define("e_db",-2);
+	define("e_empty",-3);
+	define("cero",0);
+
+	if ($nuConn){
+		$sbSql = "SELECT plantanombre, sistemnombre from planta, sistema, equipo where equipocodigo="."'".$iintequipocodigo."'"." and equipo.sistemcodigo=sistema.sistemcodigo and sistema.plantacodigo=planta.plantacodigo";
+
+		$nuResult = pg_exec($nuConn,$sbSql);
+
+		unset($sbSql);
+		if ($nuResult)
+		{
+			$nuCantRow = pg_numrows($nuResult);
+
+			if ($nuCantRow > cero)
+			{
+
+				$nuCantFields = pg_numfields($nuResult);
+				$sbRow = pg_fetch_row ($nuResult,cero);
+				$sbLista = array(
+				"plantanombre"=>$sbRow[0],
+				"sistemnombre"=>$sbRow[1]
+				);
+				return $sbLista;
+			}
+			else
+			{
+				return  e_empty;
+			}
+		}
+		else
+		{
+			// echo"Ha ocurrido un error \n";
+			// echo $php_errormsg;
+			return  e_db;
+		}
+	}
+	else
+	{
+		// echo"Fallo Intento de Conexion \n";
+		return  e_connection;
+	}
+}
+?> 

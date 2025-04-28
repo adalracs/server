@@ -1,0 +1,5 @@
+2015-10-13 08:17:53 - desarrollo => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 190.242.58.154
+2015-10-13 08:17:53 - desarrollo => [Rango de Generacion 2015-10-13 - 2015-10-20 :: RNG_DATE_PER ] -> IP: 190.242.58.154
+2015-10-13 08:17:53 - desarrollo => [PROGRAMACION 283 - No GENERA ORDEN / FECHA GENERACION [2015-10-23] MAYOR A FECHA LIMITE [2015-10-20] :: RNG_NOGEN_OT ] -> IP: 190.242.58.154
+2015-10-13 08:17:53 - desarrollo => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 190.242.58.154
+2015-10-13 08:17:53 - desarrollo => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 190.242.58.154

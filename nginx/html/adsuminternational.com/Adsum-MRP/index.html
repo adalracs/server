@@ -1,0 +1,166 @@
+<?php
+include( 'src/FunGen/sesion/fncdesactsess.php');
+if($GLOBALS[idsesssec])
+{
+    fncdesactsess();
+}
+    session_destroy();
+?>
+
+<!-- Codigo creado por:
+Andres A. Riascos D.
+Fecha: 02022002
+Ultima modificacion:
+Fecha: 07112005
+Por ariascos@parquesoft.com
+para version Kallpa
+Todos los derechos reservados-->
+<!doctype html>
+<html>
+<head>
+<title>Adsum Kallpa</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<link rel="shortcut icon" href="img/favicon.ico" />
+<link rel="icon" type="image/png" href="img/favicon.png" />
+<style type="text/css">
+<!--
+
+body {
+
+	margin-left: 0px;
+
+	margin-top: 0px;
+
+	margin-right: 0px;
+
+	margin-bottom: 0px;
+
+}
+
+-->
+
+</style>
+
+<script>
+
+function abrirPagina()
+
+   { 
+
+     var direccion="bin/principal.php";
+
+      var padre;
+
+		  if (window.screen)
+
+             { 
+             	padre=window.open("","Adsum","toolbar=0,status=0,menubar=0,resizable=1");
+
+               padre.location.href=direccion; }
+
+          else {
+
+	   opener.location.href=direccion; }
+
+                  window.opener=top;
+
+				  window.close();
+
+               }
+
+</script>
+
+</head>
+
+<body bgcolor="#ffffff" onLoad="abrirPagina();">
+
+<table width="430" border="0" align="center" cellpadding="0" cellspacing="0">
+
+  <tr>
+
+   <td><img src="img/spacer.gif" width="28" height="1" border="0" alt=""></td>
+
+   <td><img src="img/spacer.gif" width="72" height="1" border="0" alt=""></td>
+
+   <td><img src="img/spacer.gif" width="18" height="1" border="0" alt=""></td>
+
+   <td><img src="img/spacer.gif" width="88" height="1" border="0" alt=""></td>
+
+   <td><img src="img/spacer.gif" width="136" height="1" border="0" alt=""></td>
+
+   <td><img src="img/spacer.gif" width="14" height="1" border="0" alt=""></td>
+
+   <td><img src="img/spacer.gif" width="74" height="1" border="0" alt=""></td>
+
+   <td><img src="img/spacer.gif" width="1" height="1" border="0" alt=""></td>
+
+  </tr>
+
+
+
+  <tr>
+
+   <td rowspan="6"><img name="index_r1_c1" src="img/index_r1_c1.gif" width="28" height="230" border="0" alt=""></td>
+
+   <td rowspan="6"><img name="index_r1_c2" src="img/index_r1_c2.gif" width="72" height="230" border="0" alt=""></td>
+
+   <td rowspan="2" colspan="3"><img name="index_r1_c3" src="img/index_r1_c3.gif" width="242" height="89" border="0" alt=""></td>
+
+   <td colspan="2"><img name="index_r1_c6" src="img/index_r1_c6.gif" width="88" height="34" border="0" alt=""></td>
+
+   <td><img src="img/spacer.gif" width="1" height="34" border="0" alt=""></td>
+
+  </tr>
+
+  <tr>
+
+   <td colspan="2"><img name="index_r2_c6" src="img/index_r2_c6.gif" width="88" height="55" border="0" alt=""></td>
+
+   <td><img src="img/spacer.gif" width="1" height="55" border="0" alt=""></td>
+
+  </tr>
+
+  <tr>
+
+   <td rowspan="4"><img name="index_r3_c3" src="img/index_r3_c3.gif" width="18" height="141" border="0" alt=""></td>
+
+   <td><img name="index_r3_c4" src="img/index_r3_c4.gif" width="88" height="89" border="0" alt=""></td>
+
+   <td colspan="2"><img name="index_r3_c5" src="img/index_r3_c5.gif" width="150" height="89" border="0" alt=""></td>
+
+   <td rowspan="4"><img name="index_r3_c7" src="img/index_r3_c7.gif" width="74" height="141" border="0" alt=""></td>
+
+   <td><img src="img/spacer.gif" width="1" height="89" border="0" alt=""></td>
+
+  </tr>
+
+  <tr>
+
+   <td colspan="3"><img name="index_r4_c4" src="img/index_r4_c4.gif" width="238" height="7" border="0" alt=""></td>
+
+   <td><img src="img/spacer.gif" width="1" height="7" border="0" alt=""></td>
+
+  </tr>
+
+  <tr>
+
+   <td colspan="3"><img name="index_r5_c4" src="img/index_r5_c4.gif" width="238" height="24" border="0" alt=""></td>
+
+   <td><img src="img/spacer.gif" width="1" height="24" border="0" alt=""></td>
+
+  </tr>
+
+  <tr>
+
+   <td colspan="3"><img name="index_r6_c4" src="img/index_r6_c4.gif" width="238" height="21" border="0" alt=""></td>
+
+   <td><img src="img/spacer.gif" width="1" height="21" border="0" alt=""></td>
+
+  </tr>
+
+</table>
+
+</body>
+
+</html>

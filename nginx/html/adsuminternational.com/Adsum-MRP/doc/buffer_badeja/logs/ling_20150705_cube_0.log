@@ -1,0 +1,4 @@
+2015-07-05 00:00:26 - jhon.querubin => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.65.160
+2015-07-05 00:00:26 - jhon.querubin => [Rango de Generacion 2015-07-05 - 2015-07-12 :: RNG_DATE_PER ] -> IP: 192.168.65.160
+2015-07-05 00:00:26 - jhon.querubin => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.65.160
+2015-07-05 00:00:26 - jhon.querubin => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 192.168.65.160

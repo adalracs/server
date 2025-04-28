@@ -1,0 +1,4 @@
+2015-02-16 00:00:21 - diego.agudelo => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.65.59
+2015-02-16 00:00:21 - diego.agudelo => [Rango de Generacion 2015-02-16 - 2015-02-23 :: RNG_DATE_PER ] -> IP: 192.168.65.59
+2015-02-16 00:00:21 - diego.agudelo => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.65.59
+2015-02-16 00:00:21 - diego.agudelo => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 192.168.65.59

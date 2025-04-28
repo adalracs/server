@@ -1,0 +1,4 @@
+2015-01-29 00:00:14 - yemir.vidal => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.66.31
+2015-01-29 00:00:14 - yemir.vidal => [Rango de Generacion 2015-01-29 - 2015-02-05 :: RNG_DATE_PER ] -> IP: 192.168.66.31
+2015-01-29 00:00:14 - yemir.vidal => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.66.31
+2015-01-29 00:00:14 - yemir.vidal => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 192.168.66.31

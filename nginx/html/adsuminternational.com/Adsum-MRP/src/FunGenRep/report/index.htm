@@ -1,0 +1,81 @@
+<html>
+<body bgcolor="#FFFFFF">
+<h1>PEAR Report class</h1>
+  This class create an html report page from a result set
+  array. That array usually came from a sql query
+  and isn't well formatted for display. This class
+  parse the result using IT.php
+
+ <pre> 
+  Ex.: Inicial result set:
+  ----------------------------------------------
+  title	subtitle	value1	value2	value2
+  ----------------------------------------------
+  titulo1	subtitulo1	valor1	valor2	valor3
+  titulo1	subtitulo1	valor1	valor2	valor3
+  titulo1	subtitulo1	total1	total2	total3
+  titulo1	subtitulo2	valor1	valor2	valor3
+  titulo1	subtitulo2	valor1	valor2	valor3
+  titulo1	subtitulo2	total1	total2	total3
+  titulo2	subtitulo1	valor1	valor2	valor3
+  titulo2	subtitulo1	valor1	valor2	valor3
+  titulo2	subtitulo1	total1	total2	total3
+  titulo2	subtitulo2	valor1	valor2	valor3
+  titulo2	subtitulo2	total1	total2	total3
+</pre>
+  
+  
+  <b> Report generated:</b>
+<pre>
+  ============================================
+  titulo1
+  ---------------------------------------------
+        subtitulo1
+        ----------------------------
+    	    valor1 valor2 valor3
+    	    valor1 valor2 valor3
+        subtitulo2
+        ----------------------------
+            valor1 valor2 valor3
+            valor1 valor2 valor3
+  ============================================
+  titulo2
+  ---------------------------------------------
+        subtitulo1
+        ----------------------------
+  	        valor1 valor2 valor3
+  	        valor1 valor2 valor3
+        subtitulo2
+        ----------------------------
+            valor1 valor2 valor3
+            valor1 valor2 valor3
+  ---------------------------------------------- 
+</pre>
+  
+ <b> The format is done on the template file like the following: </b>
+  
+<pre>
+  <!-- BEGIN title -->
+  {title}
+  ---------------------------------------------
+  <!-- BEGIN subtitle -->
+  {subtitle}
+  ----------------------------
+  	<!-- BEGIN values -->
+  	{value1} {value2} {value3}
+  	<!-- END values -->
+    <!-- BEGIN totals -->
+  	{total1} {total2} {total3}
+  	<!-- END totals -->
+  
+  <!-- END subtitle -->
+  ----------------------------------------------
+  <!-- END title -->
+</pre>
+<h2>Files:</h2>
+<menu>
+<li><a href="Report.phps">Report.php</a>
+<li><a href="report.php">report.php</a>
+</menu>
+</body>
+</html>

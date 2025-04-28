@@ -1,0 +1,4 @@
+2014-04-10 00:00:05 - daniel.quintana => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 200.93.164.51
+2014-04-10 00:00:05 - daniel.quintana => [Rango de Generacion 2014-04-10 - 2014-04-17 :: RNG_DATE_PER ] -> IP: 200.93.164.51
+2014-04-10 00:00:05 - daniel.quintana => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 200.93.164.51
+2014-04-10 00:00:05 - daniel.quintana => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 200.93.164.51

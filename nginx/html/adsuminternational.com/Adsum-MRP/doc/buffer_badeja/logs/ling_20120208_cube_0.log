@@ -1,0 +1,5 @@
+2012-02-08 05:21:43 - victor.dagua => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 190.242.58.154
+2012-02-08 05:21:43 - victor.dagua => [Rango de Generacion 2012-02-08 - 2012-02-15 :: RNG_DATE_PER ] -> IP: 190.242.58.154
+2012-02-08 05:21:43 - victor.dagua => [PROGRAMACION 1 - No GENERA ORDEN / FECHA GENERACION [2012-05-01] MAYOR A FECHA LIMITE [2012-02-15] :: RNG_NOGEN_OT ] -> IP: 190.242.58.154
+2012-02-08 05:21:43 - victor.dagua => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 190.242.58.154
+2012-02-08 05:21:43 - victor.dagua => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 190.242.58.154

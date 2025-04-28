@@ -1,0 +1,4 @@
+2015-03-23 00:00:23 - yorman.aguilar => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.65.59
+2015-03-23 00:00:23 - yorman.aguilar => [Rango de Generacion 2015-03-23 - 2015-03-30 :: RNG_DATE_PER ] -> IP: 192.168.65.59
+2015-03-23 00:00:23 - yorman.aguilar => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.65.59
+2015-03-23 00:00:23 - yorman.aguilar => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 192.168.65.59

@@ -1,0 +1,45 @@
+<html>
+<body bgcolor="#FFFFFF">
+<table align="center" width="600" bordercolor="#FFFFFF">
+  <!-- BEGIN b_store -->
+  <tr>
+    <td bgcolor="#CCCCCC" ><b>{store}</b></td>
+  </tr>
+  <tr> 
+    <td bgcolor="#EEEEEE" align="right"> 
+      <!-- BEGIN b_description -->
+      <table width="550" >
+        <tr bgcolor="#EEEEEE"> 
+          <td colspan=4><b>{description}</b></td>
+        </tr>
+        <tr bgcolor="#FFFFFF"> 
+          <td> Aquis. date</td>
+          <td> Qtd </td>
+          <td> Unit value</td>
+          <td> Total </td>
+        </tr>
+        <!-- BEGIN values -->
+        <tr bgcolor="#FFFFFF"> 
+          <td> {valid} </td>
+          <td> {qtd} </td>
+          <td> {value} </td>
+          <td> {total} </td>
+        </tr>
+        <!-- END values -->
+        <!-- BEGIN totals -->
+        <tr bgcolor="#DDDDDD"> 
+          <td align="right"><b>Total</b> </td>
+          <td> {qtd}</td>
+          <td> {value}</td>
+          <td> {total}</td>
+        </tr>
+        <!-- END totals -->
+      </table>
+      <!-- END b_description -->
+    </td>
+  </tr>
+<!-- END b_store --> 
+ </table> 
+<br>
+<a href="../index.php">back</a> | <a href="../index-pt_br.php">voltar</a><br>
+</html>

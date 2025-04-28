@@ -1,0 +1,104 @@
+<?php 
+session_start();
+/*
+Propiedad intelectual de Adsum (c).
+Funcion         : fncaccrap
+Decripcion      : Permite el acceso rapido a un componente del menu. 
+Parametros      : Descripicion
+  $isbacra        Cadena con las iniciales para acceso rapido.
+Retorno         : Descripicion
+
+Autor           : agomez-freina
+Fecha           : 05-Dec-2001  
+Modificado por	: ariascos
+Fecha			: 28052002
+Motivo			: Adecuaci¢n para entrega
+*/
+include( '../src/FunPerSecNiv/fncnumreg.php');
+include( '../src/FunPerSecNiv/fncfetch.php');
+include( '../src/FunPerPriNiv/pktblusuagrup.php'); 
+include( '../src/FunPerPriNiv/pktblgrupcomp.php');
+include( '../src/FunPerPriNiv/pktblmenucomp.php');
+include( '../src/FunGen/Menu/fnccomgru.php');
+include( '../src/FunGen/Menu/fncusugru.php');
+include( '../src/FunGen/Menu/fnccompusu.php');
+include( '../src/FunGen/Menu/fncdatcom.php');
+define ("n",0);
+define ("n1",1);
+$flag = n;
+				  
+function  fncaccrap($isbacra)
+{
+	$nuconn = fncconn();
+	// trae los datos del componente a desplegar 
+	$reccadena = fncdatcom($isbacra,$nuconn);
+	if ($reccadena)
+	{
+	// los grupos a los que pertenece el usuario
+		$reccadena1 = fncusugru($GLOBALS[usuacodi],$nuconn);
+		if ($reccadena1)
+		{
+		// Todos los componentes a los que el usuario tiene derecho
+			$reccadena2 = fnccompusu($reccadena1,$nuconn);
+			if($reccadena2)
+			{
+				$cant = count($reccadena2);
+				for($i = n ; $i< $cant; $i ++)
+				{
+					// si el componente a desplegar le pertenece al usu.
+					if($reccadena2[$i] == $reccadena[mecocodi])
+					{
+						$flag = n1;
+					}
+				}
+				if($flag)
+				{
+					$contador = n;
+					// almacena los subcomponentes del componente
+					for($j = n ; $j< $cant; $j ++)
+					{
+						$reccadena3 = loadrecordmenucomp($reccadena2[$j],
+						$nuconn);
+						if($reccadena3[mecocopa] == $reccadena[mecocodi])
+						{	
+							$recalm[$contador] = $reccadena3[meconomb]; 
+							$contador ++;
+						}
+					}
+					echo '<script language="javascript">'."\n";
+					echo '<!--//'."\n";
+					echo 'top.frames['."'".'text'."'".'].location='."'"
+					.$reccadena[mecoscri];
+					echo '?codigo='.$reccadena[mecocodi];
+					$cant1 = count ($recalm);
+					for($j = n;$j< $cant1; $j++)
+					{
+						echo '&'.$recalm[$j].'=1';
+					}
+					echo "';"."\n";
+					echo '//-->'."\n";
+					echo '</script>'."\n";
+				}
+				else
+				{
+					echo "<script language=".'"'."javascript".'"'.">"."\n";
+					echo "<!--//"."\n";
+					echo "alert(".'"'."No tiene permiso de acceso".'")'."\n";
+					echo "//-->"."\n";
+					echo "</script>"."\n";
+				}
+			}
+		}
+		
+	}
+	else
+	{
+		echo "<script language=".'"'."javascript".'"'.">"."\n";
+		echo "<!--//"."\n";
+		echo "alert(".'"'."Componente no existe".'")'."\n";
+		echo "//-->"."\n";
+		echo "</script>"."\n";
+	}
+	fncclose($nuconn);
+}
+?>

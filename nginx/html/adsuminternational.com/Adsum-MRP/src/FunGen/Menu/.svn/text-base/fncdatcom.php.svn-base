@@ -1,0 +1,52 @@
+<?php 
+/*
+Propiedad intelectual de Adsum (c).
+Funcion         : fncdatcom
+Decripcion      : Retorna el registro completo de un componente del menu. 
+Parametros      : Descripicion
+  $isbacra        Cadena con las iniciales para acceso rapido.
+  $inuconn		  Id de conexion a la base de datos.
+Retorno         : Descripicion
+ $oreccadena      Arreglo con los datos del componente	
+Autor           : agomez-freina
+Fecha           : 03-oct-2001  
+*/
+
+function  fncdatcom($isbacra,$inuconn)
+{
+	
+	define ("n",0);
+	define ("n1",1);
+	define ("n4",4);
+	define ("e_conn",-1);
+	define ("e_db",-2);
+	define ("e_empty",-3);
+	
+	
+	$sbacra = trim ($isbacra);
+	$sbacra = strtolower ($sbacra);
+	$reccadena= array("mecoacra"=>$sbacra,"timecodi"=>n4);
+	$nuresult = dinamicscanmenucomp($reccadena,$inuconn);
+	if ($nuresult && $nuresult != e_empty && $nuresult != e_db
+	&& $nuresult != e_conn) 
+	{
+		$nucantrow = fncnumreg($nuresult);
+		if($nucantrow > n)
+		{
+			for($i = n; $i < $nucantrow ;$i++)
+			{
+				$oreccadena = fncfetch($nuresult,$i);
+				$oreccadena[mecoacra] = trim ($oreccadena[mecoacra]);
+				if($oreccadena[mecoacra] == $sbacra)
+				{
+					return $oreccadena;
+				}
+			}
+		}
+	}
+	else
+	{
+		return n;
+	}
+}
+?>

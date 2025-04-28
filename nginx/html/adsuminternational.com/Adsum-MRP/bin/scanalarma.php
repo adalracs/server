@@ -1,0 +1,429 @@
+<?php 
+
+ini_set("display_errors", 1);
+
+include ('../def/jquery.library_maestro.php'); 
+
+	//validamos que se obtenga el nit del cliente para ingresar a la funcion
+	if($ordcomcodcli)
+	{
+		unset($ircRecord,$ircRecordop);
+		$ircRecord['nivalacodigo'] = 2;
+		$ircRecord['ordcomcodcli'] = $ordcomcodcli;
+		$ircRecordop['nivalacodigo'] = '=';
+		$ircRecordop['ordcomcodcli'] = '=';
+		$ircRecordop['alagesdescri'] = '=';
+		$rsAlarma = dinamicscanopalarma($ircRecord,$ircRecordop,$idcon);
+		$nrAlarma = fncnumreg($rsAlarma);
+		if($nrAlarma > 0)
+		{
+			for($a = 0; $a < $nrAlarma; $a++)
+			{
+				$rwAlarma = fncfetch($rsAlarma,$a);
+				unset($ircRecord,$ircRecordop);
+				$ircRecord['alarmacodigo'] = $rwAlarma['alarmacodigo'];
+				$ircRecord['modulocodigo'] = $MODULOCODIGO;
+				
+				$ircRecordop['alarmacodigo'] = '=';
+				$ircRecordop['modulocodigo'] = '=';
+				$rsAlarmaModulo = dinamicscanopalarmamodulo($ircRecord,$ircRecordop,$idcon);
+				$nrAlarmaModulo = fncnumreg($rsAlarmaModulo);
+				
+				unset($ircRecord,$ircRecordop);
+				$ircRecord['alarmacodigo'] = $rwAlarma['alarmacodigo'];
+				$ircRecordop['alarmacodigo'] = '=';
+				$rsAlarmaGestion = dinamicscanopvistaalarmagestion($ircRecord,$ircRecordop,$idcon);
+				$nrAlarmaGestion = fncnumreg($rsAlarmaGestion);
+				
+				unset($ircRecord,$ircRecordop);
+				$ircRecord['alarmacodigo'] = $rwAlarma['alarmacodigo'];
+				$ircRecordop['alagesdescri'] = $rwAlarma['alarmadescri'];
+				$ircRecord['modulocodigo'] = $MODULOCODIGO;
+				$ircRecord['alamodirres'] = '1';//1 si es responsable y 0 si es dirigido
+				$ircRecordop['alarmacodigo'] = '=';
+				$ircRecordop['modulocodigo'] = '=';
+				$ircRecord['alamodirres'] = '=';
+				$rsAlarmaModulo1 = dinamicscanopalarmamodulo($ircRecord,$ircRecordop,$idcon);
+				$nrAlarmaModulo1 = fncnumreg($rsAlarmaModulo1);
+				
+				if($nrAlarmaModulo >= 1 && $nrAlarmaGestion >= 1)
+				{
+					if($rwAlarma['tipoalacodigo'] == '1' && $nrAlarmaModulo1 < 1)//alarma 1 restrictiva
+					{
+						if(!$rutamodulo)
+							$rutamodulo  = 'main.php';
+						
+						echo '<script language="javascript">';
+						echo ' $(function() { ';
+					    echo '	$( "#dialogAlarma" ).dialog({ 
+							    resizable: false,
+								height:140,
+								modal: true,
+								buttons: {
+									Cancel: function() {
+										<!--//
+														location ="'.$rutamodulo.'?codigo='.$codigo.'";
+													//--> 
+										$( this ).dialog( "close" );
+									},
+									"Descripcion": function() {
+										$( this ).dialog( "close" );
+										$( "#dialog-segundo" ).dialog({
+											resizable: false,
+											height:180,
+											modal: true, 
+											buttons: {
+												Ok: function() {
+													<!--//
+														location ="'.$rutamodulo.'?codigo='.$codigo.'";
+													//-->  	
+													$( this ).dialog( "close" );
+												}
+											}
+										});
+									}
+								}
+							}); ';
+					    echo '});';
+						echo '</script>';
+						
+						echo '
+							<div id="dialogAlarma" title="Mensaje de Alarma" style="display:none">
+							  <p>'.$rwAlarma['alarmamensaj'].'</p>
+							</div>';
+						echo '
+							<div id="dialog-segundo" title="Descripcion de Alarma" style="display:none">
+							  <p>'.$rwAlarma['alarmadescri'].'</p>
+							</div>';
+						
+						/*
+							echo '<script language="javascript">';
+							echo '<!--//'."\n";
+							echo 'location ="'.$rutamodulo.'?codigo='.$codigo.';"';
+							echo '//-->'."\n";
+							echo '</script>';
+						*/	
+					}
+					elseif($rwAlarma['tipoalacodigo'] == '1' && $nrAlarmaModulo1 >= 1)//alarma 2 informativa
+					{
+						//muestra ventana para las alarmas informativas
+						echo '<script language="javascript">';
+						echo ' $(function() { ';
+					    echo '	$( "#dialogAlarma" ).dialog({ 
+							    resizable: false,
+								height:140,
+								modal: true,
+								buttons: {
+									Cancel: function() {
+										$( this ).dialog( "close" );
+									},
+									"Descripcion": function() {
+										$( this ).dialog( "close" );
+										$( "#dialog-segundo" ).dialog({
+											resizable: false,
+											height:180,
+											modal: true, 
+											buttons: {
+												Ok: function() {
+													$( this ).dialog( "close" );
+												}
+											}
+										});
+									}
+								}
+							}); ';
+					    echo '});';
+						echo '</script>';
+						
+						echo '
+							<div id="dialogAlarma" title="Mensaje de Alarma" style="display:none">
+							  <p>'.$rwAlarma['alarmamensaj'].'</p>
+							</div>';
+						echo '
+							<div id="dialog-segundo" title="Descripcion de Alarma" style="display:none">
+							  <p>'.$rwAlarma['alarmadescri'].'</p>
+							</div>';
+			
+						$varMsj = 
+							'<tr>
+								<td>
+									<div class="ui-widget">
+										<div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;"> 
+											<p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+											<strong>Mensaje de alarma:</strong> '.$rwAlarma['alarmamensaj'].'</p>
+										</div>
+									</div>
+								</td>
+							</tr>';
+					} 
+					else
+					{
+						//muestra ventana para las alarmas informativas
+						echo '<script language="javascript">';
+						echo ' $(function() { ';
+					    echo '	$( "#dialogAlarma" ).dialog({ 
+							    resizable: false,
+								height:140,
+								modal: true,
+								buttons: {
+									Cancel: function() {
+										$( this ).dialog( "close" );
+									},
+									"Descripcion": function() {
+										$( this ).dialog( "close" );
+										$( "#dialog-segundo" ).dialog({
+											resizable: false,
+											height:180,
+											modal: true, 
+											buttons: {
+												Ok: function() {
+													$( this ).dialog( "close" );
+												}
+											}
+										});
+									}
+								}
+							}); ';
+					    echo '});';
+						echo '</script>';
+						
+						echo '
+							<div id="dialogAlarma" title="Mensaje de Alarma" style="display:none">
+							  <p>'.$rwAlarma['alarmamensaj'].'</p>
+							</div>';
+						echo '
+							<div id="dialog-segundo" title="Descripcion de Alarma" style="display:none">
+							  <p>'.$rwAlarma['alarmadescri'].'</p>
+							</div>';
+						
+						$varMsj = 
+							'<tr>
+								<td>
+									<div class="ui-widget">
+										<div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;"> 
+											<p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+											<strong>Mensaje de alarma:</strong> '.$rwAlarma['alarmamensaj'].'</p>
+										</div>
+									</div>
+								</td>
+							</tr>';
+						//exit;
+					}
+				}
+			}
+		}
+	}
+	
+	if($produccoduno)
+	{
+		unset($ircRecord,$ircRecordop);
+		$ircRecord['nivalacodigo'] = '1';
+		$ircRecordop['nivalacodigo'] = '=';
+		$rsAlarma = dinamicscanopalarma($ircRecord,$ircRecordop,$idcon);
+		$nrAlarma = fncnumreg($rsAlarma);
+		if($nrAlarma > 0)
+		{
+			for($a = 0; $a < $nrAlarma; $a++)
+			{
+				$rwAlarma = fncfetch($rsAlarma,$a);
+				unset($ircRecord,$ircRecordop);
+				$ircRecord['alarmacodigo'] = $rwAlarma['alarmacodigo'];
+				$ircRecord['modulocodigo'] = $MODULOCODIGO;
+				$ircRecordop['alarmacodigo'] = '=';
+				$ircRecordop['modulocodigo'] = '=';
+				$rsAlarmaModulo = dinamicscanopalarmamodulo($ircRecord,$ircRecordop,$idcon);
+				$nrAlarmaModulo = fncnumreg($rsAlarmaModulo);
+				
+				
+				unset($ircRecord,$ircRecordop);
+				$ircRecord['alarmacodigo'] = $rwAlarma['alarmacodigo'];
+				$ircRecord['produccoduno'] = $produccoduno;
+				$ircRecordop['alarmacodigo'] = '=';
+				$ircRecordop['produccoduno'] = '=';
+				$rsAlarmaItem = dinamicscanopalarmaitem($ircRecord,$ircRecordop,$idcon);
+				$nrAlarmaItem = fncnumreg($rsAlarmaItem);
+				
+				unset($ircRecord,$ircRecordop);
+				$ircRecord['alarmacodigo'] = $rwAlarma['alarmacodigo'];
+				$ircRecordop['alarmacodigo'] = '=';
+				$rsAlarmaGestion = dinamicscanopvistaalarmagestion($ircRecord,$ircRecordop,$idcon);
+				$nrAlarmaGestion = fncnumreg($rsAlarmaGestion);
+				
+				unset($ircRecord,$ircRecordop);
+				$ircRecord['alarmacodigo'] = $rwAlarma['alarmacodigo'];
+				$ircRecord['modulocodigo'] = $MODULOCODIGO;
+				$ircRecord['alamodirres'] = '1';//1 si es responsable y 0 si es dirigido
+				$ircRecordop['alarmacodigo'] = '=';
+				$ircRecordop['modulocodigo'] = '=';
+				$ircRecord['alamodirres'] = '=';
+				$rsAlarmaModulo1 = dinamicscanopalarmamodulo($ircRecord,$ircRecordop,$idcon);
+				$nrAlarmaModulo1 = fncnumreg($rsAlarmaModulo1);
+				
+				if($nrAlarmaItem >= 1 && $nrAlarmaGestion >= 1 && $nrAlarmaModulo >= 1)
+				{
+					if($rwAlarma['tipoalacodigo'] == '1' && $nrAlarmaModulo1 < 1)//alarma 1 restrictiva
+					{
+						if(!$rutamodulo)
+							$rutamodulo  = 'main.php';
+						
+						echo '<script language="javascript">';
+						echo ' $(function() { ';
+					    echo '	$( "#dialogAlarma" ).dialog({ 
+							    resizable: false,
+								height:140,
+								modal: true,
+								buttons: {
+									Cancel: function() {
+										<!--//
+														location ="'.$rutamodulo.'?codigo='.$codigo.'";
+													//--> 
+										$( this ).dialog( "close" );
+									},
+									"Descripcion": function() {
+										$( this ).dialog( "close" );
+										$( "#dialog-segundo" ).dialog({
+											resizable: false,
+											height:180,
+											modal: true, 
+											buttons: {
+												Ok: function() {
+													<!--//
+														location ="'.$rutamodulo.'?codigo='.$codigo.'";
+													//-->  	
+													$( this ).dialog( "close" );
+												}
+											}
+										});
+									}
+								}
+							}); ';
+					    echo '});';
+						echo '</script>';
+						
+						echo '
+							<div id="dialogAlarma" title="Mensaje de Alarma" style="display:none">
+							  <p>'.$rwAlarma['alarmamensaj'].'</p>
+							</div>';
+						echo '
+							<div id="dialog-segundo" title="Descripcion de Alarma" style="display:none">
+							  <p>'.$rwAlarma['alarmadescri'].'</p>
+							</div>';
+						
+						/*if(!$rutamodulo)
+							$rutamodulo  = 'main.php';
+							echo '<script language="javascript">';
+							echo '<!--//'."\n";
+							echo 'location ="'.$rutamodulo.'?codigo='.$codigo.';"';
+							echo '//-->'."\n";
+							echo '</script>';*/	
+					}
+					elseif($rwAlarma['tipoalacodigo'] == '1' && $nrAlarmaModulo1 >= 1)//alarma 2 informativa
+					{
+						//muestra ventana para las alarmas informativas
+						echo '<script language="javascript">';
+						echo ' $(function() { ';
+					    echo '	$( "#dialogAlarma" ).dialog({ 
+							    resizable: false,
+								height:140,
+								modal: true,
+								buttons: {
+									Cancel: function() {
+										$( this ).dialog( "close" );
+									},
+									"Descripcion": function() {
+										$( this ).dialog( "close" );
+										$( "#dialog-segundo" ).dialog({
+											resizable: false,
+											height:180,
+											modal: true, 
+											buttons: {
+												Ok: function() {
+													$( this ).dialog( "close" );
+												}
+											}
+										});
+									}
+								}
+							}); ';
+					    echo '});';
+						echo '</script>';
+						
+						echo '
+							<div id="dialogAlarma" title="Mensaje de Alarma" style="display:none">
+							  <p>'.$rwAlarma['alarmamensaj'].'</p>
+							</div>';
+						echo '
+							<div id="dialog-segundo" title="Descripcion de Alarma" style="display:none">
+							  <p>'.$rwAlarma['alarmadescri'].'</p>
+							</div>';
+						
+						
+						$varMsj = 
+							'<tr>
+								<td>
+									<div class="ui-widget">
+										<div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;"> 
+											<p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+											<strong>Mensaje de alarma:</strong> '.$rwAlarma['alarmamensaj'].'</p>
+										</div>
+									</div>
+								</td>
+							</tr>';
+					}
+					else
+					{
+						//muestra ventana para las alarmas informativas
+						echo '<script language="javascript">';
+						echo ' $(function() { ';
+					    echo '	$( "#dialogAlarma" ).dialog({ 
+							    resizable: false,
+								height:140,
+								modal: true,
+								buttons: {
+									Cancel: function() {
+										$( this ).dialog( "close" );
+									},
+									"Descripcion": function() {
+										$( this ).dialog( "close" );
+										$( "#dialog-segundo" ).dialog({
+											resizable: false,
+											height:180,
+											modal: true, 
+											buttons: {
+												Ok: function() {
+													$( this ).dialog( "close" );
+												}
+											}
+										});
+									}
+								}
+							}); ';
+					    echo '});';
+						echo '</script>';
+						
+						echo '
+							<div id="dialogAlarma" title="Mensaje de Alarma" style="display:none">
+							  <p>'.$rwAlarma['alarmamensaj'].'</p>
+							</div>';
+						echo '
+							<div id="dialog-segundo" title="Descripcion de Alarma" style="display:none">
+							  <p>'.$rwAlarma['alarmadescri'].'</p>
+							</div>';
+						
+						$varMsj = 
+							'<tr>
+								<td>
+									<div class="ui-widget">
+										<div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;"> 
+											<p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+											<strong>Mensaje de alarma:</strong> '.$rwAlarma['alarmamensaj'].'</p>
+										</div>
+									</div>
+								</td>
+							</tr>';
+					}
+				}
+			}
+		}	
+	}
+?>

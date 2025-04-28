@@ -1,0 +1,48 @@
+<?php 
+/*
+Propiedad intelectual de Adsum (c).
+Funcion         : fncelidup
+Decripcion      : Genera un arreglo sin componentes repetidos.
+Parametros      : Descripicion
+   $irecentrada      array con los componentes del menu a los cuales 
+   			   un usuario tiene derecho.
+Retorno         : Descripicion
+  true $orecsalida     array con los componentes del menu.
+Autor           : agomez-freina
+Fecha           : 17-ene-2001  
+*/
+
+function  fncelidup($irecentrada)
+{
+	define ("n",0);
+	define ("n1",1);
+	$nuflag = n;
+	$nucont = n;
+	$nucant = n;
+	
+	sort ($irecentrada);
+	$recentrada = $irecentrada;
+	
+ 	$nucant = count ($irecentrada);
+	for ($i = n; $i < $nucant; $i++ )
+	{
+		$nuflag =n1;
+		for($g = $i;$g < $nucant;$g++)
+		{
+			if($irecentrada[$i] == $recentrada[$g] && $i != $g)
+			{
+				$nuflag=n;
+				break;
+			}
+		}
+		if($nuflag)
+		{
+			$orecsalida[$nucont] = $irecentrada[$i];
+			$nucont ++;
+		}
+	}
+
+	sort ($orecsalida);
+	return $orecsalida;
+}
+?>

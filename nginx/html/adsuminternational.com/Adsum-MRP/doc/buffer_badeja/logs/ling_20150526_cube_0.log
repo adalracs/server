@@ -1,0 +1,4 @@
+2015-05-26 00:00:28 - alexander.lozada => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.96.33
+2015-05-26 00:00:28 - alexander.lozada => [Rango de Generacion 2015-05-26 - 2015-06-02 :: RNG_DATE_PER ] -> IP: 192.168.96.33
+2015-05-26 00:00:28 - alexander.lozada => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 192.168.96.33
+2015-05-26 00:00:28 - alexander.lozada => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 192.168.96.33

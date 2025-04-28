@@ -1,0 +1,4 @@
+2014-05-24 00:00:05 - luz.zambrano => [Inicia Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 190.242.58.154
+2014-05-24 00:00:05 - luz.zambrano => [Rango de Generacion 2014-05-24 - 2014-05-31 :: RNG_DATE_PER ] -> IP: 190.242.58.154
+2014-05-24 00:00:05 - luz.zambrano => [ Finaliza Generacion de Ordenes :: EX_FILE_CB_NOW ] -> IP: 190.242.58.154
+2014-05-24 00:00:05 - luz.zambrano => [ Elimina Archivo cube_0.cub  :: DL_FILE_CB_NOW ] -> IP: 190.242.58.154
