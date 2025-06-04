@@ -1,0 +1,36 @@
+{
+  "common": {
+    "loading": "Cargando...",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "confirm": "Confirmar",
+    "close": "Cerrar",
+    "submit": "Enviar"
+  },
+  "navigation": {
+    "home": "Inicio",
+    "about": "Acerca de",
+    "contact": "Contacto",
+    "login": "Iniciar Sesión",
+    "register": "Registrarse"
+  },
+  "hero": {
+    "title": "Blockchain sin cripto, solo soluciones",
+    "subtitle": "La plataforma blockchain que democratiza la tecnología para aplicaciones del mundo real",
+    "cta_primary": "Únete a la Comunidad",
+    "cta_secondary": "Descubre Adsum"
+  },
+  "early_adopter_form": {
+    "title": "Únete como Early Adopter",
+    "email": "Email",
+    "name": "Nombre",
+    "company": "Empresa/Organización",
+    "submit": "Unirme al Programa",
+    "success": "¡Gracias por unirte a nuestro programa de early adopters!"
+  },
+  "footer": {
+    "copyright": "© 2025 Adsum-Blockchain. Todos los derechos reservados."
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "common": {
+    "loading": "加载中...",
+    "save": "保存",
+    "cancel": "取消",
+    "submit": "提交"
+  },
+  "navigation": {
+    "home": "首页",
+    "about": "关于我们",
+    "contact": "联系我们"
+  },
+  "hero": {
+    "title": "区块链无加密货币，只有解决方案",
+    "subtitle": "使区块链技术民主化，用于现实世界应用的区块链平台"
+  },
+  "footer": {
+    "copyright": "© 2025 Adsum-Blockchain. 版权所有。"
+  }
+}

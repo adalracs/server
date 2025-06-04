@@ -1,23 +1,78 @@
 # Configuración HTTP (redirige a HTTPS)
 server {
+    if ($host = www.adsuminternational.net) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = adsuminternational.net) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
     listen 80;
     listen [::]:80;
-    server_name adsuminternational.net www.adsuminternational.net verify.adsuminternational.net;
+    server_name adsuminternational.net www.adsuminternational.net;
     return 301 https://$host$request_uri;
+}
+
+# Configuración HTTP para validate (redirección a HTTPS)
+server {
+    if ($host = validate.adsuminternational.net) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    listen 80;
+    listen [::]:80;
+    server_name validate.adsuminternational.net;
+    return 301 https://$host$request_uri;
+
+
 }
 
 # Configuración HTTPS
 server {
     listen 443 ssl;
     listen [::]:443 ssl;
-    server_name adsuminternational.net www.adsuminternational.net verify.adsuminternational.net;
+    server_name adsuminternational.net www.adsuminternational.net;
 
     # Ruta de los certificados
-    ssl_certificate /etc/letsencrypt/live/adsuminternational.net/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/adsuminternational.net/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/adsuminternational.net-0001/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/adsuminternational.net-0001/privkey.pem; # managed by Certbot
 
     root /var/www/html/adsuminternational.net;
     index index.html index.htm;
+
+    # NUEVA (proxy a uvicorn)
+    location /api/ {
+        proxy_pass http://127.0.0.1:8001;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # AGREGAR ESTA SECCIÓN - Servir archivos de idioma
+    location /lang/ {
+        alias /var/www/html/adsuminternational.net/nueva/lang/;  # O donde estén tus archivos
+        add_header Content-Type application/json;
+        add_header Cache-Control "public, max-age=3600";
+    }
+
+    # React SPA - Fallback para todas las rutas de /nueva/
+    location /nueva/ {
+        alias /var/www/html/adsuminternational.net/nueva/;
+        try_files $uri $uri/ /nueva/index.html;
+        index index.html;
+    }
+
+    # Archivos estáticos de React - NUEVA SECCIÓN
+    location /static/ {
+        alias /var/www/html/adsuminternational.net/nueva/static/;
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
 
     # Configuración para tu API en /CreateUser
     location /CreateUser/ {
@@ -29,4 +84,27 @@ server {
     location / {
         try_files $uri $uri/ =404;
     }
+
+}
+
+# Configuración HTTPS para validate.adsuminternational.net
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    server_name validate.adsuminternational.net;
+    ssl_certificate /etc/letsencrypt/live/adsuminternational.net-0001/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/adsuminternational.net-0001/privkey.pem; # managed by Certbot
+
+    # Este root no es necesario, redirigimos todo al uWSGI de blockchain
+    location / {
+        include uwsgi_params;
+	uwsgi_param SCRIPT_NAME /;
+        uwsgi_pass unix:/home/arias/Adsum-Blockchain/socket/uwsgi.sock;  # <-- Aquí pones tu socket real
+    }
+    location /lang/ {
+    alias /var/www/adsuminternational.net/nueva/lang/;
+    add_header Content-Type application/json;
+    add_header Cache-Control "public, max-age=3600"; # Cache por 1 hora
+}
+
 }

@@ -1,0 +1,20 @@
+{
+  "common": {
+    "loading": "Caricamento...",
+    "save": "Salva",
+    "cancel": "Annulla",
+    "submit": "Invia"
+  },
+  "navigation": {
+    "home": "Home",
+    "about": "Chi siamo",
+    "contact": "Contatto"
+  },
+  "hero": {
+    "title": "Blockchain senza crypto, solo soluzioni",
+    "subtitle": "La piattaforma blockchain che democratizza la tecnologia per applicazioni del mondo reale"
+  },
+  "footer": {
+    "copyright": "© 2025 Adsum-Blockchain. Tutti i diritti riservati."
+  }
+}

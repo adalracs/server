@@ -1,0 +1,68 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "confirm": "Confirmer",
+    "close": "Fermer",
+    "submit": "Soumettre"
+  },
+  "navigation": {
+    "home": "Accueil",
+    "about": "À propos",
+    "contact": "Contact",
+    "login": "Se connecter",
+    "register": "S'inscrire"
+  },
+  "hero": {
+    "title": "Blockchain sans crypto, seulement des solutions",
+    "subtitle": "La plateforme blockchain qui démocratise la technologie pour les applications du monde réel",
+    "cta_primary": "Rejoindre la Communauté",
+    "cta_secondary": "Découvrir Adsum"
+  },
+  "problems": {
+    "title": "Problèmes et Solutions",
+    "description": "Les blockchains actuelles sont axées sur les cryptomonnaies et la spéculation. Adsum-Blockchain se concentre sur les applications pratiques pour les foyers, les entreprises et les institutions.",
+    "problem_title": "Le Problème",
+    "problem_description": "Un pourcentage élevé de blockchains sont axées sur la crypto, laissant de côté les vraies entreprises.",
+    "solution_title": "Notre Solution",
+    "solution_description": "Adsum est une infrastructure plug-and-play pour les DApps non financières."
+  },
+  "use_cases": {
+    "title": "Cas d'Usage",
+    "description": "Adsum-Blockchain s'adapte à des besoins divers avec des applications pratiques et à fort impact dans différents secteurs.",
+    "identity": {
+      "title": "Gestion d'Identité Décentralisée",
+      "description": "Contrôle total sur votre identité numérique sans dépendre de tiers."
+    },
+    "transparency": {
+      "title": "Transparence Institutionnelle",
+      "description": "Systèmes de transparence et de traçabilité pour les organisations et institutions."
+    },
+    "industrial": {
+      "title": "Applications Industrielles",
+      "description": "Traçabilité dans les chaînes d'approvisionnement, certifications et plus."
+    }
+  },
+  "early_adopter_form": {
+    "title": "Rejoindre en tant qu'Early Adopter",
+    "email": "Email",
+    "name": "Nom",
+    "company": "Entreprise/Organisation",
+    "segment": "Je suis un:",
+    "interests": "Je suis intéressé par:",
+    "segments": {
+      "developer": "Développeur",
+      "business": "Entreprise",
+      "academic": "Académique",
+      "ngo_gov": "ONG/Gouvernement"
+    },
+    "submit": "Rejoindre le Programme",
+    "success": "Merci de rejoindre notre programme d'early adopters!"
+  },
+  "footer": {
+    "copyright": "© 2025 Adsum-Blockchain. Tous droits réservés."
+  }
+}
